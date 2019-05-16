@@ -20,7 +20,11 @@ class HomeController extends BaseController
 
     public function show()
     {
-        return "admin";
+        if(auth()->user()->admin->super_admin==1)
+            $type='مدير النظام';
+        else
+            $type="المنشط";
+        return view('admin.home.profile',compact('type'));
     }
 
     public function editProfile()
