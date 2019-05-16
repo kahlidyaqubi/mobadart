@@ -1,6 +1,6 @@
 # mobadarat Project
 
 make 
-composer ubdate
-then make
-php artisan migrate:refresh --seed
+composer update<br>
+then make<br>
+php artisan migrate:refresh --seed<br>
