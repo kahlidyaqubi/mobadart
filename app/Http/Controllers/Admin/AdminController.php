@@ -10,7 +10,7 @@ class AdminController extends Controller
     //
     public function index(Request $request)
     {
-        return "test";
+        return view('admin.admins.index');
     }
     public function create()
     {

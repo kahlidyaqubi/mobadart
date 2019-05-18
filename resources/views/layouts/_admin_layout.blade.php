@@ -129,11 +129,11 @@
                         <ul class="dropdown-menu dropdown-menu-default">
 
                             <li>
-                                <a href="#">
+                                <a href="/admin/changePassword">
                                     <i class="icon-lock"></i> تعديل كلمة المرور </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="/admin/editProfile">
                                     <i class="icon-lock"></i> تعديل البروفايل</a>
                             </li>
                             <li>
@@ -272,8 +272,6 @@
 <script src="/metronic-rtl/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 <script src="/metronic-rtl/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="/metronic-rtl/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
-<script src="/metronic-rtl/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"
-        type="text/javascript"></script>
 <script src="/metronic-rtl/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js"
         type="text/javascript"></script>
 <script src="/metronic-rtl/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
@@ -287,7 +285,13 @@
 <script src="/metronic-rtl/assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
 <script src="/metronic-rtl/assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
 <script src="/metronic-rtl/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+
+
+<script src="/metronic-rtl/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"
+        type="text/javascript"></script>
 <script>
+
+
     $(function () {
         //$("#Confirm").modal("show");
         $(".Confirm").click(function () {

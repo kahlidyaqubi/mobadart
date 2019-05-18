@@ -19,7 +19,9 @@ Route::namespace('Admin')
         Route::get('/', 'HomeController@show');
         Route::get('/noaccess', 'HomeController@noaccess');
         Route::get('/changePassword', 'HomeController@changePassword');
+        Route::post('/changePassword', 'HomeController@changePassword_post');
         Route::get('/editProfile', 'HomeController@editProfile');
+        Route::post('/editProfile', 'HomeController@editProfile_post');
         Route::get('/hisArticle', 'HomeController@hisArticle');
         Route::get('/hisInitiave', 'HomeController@hisInitiave');
         /********/
