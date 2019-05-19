@@ -19,7 +19,7 @@ class Admin extends Model
     {
         return $this->hasMany('App\Demand');
     }
-    public function Family_center(){
+    public function family_center(){
         return $this->belongsTo('App\Family_center');
     }
 

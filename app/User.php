@@ -4,12 +4,11 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens,Notifiable, SoftDeletes;
+    use HasApiTokens,Notifiable;
     
 
     /**
@@ -17,7 +16,6 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
     protected $fillable = [
         'name', 'email', 'password','lang','last_name','user_name','the_type'
     ];

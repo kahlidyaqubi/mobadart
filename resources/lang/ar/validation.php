@@ -210,6 +210,7 @@ return [
         'sent_type'=>'طريقة الإرسال',
         'mopile' => 'رقم الهاتف',
         'family_center_id' => 'مركز العائلة',
+        'super_admin'=> 'نوع الحساب',
 
     ],
 ];

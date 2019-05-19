@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Admin;
+use App\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,13 +26,23 @@ class AdminRequest extends FormRequest
      */
     public function rules()
     {
-		return [
+        Validator::extend('without_spaces', function ($attr, $value) {
+            return preg_match('/^\S*$/u', $value);
+        });
+        $id_admin = $this->route('admin');
+        $id = Admin::find($id_admin)->user->id;
+        $valid = [
             //'user_id'=> 'required|max:3',
-			'family_center_id'=> 'required|max:3',
-            'is_cor'=>'max:1',
-			'mobile'=> 'string|min:6|max:10',
-			'super_admin'=> 'max:1',
+            'name' => 'required|max:30',
+            'user_name' => 'required|max:30|without_spaces|unique:users,user_name,' . $id . ',id',
+            'email' => 'required|email|max:30|unique:users,email,' . $id . ',id',
+            'family_center_id' => 'max:3',
+            'is_cor' => 'max:1',
+            'super_admin' => 'required|max:1',
         ];
+        if (request()->mobile)
+            $valid['mobile'] = 'string|min:6|max:10';
+        return $valid;
     }
 }
 

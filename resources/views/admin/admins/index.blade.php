@@ -13,19 +13,20 @@
                     </div>
 
                     <div class="col-sm-4" style="margin-top: 12px">
-                        <select class="form-control" name="category_id">
+                        <select class="form-control" name="super_admin">
                             <option value="">جميع الحسابات</option>
-                            <option value="">مدراء النظام</option>
-                            <option value="">المنشطين</option>
+                            <option value="1" @if($super_admin==1)selected @endif>مدراء النظام</option>
+                            <option value="0" @if($super_admin==='0')selected @endif>المنشطين</option>
 
                         </select>
                     </div>
 
                     <div class="col-sm-4" style="margin-top: 12px">
-                        <select class="form-control" name="category_id">
+                        <select class="form-control" name="family_center_id">
                             <option value="">جميع مراكز العائلة</option>
-                            <option value="">غزة</option>
-
+                            @foreach($family_centers as $family_center)
+                                <option value="{{$family_center->id}}" @if($family_center->id==$family_center_id) selected @endif>{{$family_center->name}}</option>
+                            @endforeach
                         </select>
                     </div>
 
@@ -35,7 +36,7 @@
 
 
                     <div class="col-sm-2 " style="margin-top: 12px">
-                        <a class="btn btn-success" href="/account/article/create">اضافــة حساب جديد</a>
+                        <a class="btn btn-success" href="/admin/admin/create">اضافــة حساب جديد</a>
                     </div>
                 </form>
             </div>
@@ -43,84 +44,56 @@
     </div>
 
     <div class="portlet-body">
-        <div class="table-scrollable" style="overflow:visible">
-            <table class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                    <th> #</th>
-                    <th> الإسم كاملاً</th>
-                    <th> البريد الإلكتروني</th>
-                    <th> رقم التواصل</th>
-                    <th> مركز العائلة</th>
-                    <th> توع الحساب</th>
-                    <th width="15%"> إجراءات</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr class="active">
-                    <td> 1</td>
-                    <td> active</td>
-                    <td> Column heading</td>
-                    <td> Column heading</td>
-                    <td> Column heading</td>
-                    <td> Column heading</td>
-                    <td width="17%">
-                        <div class="btn-group">
-                            <button class="btn btn-xs green dropdown-toggle" type="button"
-                                    data-toggle="dropdown"
-                                    aria-expanded="false"> إجراءات
-                                <i class="fa fa-angle-down"></i>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="#">
-                                        <span class="text-warning"><i class="icon-pencil"></i> تعديل </span></a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="text-info"><i class="icon-lock"></i> تعديل الصلاحيات</span></a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="text-danger"><i class="icon-trash"></i> حذف</span></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td> 1</td>
-                    <td> active</td>
-                    <td> Column heading</td>
-                    <td> Column heading</td>
-                    <td> Column heading</td>
-                    <td> Column heading</td>
-                    <td width="17%">
-                        <div class="btn-group">
-                            <button class="btn btn-xs green dropdown-toggle" type="button"
-                                    data-toggle="dropdown"
-                                    aria-expanded="false"> إجراءات
-                                <i class="fa fa-angle-down"></i>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="#">
-                                        <span class="text-warning"><i class="icon-pencil"></i> تعديل </span></a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="text-info"><i class="icon-lock"></i> تعديل الصلاحيات</span></a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="text-danger"><i class="icon-trash"></i> حذف</span></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="table-scrollable" >
+            <table class="table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer">
+                    <thead>
+                    <tr>
+                        <th> #</th>
+                        <th> الإسم كاملاً</th>
+                        <th> البريد الإلكتروني</th>
+                        <th> رقم التواصل</th>
+                        <th> مركز العائلة</th>
+                        <th> نوع الحساب</th>
+                        <th width="15%"  class="hidden-xs"> إجراءات</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($items as $item)
+                        <tr>
+                            <td> {{$item->id}}</td>
+                            <td> {{$item->user->name}}</td>
+                            <td> {{$item->user->email}}</td>
+                            <td> {{$item->mobile}}</td>
+                            <td> @if(!$item->super_admin) {{$item->family_center->name}} @else عام @endif</td>
+                            <td> @if($item->super_admin)مدير نظام @else منشط  @endif</td>
+                            <td width="17%" class="hidden-xs">
+                                <div class="btn-group">
+                                    <button class="btn btn-xs green dropdown-toggle" type="button"
+                                            data-toggle="dropdown"
+                                            aria-expanded="false"> إجراءات
+                                        <i class="fa fa-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a href="/admin/admin/{{$item->id}}/edit">
+                                                <span class="text-warning"><i class="icon-pencil"></i> تعديل </span></a>
+                                        </li>
+                                        <li>
+                                            <a href="/admin/admin/permission/{{$item->id}}">
+                                                <span class="text-info"><i class="icon-lock"></i> تعديل الصلاحيات</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="/admin/admin/delete/{{$item->id}}" class="Confirm">
+                                                <span class="text-danger"><i class="icon-trash"></i> حذف</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                {{$items->links()}}
+                </table>
         </div>
     </div>
     </div>

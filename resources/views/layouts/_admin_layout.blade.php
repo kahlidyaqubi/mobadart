@@ -182,7 +182,7 @@
                     $adminId = Auth::user()->admin->id;
                     /*$links = \DB::table("links")->where("parent_id",0)->
                         whereRaw('id in (select link_id from admin_link where admin_id=?)',$adminId)->get();*/
-                    $links = Auth::user()->admin->links->where("in_menu",1)->where("parent_id", 0);
+                    $links = Auth::user()->admin->links()->where("in_menu",1)->where("parent_id", 0)->orderBy('order_id')->get();
                     ?>
 
                     @foreach($links as $link)
@@ -239,7 +239,7 @@
 <!-- END CONTAINER -->
 <!-- BEGIN FOOTER -->
 <div class="page-footer">
-    <div class="page-footer-inner"> {{date("Y")}} all copyrights reserved &copy; .
+    <div class="page-footer-inner"> {{date("Y")}} جميع الحقوق محفوظة &copy; .
 
     </div>
     <div class="scroll-to-top">
@@ -252,18 +252,18 @@
     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">confirm</h5>
+                <h5 class="modal-title" id="exampleModalCenterTitle">تأكيد</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                do you sure to continue
+                هل أنت متأكد من الاستمرار في العملية
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary"
-                        data-dismiss="modal">close</button>
-                <a href="#" class="btn btn-danger">yes, sure</a>
+                        data-dismiss="modal">إلغاء</button>
+                <a href="#" class="btn btn-danger">نعم، متأكد</a>
             </div>
         </div>
     </div>
