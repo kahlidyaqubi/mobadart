@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\City;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -91,4 +92,14 @@ class GovernorateController extends BaseController
     {
         //
     }
+    public function ajaxCityInGover($id=null)
+    {
+        //
+        if($id!=null)
+        $cities=City::where('governorate_id',$id)->get();
+        else
+            $cities=City::get();
+        return $cities;
+    }
+
 }

@@ -175,6 +175,41 @@ class CreateAdminLinks extends Seeder
             'new_window' => 0,
             'route' => '',
         ]);
+		 /********************إدارة الأنشطة*********************/
+
+        $link1 = DB::table('links')->insertGetId([
+            'title' => 'إنشاء نشاط',
+            'icon' => 'icon-diamond',
+            'parent_id' => $link_id,
+            'in_menu' => 1,
+            'link' => '/admin/activity/create',
+            'order_id' => 2,
+            'super' => 0,
+            'new_window' => 0,
+            'route' => '',
+        ]);
+        $link1 = DB::table('links')->insertGetId([
+            'title' => 'تعديل نشاط',
+            'icon' => 'icon-diamond',
+            'parent_id' => $link_id,
+            'in_menu' => 0,
+            'link' => '/admin/activity/edit',
+            'order_id' => 2,
+            'super' => 0,
+            'new_window' => 0,
+            'route' => '',
+        ]);
+        $link1 = DB::table('links')->insertGetId([
+            'title' => 'حذف نشاط',
+            'icon' => 'icon-diamond',
+            'parent_id' => $link_id,
+            'in_menu' => 0,
+            'link' => '/admin/activity/delete',
+            'order_id' => 2,
+            'super' => 0,
+            'new_window' => 0,
+            'route' => '',
+        ]);
         /********************إدارة التبرعات*********************/
         $link_id = DB::table('links')->insertGetId([
             'title' => 'التبرعات',
@@ -220,41 +255,7 @@ class CreateAdminLinks extends Seeder
             'new_window' => 0,
             'route' => '',
         ]);
-        /********************إدارة الأنشطة*********************/
-
-        $link1 = DB::table('links')->insertGetId([
-            'title' => 'إنشاء نشاط',
-            'icon' => 'icon-diamond',
-            'parent_id' => $link_id,
-            'in_menu' => 1,
-            'link' => '/admin/activity/create',
-            'order_id' => 2,
-            'super' => 0,
-            'new_window' => 0,
-            'route' => '',
-        ]);
-        $link1 = DB::table('links')->insertGetId([
-            'title' => 'تعديل نشاط',
-            'icon' => 'icon-diamond',
-            'parent_id' => $link_id,
-            'in_menu' => 0,
-            'link' => '/admin/activity/edit',
-            'order_id' => 2,
-            'super' => 0,
-            'new_window' => 0,
-            'route' => '',
-        ]);
-        $link1 = DB::table('links')->insertGetId([
-            'title' => 'حذف نشاط',
-            'icon' => 'icon-diamond',
-            'parent_id' => $link_id,
-            'in_menu' => 0,
-            'link' => '/admin/activity/delete',
-            'order_id' => 2,
-            'super' => 0,
-            'new_window' => 0,
-            'route' => '',
-        ]);
+       
         /********************إدارة مراكز العائلة*********************/
         $link_id = DB::table('links')->insertGetId([
             'title' => 'مراكز العائلة',
@@ -263,7 +264,7 @@ class CreateAdminLinks extends Seeder
             'in_menu' => 1,
             'link' => '',
             'order_id' => 4,
-            'super' => 0,
+            'super' => 1,
             'new_window' => 0,
             'route' => '',
         ]);
@@ -446,6 +447,17 @@ class CreateAdminLinks extends Seeder
             'new_window' => 0,
             'route' => '',
         ]);
+		$link1 = DB::table('links')->insertGetId([
+            'title' => 'إضافة خبر',
+            'icon' => 'icon-diamond',
+            'parent_id' => $link_id,
+            'in_menu' => 1,
+            'link' => '/admin/article/create',
+            'order_id' => 7,
+            'super' => 0,
+            'new_window' => 0,
+            'route' => '',
+        ]);
         $link1 = DB::table('links')->insertGetId([
             'title' => 'تعديل خبر',
             'icon' => 'icon-diamond',
@@ -554,7 +566,7 @@ class CreateAdminLinks extends Seeder
             'in_menu' => 1,
             'link' => '',
             'order_id' => 9,
-            'super' => 0,
+            'super' => 1,
             'new_window' => 0,
             'route' => '',
         ]);
@@ -727,7 +739,7 @@ class CreateAdminLinks extends Seeder
             'route' => '',
         ]);
         $link1 = DB::table('links')->insertGetId([
-            'title' => 'إدارة الفئات',
+            'title' => 'إدارة فئات النماذج',
             'icon' => 'icon-diamond',
             'parent_id' => $link_id,
             'in_menu' => 1,
@@ -738,7 +750,7 @@ class CreateAdminLinks extends Seeder
             'route' => '',
         ]);
         $link1 = DB::table('links')->insertGetId([
-            'title' => 'إضافة فئة',
+            'title' => 'إضافة فئة نماذج',
             'icon' => 'icon-diamond',
             'parent_id' => $link_id,
             'in_menu' => 1,
@@ -749,7 +761,7 @@ class CreateAdminLinks extends Seeder
             'route' => '',
         ]);
         $link1 = DB::table('links')->insertGetId([
-            'title' => 'تعديل فئة',
+            'title' => 'تعديل فئة نماذج',
             'icon' => 'icon-diamond',
             'parent_id' => $link_id,
             'in_menu' => 0,
@@ -760,11 +772,67 @@ class CreateAdminLinks extends Seeder
             'route' => '',
         ]);
         $link1 = DB::table('links')->insertGetId([
-            'title' => 'حذف فئة',
+            'title' => 'حذف فئة نماذج',
             'icon' => 'icon-diamond',
             'parent_id' => $link_id,
             'in_menu' => 0,
             'link' => '/admin/categoryDemand/delete',
+            'order_id' => 12,
+            'super' => 1,
+            'new_window' => 0,
+            'route' => '',
+        ]);
+/********************فئات الأخبار*********************/
+        $link_id = DB::table('links')->insertGetId([
+            'title' => 'فئات الأخبار',
+            'icon' => 'icon-diamond',
+            'parent_id' => 0,
+            'in_menu' => 1,
+            'link' => '',
+            'order_id' => 12,
+            'super' => 1,
+            'new_window' => 0,
+            'route' => '',
+        ]);
+        $link1 = DB::table('links')->insertGetId([
+            'title' => 'إدارة فئات الأخبار',
+            'icon' => 'icon-diamond',
+            'parent_id' => $link_id,
+            'in_menu' => 1,
+            'link' => '/admin/categoryArticle',
+            'order_id' => 12,
+            'super' => 1,
+            'new_window' => 0,
+            'route' => '',
+        ]);
+        $link1 = DB::table('links')->insertGetId([
+            'title' => 'إضافة فئة أخبار',
+            'icon' => 'icon-diamond',
+            'parent_id' => $link_id,
+            'in_menu' => 1,
+            'link' => '/admin/categoryArticle/create',
+            'order_id' => 12,
+            'super' => 1,
+            'new_window' => 0,
+            'route' => '',
+        ]);
+        $link1 = DB::table('links')->insertGetId([
+            'title' => 'تعديل فئة أخبار',
+            'icon' => 'icon-diamond',
+            'parent_id' => $link_id,
+            'in_menu' => 0,
+            'link' => '/admin/categoryArticle/edit',
+            'order_id' => 12,
+            'super' => 1,
+            'new_window' => 0,
+            'route' => '',
+        ]);
+        $link1 = DB::table('links')->insertGetId([
+            'title' => 'حذف فئة أخبار',
+            'icon' => 'icon-diamond',
+            'parent_id' => $link_id,
+            'in_menu' => 0,
+            'link' => '/admin/categoryArticle/delete',
             'order_id' => 12,
             'super' => 1,
             'new_window' => 0,
@@ -835,7 +903,7 @@ class CreateAdminLinks extends Seeder
             'in_menu' => 1,
             'link' => '',
             'order_id' => 14,
-            'super' => 1,
+            'super' => 0,
             'new_window' => 0,
             'route' => '',
         ]);
@@ -970,6 +1038,8 @@ class CreateAdminLinks extends Seeder
             'name' => 'عائلة غزى',
             'city_id' => $city_id,
             'manager_id' => $a_admin_id,
+            'manager_name' => 'رامي حسنين',
+            'mobile' => '99636064',
         ]);
         /***************اليوزر سيتنج******************/
         DB::table('site_sting')->insertGetId([

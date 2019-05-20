@@ -86,6 +86,26 @@
                                             <a href="/admin/admin/delete/{{$item->id}}" class="Confirm">
                                                 <span class="text-danger"><i class="icon-trash"></i> حذف</span></a>
                                         </li>
+                                        <li>
+                                            <a href="#" >
+                                                <span class="text-primary"><i class="fa fa-newspaper-o"></i>أخباره</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="#" >
+                                                <span class="text-primary"><i class="fa fa-users"></i>مبادراته</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="#" >
+                                                <span class="text-primary"><i class="fa fa-sitemap"></i>فئاته</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="#" >
+                                                <span class="text-primary"><i class="fa fa-reply-all"></i>ردوده</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="#" >
+                                                <span class="text-primary"><i class="fa fa-comment"></i>نماذجه</span></a>
+                                        </li>
                                     </ul>
                                 </div>
                             </td>

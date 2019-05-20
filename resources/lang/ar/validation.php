@@ -211,6 +211,8 @@ return [
         'mopile' => 'رقم الهاتف',
         'family_center_id' => 'مركز العائلة',
         'super_admin'=> 'نوع الحساب',
+        'city_id'=> 'المدينة',
+        'manager_name'=> 'اسم المنسق',
 
     ],
 ];

@@ -85,6 +85,7 @@ Route::namespace('Admin')
         Route::get('/city/delete/{id}', 'CityController@delete');
         Route::resource('city', 'CityController');
         /********/
+        Route::get('/governorate/ajaxCityInGover/{id?}', 'GovernorateController@ajaxCityInGover');
         Route::resource('governorate', 'GovernorateController');
         Route::get('/governorate/delete/{id}', 'GovernorateController@delete');
         Route::get('/governorate/cityInGover/{id}', 'GovernorateController@cityInGover');

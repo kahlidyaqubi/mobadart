@@ -24,11 +24,12 @@ class Family_centerRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->route('family_center');
         return [
-            'name'=> 'required|string|max:255',
+            'name'=> 'required|string|max:255|unique:family_centers,name,' . $id . ',id',
 			'city_id'=> 'required|max:3',
 			'manager_id'=> 'max:3',
-			'manager_name'=> 'required|string|email|max:255',
+			'manager_name'=> 'required|string|max:255',
 			'mobile'=> 'required|string|min:6|max:10',
         ];
     }
