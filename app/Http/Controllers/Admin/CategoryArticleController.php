@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Category;
+use App\Http\Requests\CategoryRequest;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Session;
 
 class CategoryArticleController extends BaseController
 {
@@ -12,9 +14,21 @@ class CategoryArticleController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index( Request $request)
     {
-        //
+        $q = $request["q"]??"";
+
+        $items=Category::where('type',1)->whereRaw(true);
+
+        if ($q)
+            $items->whereRaw("(name like ?)"
+                , ["%$q%"]);
+        $items = Category::whereIn('id',$items->pluck('id'))->paginate(20)
+            ->appends([
+                "q" => $q ]);
+
+        return view('admin.categories_article.index',compact('items'));
+
     }
 
     /**
@@ -24,7 +38,7 @@ class CategoryArticleController extends BaseController
      */
     public function create()
     {
-        //
+        return view('admin.categories_article.create');
     }
 
     /**
@@ -33,9 +47,13 @@ class CategoryArticleController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
+        request()['type']=1;
+        Category::create(request()->all());
+
+        Session::flash("msg", "تمت عملية الاضافة بنجاح");
+        return redirect("/admin/categoryArticle/create");
     }
 
     /**
@@ -47,6 +65,7 @@ class CategoryArticleController extends BaseController
     public function show($id)
     {
         //
+
     }
 
     /**
@@ -57,7 +76,13 @@ class CategoryArticleController extends BaseController
      */
     public function edit($id)
     {
-        //
+        $item=Category::find($id);
+        if ($item == NULL) {
+            Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
+            return redirect("/admin/categoryArticle");
+        }
+
+        return view('admin.categories_article.edit',compact('item'));
     }
 
     /**
@@ -67,9 +92,18 @@ class CategoryArticleController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
-        //
+        $item=Category::find($id);
+        if ($item == NULL) {
+            Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
+            return redirect("/admin/categoryArticle");
+        }
+
+        $item->update($request->all());
+
+        Session::flash("msg", "تمت عملية التعديل بنجاح");
+        return redirect("/admin/categoryArticle");
     }
 
     /**
@@ -84,9 +118,20 @@ class CategoryArticleController extends BaseController
     }
     public function delete($id)
     {
-        //
+        $item=Category::find($id);
+        if ($item == NULL) {
+            Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
+            return redirect("/admin/categoryArticle");
+        }
+        if ($item->articles->all()) {
+            Session::flash("msg", "e:لا يمكن حذف فئة طلبات عليها طلبات");
+            return redirect("/admin/categoryArticle");
+        }
+        $item->delete();
+        Session::flash("msg", "تم حذف فئة بنجاح");
+        return redirect("/admin/categoryArticle");
     }
-    public function demandsInCate($id)
+    public function articlesInCate($id)
     {
         //
     }

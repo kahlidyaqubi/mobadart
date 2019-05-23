@@ -208,11 +208,12 @@ return [
         'category_id'=> 'القسم',
         'id'=> 'الرقم',
         'sent_type'=>'طريقة الإرسال',
-        'mopile' => 'رقم الهاتف',
+        'mopile' => 'رقم التواصل',
         'family_center_id' => 'مركز العائلة',
         'super_admin'=> 'نوع الحساب',
         'city_id'=> 'المدينة',
         'manager_name'=> 'اسم المنسق',
+        'governorate_id'=>'المحافظة',
 
     ],
 ];

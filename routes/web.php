@@ -80,10 +80,12 @@ Route::namespace('Admin')
         /********/
         Route::resource('interest', 'InterestController');
         Route::get('/interest/delete/{id}', 'InterestController@delete');
-        Route::get('/interest/stop/{id}', 'InterestController@stop');
+        Route::get('/interest/active/{id}', 'InterestController@active');
         /********/
         Route::get('/city/delete/{id}', 'CityController@delete');
         Route::resource('city', 'CityController');
+        Route::get('/governorate/familyInCity/{id}', 'CityController@familyInCity');
+
         /********/
         Route::get('/governorate/ajaxCityInGover/{id?}', 'GovernorateController@ajaxCityInGover');
         Route::resource('governorate', 'GovernorateController');
@@ -96,7 +98,7 @@ Route::namespace('Admin')
         /********/
         Route::resource('categoryArticle', 'CategoryArticleController');
         Route::get('/categoryArticle/delete/{id}', 'CategoryArticleController@delete');
-        Route::get('/categoryArticle/articlesInCate/{id}', 'CategoryArticleController@demandsInCate');
+        Route::get('/categoryArticle/articlesInCate/{id}', 'CategoryArticleController@articlesInCate');
         /********/
         Route::resource('/siteSting/message', 'MessageController');
         Route::get('/siteSting/editSting', 'SiteStingController@editSting');

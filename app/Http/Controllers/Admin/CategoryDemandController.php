@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Category;
+use App\Http\Requests\CategoryRequest;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Session;
 
 class CategoryDemandController extends BaseController
 {
@@ -12,9 +14,21 @@ class CategoryDemandController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index( Request $request)
     {
-        //
+        $q = $request["q"]??"";
+
+        $items=Category::where('type',2)->whereRaw(true);
+
+        if ($q)
+            $items->whereRaw("(name like ?)"
+                , ["%$q%"]);
+        $items = Category::whereIn('id',$items->pluck('id'))->paginate(20)
+            ->appends([
+                "q" => $q ]);
+
+        return view('admin.categories_demand.index',compact('items'));
+
     }
 
     /**
@@ -25,6 +39,7 @@ class CategoryDemandController extends BaseController
     public function create()
     {
         //
+        return view('admin.categories_demand.create');
     }
 
     /**
@@ -33,9 +48,14 @@ class CategoryDemandController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
         //
+        request()['type']=2;
+        Category::create(request()->all());
+
+        Session::flash("msg", "تمت عملية الاضافة بنجاح");
+        return redirect("/admin/categoryDemand/create");
     }
 
     /**
@@ -46,7 +66,7 @@ class CategoryDemandController extends BaseController
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -57,7 +77,13 @@ class CategoryDemandController extends BaseController
      */
     public function edit($id)
     {
-        //
+        $item=Category::find($id);
+        if ($item == NULL) {
+            Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
+            return redirect("/admin/categoryDemand");
+        }
+
+        return view('admin.categories_demand.edit',compact('item'));
     }
 
     /**
@@ -67,9 +93,18 @@ class CategoryDemandController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
-        //
+        $item=Category::find($id);
+        if ($item == NULL) {
+            Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
+            return redirect("/admin/categoryDemand");
+        }
+
+        $item->update($request->all());
+
+        Session::flash("msg", "تمت عملية التعديل بنجاح");
+        return redirect("/admin/categoryDemand");
     }
 
     /**
@@ -84,7 +119,18 @@ class CategoryDemandController extends BaseController
     }
     public function delete($id)
     {
-        //
+        $item=Category::find($id);
+        if ($item == NULL) {
+            Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
+            return redirect("/admin/categoryDemand");
+        }
+        if ($item->demands->all()) {
+            Session::flash("msg", "e:لا يمكن حذف فئة طلبات عليها طلبات");
+            return redirect("/admin/categoryDemand");
+        }
+        $item->delete();
+        Session::flash("msg", "تم حذف فئة بنجاح");
+        return redirect("/admin/categoryDemand");
     }
     public function demandsInCate($id)
     {

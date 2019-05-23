@@ -28,13 +28,16 @@ class AdminProfileRequest extends FormRequest
             return preg_match('/^\S*$/u', $value);
         });
         $id = auth()->user()->id;
-        return [
+        valid= [
             'name' => "required|max:50",
-            'mobile' => 'required|max:50',
-            'email' => 'required|string|email|unique:users,email,'.$id.',id',
+            'email' => 'required|number|email|unique:users,email,'.$id.',id',
             'last_name' => 'max:50',
             'user_name' => 'required|string|max:255|without_spaces|unique:users,user_name,'.$id.',id',
 
         ];
+		
+        if (request()->mobile)
+            $valid['mobile'] = 'numeric|min:6|max:10';
+        return $valid;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Admin;
 use App\City;
 use App\Family_center;
 use App\Governorate;
@@ -82,7 +83,7 @@ class Family_centerController extends BaseController
 
     }
 
-    public function update(Request $request, $id)
+    public function update(Family_centerRequest $request, $id)
     {
         //
         $item=Family_center::find($id);
@@ -118,9 +119,28 @@ class Family_centerController extends BaseController
         return redirect("/admin/family_center");
     }
 
-    public function adminInFamily($id)
+    public function adminInFamily($id,Request $request)
     {
-        //
+        $item=Family_center::find($id);
+        if ($item == NULL) {
+            Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
+            return redirect("/admin/family_center");
+        }
+
+        $q = $request["q"]??"";
+
+
+        $items=$item->admins()->leftJoin('users','user_id','users.id')->whereRaw(true);
+
+        if ($q)
+            $items->whereRaw("(users.name like ? or users.email like ? or users.user_name like ? or admins.mobile like ?)"
+                , ["%$q%","%$q%","%$q%","%$q%"]);
+
+        $items = Admin::whereIn('id',$items->pluck('admins.id'))->orderBy("admins.id")->paginate(20)
+            ->appends([
+                "q" => $q ]);
+
+        return view('admin.family_centers.adminInFamily',compact('items','item'));
     }
 
     public function initiaveInFamily($id)

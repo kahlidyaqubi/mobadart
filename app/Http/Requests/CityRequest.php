@@ -24,9 +24,10 @@ class CityRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->route('city');
         return [
             'governorate_id'=> 'required|max:3',
-			'name'=> 'required|string|max:255',
+			'name'=> 'required|string|max:255|unique:cities,name,' . $id . ',id',
         ];
     }
 }

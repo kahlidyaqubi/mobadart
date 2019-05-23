@@ -24,8 +24,9 @@ class GovernorateRequest  extends FormRequest
      */
     public function rules()
     {
+        $id = $this->route('governorate');
         return [
-            'name'=> 'required|string|max:50',
+            'name'=> 'required|string|max:50|unique:governorates,name,' . $id . ',id',
         ];
     }
 }

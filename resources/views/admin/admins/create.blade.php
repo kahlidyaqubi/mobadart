@@ -10,44 +10,43 @@
                 <form method="post" action="/admin/admin" id="form_sample_1" class="form-horizontal">
                     {{csrf_field()}}
                     <div class="form-body">
-                        <div class="alert alert-danger display-hide">
-                            <button class="close" data-close="alert"></button> You have some form errors. Please check below. </div>
-                        <div class="alert alert-success display-hide">
-                            <button class="close" data-close="alert"></button> Your form validation is successful! </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">الإسم كاملا
                                 <span class="required"> * </span>
                             </label>
                             <div class="col-md-4">
-                                <input type="text" name="name" value="{{old("name")}}" data-required="1" class="form-control" /> </div>
+                                <input type="text" name="name" value="{{old("name")}}" data-required="1"
+                                       class="form-control"/></div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">البريد الإلكتروني
                                 <span class="required"> * </span>
                             </label>
                             <div class="col-md-4">
-                                <input name="email" type="text" value="{{old("email")}}" class="form-control" /> </div>
+                                <input name="email" type="text" value="{{old("email")}}" class="form-control"/></div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">إسم المستخدم
                                 <span class="required"> * </span>
                             </label>
                             <div class="col-md-4">
-                                <input type="text" name="user_name" value="{{old("user_name")}}" data-required="1" class="form-control" /> </div>
+                                <input type="text" name="user_name" value="{{old("user_name")}}" data-required="1"
+                                       class="form-control"/></div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">كلمة المرور
                                 <span class="required"> * </span>
                             </label>
                             <div class="col-md-4">
-                                <input type="password" name="password"  data-required="1" class="form-control" /> </div>
+                                <input type="password" name="password" data-required="1" class="form-control"/></div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3">الهاتف
-                                <span class="required"> * </span>
+                            <label class="control-label col-md-3">رقم التواصل
                             </label>
                             <div class="col-md-4">
-                                <input name="mobile" type="text" value="{{old("mobile")}}" class="form-control" /> </div>
+                                <input name="mobile" type="text" value="{{old("mobile")}}" class="form-control"/>
+                                <span class="help-block"> حقل اختياري </span>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">نوع الحساب
@@ -69,8 +68,9 @@
                                 <select class="form-control" name="family_center_id">
                                     <option value="">أختر...</option>
                                     @foreach($family_centers as $family_center)
-                                    <option value="{{$family_center->id}}" @if(old("family_center_id")==$family_center)selected @endif>{{$family_center->name}}</option>
-                                        @endforeach
+                                        <option value="{{$family_center->id}}"
+                                                @if(old("family_center_id")==$family_center)selected @endif>{{$family_center->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -99,26 +99,26 @@
 @section('js')
     <script>
 
-            $(document).ready(function(){
+        $(document).ready(function () {
 
-                if($("[name='super_admin']").val()==='0'){
-                    $('#family_center').show();
-                }
-                if($("[name='super_admin']").val()==1){
-                    $("[name='family_center_id']").val('');
-                    $('#family_center').hide();
-                }
-            });
+            if ($("[name='super_admin']").val() === '0') {
+                $('#family_center').show();
+            }
+            if ($("[name='super_admin']").val() == 1) {
+                $("[name='family_center_id']").val('');
+                $('#family_center').hide();
+            }
+        });
 
-            $("[name='super_admin']").change(function(){
-                if($("[name='super_admin']").val()==='0'){
-                    $('#family_center').show();
-                }
-                if($("[name='super_admin']").val()==1){
-                    $("[name='family_center_id']").val('');
-                    $('#family_center').hide();
-                }
-            });
+        $("[name='super_admin']").change(function () {
+            if ($("[name='super_admin']").val() === '0') {
+                $('#family_center').show();
+            }
+            if ($("[name='super_admin']").val() == 1) {
+                $("[name='family_center_id']").val('');
+                $('#family_center').hide();
+            }
+        });
     </script>
 @endsection
 

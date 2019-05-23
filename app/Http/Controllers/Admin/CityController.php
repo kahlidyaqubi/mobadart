@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\City;
+use App\Family_center;
+use App\Governorate;
+use App\Http\Requests\CityRequest;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Session;
 
 class CityController extends BaseController
 {
@@ -12,9 +16,31 @@ class CityController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $q = $request["q"]??"";
+        $governorate_id=$request["governorate_id"] ?? "";
+
+
+        $items=City::whereRaw(true);
+
+        if ($q)
+            $items->whereRaw("(name like ?)"
+                , ["%$q%"]);
+
+
+        if ($governorate_id) {
+            $items->where('governorate_id',$governorate_id);
+        }
+
+
+        $items = City::whereIn('id',$items->pluck('id'))->paginate(20)
+            ->appends([
+                "q" => $q ,'governorate_id'=>$governorate_id ]);
+
+        $governorates=Governorate::all();
+        return view('admin.cities.index',compact('items','governorate_id','governorates'));
+
     }
 
     /**
@@ -25,6 +51,10 @@ class CityController extends BaseController
     public function create()
     {
         //
+        $governorates=Governorate::all();
+        return view('admin.cities.create',compact('governorates'));
+
+
     }
 
     /**
@@ -33,10 +63,15 @@ class CityController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CityRequest $request)
     {
         //
+        City::create(request()->all());
+
+        Session::flash("msg", "تمت عملية الاضافة بنجاح");
+        return redirect("/admin/city/create");
     }
+
 
     /**
      * Display the specified resource.
@@ -57,7 +92,15 @@ class CityController extends BaseController
      */
     public function edit($id)
     {
-        //
+        $item=City::find($id);
+        if ($item == NULL) {
+            Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
+            return redirect("/admin/city");
+        }
+
+        $governorates=Governorate::all();
+        return view('admin.cities.edit',compact('governorates','item'));
+
     }
 
     /**
@@ -67,9 +110,17 @@ class CityController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CityRequest $request, $id)
     {
-        //
+        $item=City::find($id);
+        if ($item == NULL) {
+            Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
+            return redirect("/admin/city");
+        }
+        $item->update($request->all());
+
+        Session::flash("msg", "تمت عملية التعديل بنجاح");
+        return redirect("/admin/city");
     }
 
     /**
@@ -86,5 +137,41 @@ class CityController extends BaseController
     public function delete($id)
     {
         //
+        $item=City::find($id);
+        if ($item == NULL) {
+            Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
+            return redirect("/admin/city");
+        }
+        if ($item->family_centers->all()) {
+            Session::flash("msg", "e:لا يمكن حذف مدينة بها مراكز عائلة");
+            return redirect("/admin/city");
+        }
+        $item->delete();
+        Session::flash("msg", "تم حذف محافظة بنجاح");
+        return redirect("/admin/city");
+    }
+    public function familyInCity($id,Request $request)
+    {
+
+        $item=City::find($id);
+        if ($item == NULL) {
+            Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
+            return redirect("/admin/city");
+        }
+
+        $q = $request["q"]??"";
+
+        $items=$item->family_centers()->whereRaw(true);
+
+        if ($q)
+            $items->whereRaw("(name like ? )"
+                , ["%$q%"]);
+
+
+        $items = Family_center::whereIn('id',$items->pluck('family_centers.id'))->paginate(20)
+            ->appends([
+                "q" => $q ]);
+
+        return view('admin.cities.familyInCity',compact('item','items'));
     }
 }

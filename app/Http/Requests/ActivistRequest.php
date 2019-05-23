@@ -29,7 +29,7 @@ class ActivistRequest extends FormRequest
 			'city_id'=> 'required|max:3',
 			'neighborhood'=> 'required|string|max:70',
 			'brth_day'=> 'required|date',
-			'mobile'=> 'required|string|min:6|max:10',
+			'mobile'=> 'required|numeric|min:6|max:10',
 			'gender'=> 'required|string|max:1',
         ];
     }

@@ -18,7 +18,7 @@ class CreateAdminsTable extends Migration {
 			$table->integer('user_id');
             $table->boolean('is_cor')->default(0);
 			$table->integer('family_center_id')->nullable();
-			$table->string('mobile');
+			$table->string('mobile')->nullable();
 			$table->boolean('super_admin');
 			$table->softDeletes();
 			$table->timestamps();

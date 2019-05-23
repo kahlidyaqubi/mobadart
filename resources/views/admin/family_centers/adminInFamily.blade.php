@@ -1,6 +1,6 @@
 @extends("layouts._admin_layout")
 
-@section("title", "إدارة الحسابات")
+@section("title", "منشطين مركز عائلة ".$item->name)
 @section("content")
 
     <div class="search-page search-content-1">
@@ -12,32 +12,10 @@
                                placeholder="ابحث في اسم أو اسم المستخدم أو البريد أو الهاتف"/>
                     </div>
 
-                    <div class="col-sm-4" style="margin-top: 12px">
-                        <select class="form-control" name="super_admin">
-                            <option value="">جميع الحسابات</option>
-                            <option value="1" @if($super_admin==1)selected @endif>مدراء النظام</option>
-                            <option value="0" @if($super_admin==='0')selected @endif>المنشطين</option>
-
-                        </select>
-                    </div>
-
-                    <div class="col-sm-4" style="margin-top: 12px">
-                        <select class="form-control" name="family_center_id">
-                            <option value="">جميع مراكز العائلة</option>
-                            @foreach($family_centers as $family_center)
-                                <option value="{{$family_center->id}}" @if($family_center->id==$family_center_id) selected @endif>{{$family_center->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
                     <div class="col-sm-1 " style="margin-top: 12px">
                         <input type="submit" style="width:70px;" value="بحث" class="btn btn-primary"/>
                     </div>
 
-
-                    <div class="col-sm-2 " style="margin-top: 12px">
-                        <a class="btn btn-success" href="/admin/admin/create">اضافــة حساب جديد</a>
-                    </div>
                 </form>
             </div>
         </div>
@@ -46,7 +24,7 @@
     <div class="portlet-body">
         @if($items->count()>0)
             <div class="table-scrollable" >
-            <table class="table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer">
+                <table class="table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer">
                     <thead>
                     <tr>
                         <th> #</th>
@@ -76,18 +54,6 @@
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
                                         <li>
-                                            <a href="/admin/admin/{{$item->id}}/edit">
-                                                <span class="text-warning"><i class="icon-pencil"></i> تعديل </span></a>
-                                        </li>
-                                        <li>
-                                            <a href="/admin/admin/permission/{{$item->id}}">
-                                                <span class="text-info"><i class="icon-lock"></i> تعديل الصلاحيات</span></a>
-                                        </li>
-                                        <li>
-                                            <a href="/admin/admin/delete/{{$item->id}}" class="Confirm">
-                                                <span class="text-danger"><i class="icon-trash"></i> حذف</span></a>
-                                        </li>
-                                        <li>
                                             <a href="#" >
                                                 <span class="text-primary"><i class="fa fa-newspaper-o"></i>أخباره</span></a>
                                         </li>
@@ -113,13 +79,20 @@
                         </tr>
                     @endforeach
                     </tbody>
-                {{$items->links()}}
+                    {{$items->links()}}
                 </table>
-        </div>
+            </div>
         @else
             <br><br>
             <div class="alert alert-warning">نأسف لا يوجد بيانات لعرضها</div>
         @endif
+            <div class="form-actions">
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-9">
+                        <a href="/admin/family_center" class="btn grey-salsa btn-outline">إلغاء</a>
+                    </div>
+                </div>
+            </div>
     </div>
     </div>
 

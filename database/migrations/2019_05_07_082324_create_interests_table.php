@@ -16,7 +16,7 @@ class CreateInterestsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('name');
-            $table->boolean('status');
+            $table->boolean('status')->default(0);
 			$table->softDeletes();
 			$table->timestamps();
 		});

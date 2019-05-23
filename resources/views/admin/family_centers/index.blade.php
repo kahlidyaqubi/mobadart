@@ -1,6 +1,6 @@
 @extends("layouts._admin_layout")
 
-@section("title", "إدارة الحسابات")
+@section("title", "إدارة مراكز العائلة")
 @section("content")
 
     <div class="search-page search-content-1">
@@ -43,7 +43,8 @@
     </div>
 
     <div class="portlet-body">
-        <div class="table-scrollable">
+        @if($items->count()>0)
+            <div class="table-scrollable">
             <table class="table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer">
                 <thead>
                 <tr>
@@ -80,12 +81,12 @@
                                             <span class="text-danger"><i class="icon-trash"></i> حذف</span></a>
                                     </li>
                                     <li>
-                                        <a href="/#" class="Confirm">
-                                            <span class="text-primary"><i class="icon-trash"></i>مبادرات المركز</span></a>
+                                        <a href="/#" >
+                                            <span class="text-primary"><i class="fa fa-sitemap"></i>مبادرات المركز</span></a>
                                     </li>
                                     <li>
-                                        <a href="/#" class="Confirm">
-                                            <span class="text-primary"><i class="icon-trash"></i>منشطين المركز</span></a>
+                                        <a href="/admin/family_center/adminInFamily/{{$item->id}}" >
+                                            <span class="text-primary"><i class="fa fa-users"></i>منشطين المركز</span></a>
                                     </li>
                                 </ul>
                             </div>
@@ -96,6 +97,10 @@
                 {{$items->links()}}
             </table>
         </div>
+        @else
+            <br><br>
+            <div class="alert alert-warning">نأسف لا يوجد بيانات لعرضها</div>
+        @endif
     </div>
     </div>
 
@@ -133,7 +138,7 @@
 
         $("[name='governorate_id']").change(function () {
             var governorate_id = $("[name='governorate_id']").val();
-            $.get("/admin/governorate/ajaxCityInGover/1", function (data, status) {
+            $.get("/admin/governorate/ajaxCityInGover/" + governorate_id, function (data, status) {
                 $("[name='city_id']")
                     .find('option')
                     .remove()
