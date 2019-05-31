@@ -9,36 +9,36 @@
     <meta content="" name="author"/>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=El+Messiri" rel="stylesheet">
-        <link href="{{asset('metronic-rtl/assets/global/plugins/font-awesome/css/font-awesome.min.css')}}"
-              rel="stylesheet"
-              type="text/css"/>
-        <link href="{{asset('metronic-rtl/assets/global/plugins/simple-line-icons/simple-line-icons.min.css')}}"
-              rel="stylesheet" type="text/css"/>
-        <link href="{{asset('metronic-rtl/assets/global/plugins/bootstrap/css/bootstrap-rtl.min.css')}}"
-              rel="stylesheet"
-              type="text/css"/>
-        <link href="{{asset('metronic-rtl/assets/global/plugins/bootstrap-switch/css/bootstrap-switch-rtl.min.css')}}"
-              rel="stylesheet" type="text/css"/>
-        <link href="{{asset('metronic-rtl/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}"
-              rel="stylesheet"
-              type="text/css"/>
-        <!-- END GLOBAL MANDATORY STYLES -->
-        <!-- BEGIN THEME GLOBAL STYLES -->
+    <link href="{{asset('metronic-rtl/assets/global/plugins/font-awesome/css/font-awesome.min.css')}}"
+          rel="stylesheet"
+          type="text/css"/>
+    <link href="{{asset('metronic-rtl/assets/global/plugins/simple-line-icons/simple-line-icons.min.css')}}"
+          rel="stylesheet" type="text/css"/>
+    <link href="{{asset('metronic-rtl/assets/global/plugins/bootstrap/css/bootstrap-rtl.min.css')}}"
+          rel="stylesheet"
+          type="text/css"/>
+    <link href="{{asset('metronic-rtl/assets/global/plugins/bootstrap-switch/css/bootstrap-switch-rtl.min.css')}}"
+          rel="stylesheet" type="text/css"/>
+    <link href="{{asset('metronic-rtl/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}"
+          rel="stylesheet"
+          type="text/css"/>
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN THEME GLOBAL STYLES -->
 
-        <link href="{{asset('metronic-rtl/assets/global/css/components-md-rtl.min.css')}}" rel="stylesheet"
-              id="style_components" type="text/css"/>
-        <link href="{{asset('metronic-rtl/assets/global/css/plugins-md-rtl.min.css')}}" rel="stylesheet"
-              type="text/css"/>
-        <!-- END THEME GLOBAL STYLES -->
-        <!-- BEGIN THEME LAYOUT STYLES -->
-        <link href="{{asset('metronic-rtl/assets/layouts/layout/css/layout-rtl.min.css')}}" rel="stylesheet"
-              type="text/css"/>
-        <link href="{{asset('metronic-rtl/assets/layouts/layout/css/themes/blue-rtl.min.css')}}" rel="stylesheet"
-              type="text/css" id="style_color"/>
-        <link href="{{asset('metronic-rtl/assets/layouts/layout/css/custom-rtl.min.css')}}" rel="stylesheet"
-              type="text/css"/>
+    <link href="{{asset('metronic-rtl/assets/global/css/components-md-rtl.min.css')}}" rel="stylesheet"
+          id="style_components" type="text/css"/>
+    <link href="{{asset('metronic-rtl/assets/global/css/plugins-md-rtl.min.css')}}" rel="stylesheet"
+          type="text/css"/>
+    <!-- END THEME GLOBAL STYLES -->
+    <!-- BEGIN THEME LAYOUT STYLES -->
+    <link href="{{asset('metronic-rtl/assets/layouts/layout/css/layout-rtl.min.css')}}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{asset('metronic-rtl/assets/layouts/layout/css/themes/blue-rtl.min.css')}}" rel="stylesheet"
+          type="text/css" id="style_color"/>
+    <link href="{{asset('metronic-rtl/assets/layouts/layout/css/custom-rtl.min.css')}}" rel="stylesheet"
+          type="text/css"/>
 
-<!-- END THEME LAYOUT STYLES -->
+    <!-- END THEME LAYOUT STYLES -->
     <link rel="shortcut icon" href="/lib/img/Group%20124.ico"/>
     <style type="text/css">
         *, h1, h3, h4 {
@@ -54,6 +54,17 @@
         .breadcrumb > li, .pagination {
             display: block;
 
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            /* display: none; <- Crashes Chrome on hover */
+            -webkit-appearance: none;
+            margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield; /* Firefox */
         }
     </style>
 </head>
@@ -104,16 +115,16 @@
                                 <ul class="dropdown-menu-list scroller" id="notif" style="height: 250px;"
                                     data-handle-color="#637283">
                                     <li>
-                                            <a href="#">
-                                                <span class="time">15-11-2019</span>
-                                                <span class="details"
-                                                      style="display:block; max-width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+                                        <a href="#">
+                                            <span class="time">15-11-2019</span>
+                                            <span class="details"
+                                                  style="display:block; max-width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
                                                         <span class="label label-sm label-icon label-success">
                                                            رسالة</i> </span>
                                                      كيف حالك
                                             </span>
-                                            </a>
-                                        </li>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -121,7 +132,8 @@
                     <li class="dropdown dropdown-user">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
                            data-close-others="true">
-                            <img alt="" class="img-circle" src="https://pngimage.net/wp-content/uploads/2018/05/admin-avatar-png.png"/>
+                            <img alt="" class="img-circle"
+                                 src="https://pngimage.net/wp-content/uploads/2018/05/admin-avatar-png.png"/>
                             <span class="username username-hide-on-mobile">
                            {{ Auth::user()->name }} </span>
                             <i class="fa fa-angle-down"></i>
@@ -182,32 +194,61 @@
                     $adminId = Auth::user()->admin->id;
                     /*$links = \DB::table("links")->where("parent_id",0)->
                         whereRaw('id in (select link_id from admin_link where admin_id=?)',$adminId)->get();*/
-                    $links = Auth::user()->admin->links()->where("in_menu",1)->where("parent_id", 0)->orderBy('order_id')->get();
+                    $the_links = Auth::user()->admin->links()->where("in_menu", 1)->where("parent_id", 0)->where("mult_id", 0)->orderBy('order_id')->pluck('links.id');
+                    $links = \App\Link::find($the_links);
                     ?>
 
+
                     @foreach($links as $link)
+
                         <?php
                         /*$sublinks = \DB::table("link")->
                             whereRaw('id in (select link_id from admin_link where admin_id=?)',$adminId)->where("parent_id",$link->id)->get();*/
 
-                        $sublinks = Auth::user()->admin->links->where("in_menu",1)->where("parent_id", $link->id);
+                        $the_sublinks = Auth::user()->admin->links()->where("in_menu", 1)->where("parent_id", $link->id)->orWhere("mult_id", $link->id)->pluck('links.id');
+                        $sublinks = \App\Link::find($the_sublinks);
                         ?>
-                        <li class="nav-item
-                               {{ strstr("/".Route::getFacadeRoot()->current()->uri(),$sublinks->first()->link)?
-                                            "open":'' }} ">
+
+
+                        <li class="nav-item @if($link->mult!=1){{ strstr("/".Route::getFacadeRoot()->current()->uri(),$sublinks->first()->link)?
+                                            "open":'' }}@endif
+                                ">
                             <a href="{{$link->link}}" class="nav-link nav-toggle">
                                 <i class="{{$link->icon}}"></i>
                                 <span class="title">{{$link->title}}</span>
                                 <span class="arrow"></span>
                             </a>
+
                             <ul class="sub-menu"
-                                    {{ strstr("/".Route::getFacadeRoot()->current()->uri(),$sublinks->first()->link)?"style=display:block;":'' }}>
+                            @if($link->mult!=1) {{ strstr("/".Route::getFacadeRoot()->current()->uri(),$sublinks->first()->link)?"style=display:block;":'' }} @endif
+                            @if($link->mult==1) {{ in_array("/".Route::getFacadeRoot()->current()->uri(),
+                            Auth::user()->admin->links->where("in_menu", 1)->whereIn("parent_id", $sublinks->pluck('id'))->pluck('link')->toArray())?"style=display:block;":'' }} @endif>
+
                                 @foreach($sublinks as $sublink)
-                                    <li class="nav-item  ">
-                                            <a href="{{$sublink->link}}" class="nav-link ">
-                                                <span class="title">{{$sublink->title}}</span>
-                                            </a>
-                                        </li>
+                                    <?php
+                                    $sub_sublinks = Auth::user()->admin->links->where("in_menu", 1)->where("parent_id", $sublink->id);
+                                    ?>
+                                    <li class="nav-item @if($link->mult==1){{ strstr("/".Route::getFacadeRoot()->current()->uri(),$sub_sublinks->first()->link)?
+                                            "open":'' }}@endif">
+
+                                        <a @if($link->mult!=1)href="{{$sublink->link}}" @endif class="nav-link ">
+                                            <span
+                                                    @if($link->mult==1)class="arrow nav-toggle"
+                                                    @else class="title" @endif>{{$sublink->title}}</span>
+                                        </a>
+                                        @if($link->mult==1)
+
+
+                                            <ul class="sub-menu" {{ strstr("/".Route::getFacadeRoot()->current()->uri(),$sub_sublinks->first()->link)?"style=display:block;":'' }}>
+                                                @foreach($sub_sublinks as $sub_sublink)
+                                                    <li class="nav-item">
+                                                        <a href="{{$sub_sublink->link}}" class="nav-link">
+                                                            {{$sub_sublink->title}}</a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+                                    </li>
                                 @endforeach
                             </ul>
                         </li>
@@ -262,7 +303,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary"
-                        data-dismiss="modal">إلغاء</button>
+                        data-dismiss="modal">إلغاء
+                </button>
                 <a href="#" class="btn btn-danger">نعم، متأكد</a>
             </div>
         </div>

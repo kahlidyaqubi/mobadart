@@ -25,7 +25,8 @@
                         <select class="form-control" name="family_center_id">
                             <option value="">جميع مراكز العائلة</option>
                             @foreach($family_centers as $family_center)
-                                <option value="{{$family_center->id}}" @if($family_center->id==$family_center_id) selected @endif>{{$family_center->name}}</option>
+                                <option value="{{$family_center->id}}"
+                                        @if($family_center->id==$family_center_id) selected @endif>{{$family_center->name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -45,8 +46,8 @@
 
     <div class="portlet-body">
         @if($items->count()>0)
-            <div class="table-scrollable" >
-            <table class="table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer">
+            <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer">
                     <thead>
                     <tr>
                         <th> #</th>
@@ -55,7 +56,7 @@
                         <th> رقم التواصل</th>
                         <th> مركز العائلة</th>
                         <th> نوع الحساب</th>
-                        <th width="15%"  class="hidden-xs"> إجراءات</th>
+                        <th width="15%" class="hidden-xs"> إجراءات</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -87,35 +88,56 @@
                                             <a href="/admin/admin/delete/{{$item->id}}" class="Confirm">
                                                 <span class="text-danger"><i class="icon-trash"></i> حذف</span></a>
                                         </li>
-                                        <li>
-                                            <a href="#" >
-                                                <span class="text-primary"><i class="fa fa-newspaper-o"></i>أخباره</span></a>
-                                        </li>
-                                        <li>
-                                            <a href="#" >
-                                                <span class="text-primary"><i class="fa fa-users"></i>مبادراته</span></a>
-                                        </li>
-                                        <li>
-                                            <a href="#" >
-                                                <span class="text-primary"><i class="fa fa-sitemap"></i>فئاته</span></a>
-                                        </li>
-                                        <li>
-                                            <a href="#" >
-                                                <span class="text-primary"><i class="fa fa-reply-all"></i>ردوده</span></a>
-                                        </li>
-                                        <li>
-                                            <a href="#" >
-                                                <span class="text-primary"><i class="fa fa-comment"></i>نماذجه</span></a>
-                                        </li>
+                                        @if(auth()->user()->admin->links->contains(\App\Link::where('title','=','إدارة الأخبار')->first()->id))
+
+                                            <li>
+                                                <a href="/admin/admin/articleToAdmin/{{$item->id}}">
+                                                    <span class="text-primary"><i
+                                                                class="fa fa-newspaper-o"></i>أخباره</span></a>
+                                            </li>
+
+                                        @endif
+                                        @if(auth()->user()->admin->links->contains(\App\Link::where('title','=','إضافة مبادرة')->first()->id))
+                                            <li>
+                                                <a href="/admin/initiative/create?id={{$item->id}}">
+                                                    <span class="text-primary"><i
+                                                                class="fa fa-plus"></i>أنشئ مبادرة</span></a>
+                                            </li>
+                                        @endif
+                                        @if(auth()->user()->admin->links->contains(\App\Link::where('title','=','إدارة المبادرات')->first()->id))
+                                            <li>
+                                                <a href="/admin/admin/initiaveToAdmin/{{$item->id}}">
+                                                    <span class="text-primary"><i
+                                                                class="fa fa-users"></i>مبادراته</span></a>
+                                            </li>
+                                        @endif
+                                        @if(auth()->user()->admin->links->contains(\App\Link::where('title','=','صلاحيات حساب')->first()->id))
+                                            <li>
+                                                <a href="/admin/admin/hisCategoty/{{$item->id}}">
+                                                    <span class="text-primary"><i class="fa fa-sitemap"></i>فئاته</span></a>
+                                            </li>
+                                        @endif
+                                        @if(auth()->user()->admin->links->contains(\App\Link::where('title','=','إدارة النماذج')->first()->id))
+                                            <li>
+                                                <a href="#">
+                                                    <span class="text-primary"><i
+                                                                class="fa fa-reply-all"></i>ردوده</span></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <span class="text-primary"><i
+                                                                class="fa fa-comment"></i>نماذجه</span></a>
+                                            </li>
+                                        @endif
                                     </ul>
                                 </div>
                             </td>
                         </tr>
                     @endforeach
                     </tbody>
-                {{$items->links()}}
+                    {{$items->links()}}
                 </table>
-        </div>
+            </div>
         @else
             <br><br>
             <div class="alert alert-warning">نأسف لا يوجد بيانات لعرضها</div>

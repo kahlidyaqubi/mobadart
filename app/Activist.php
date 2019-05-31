@@ -9,7 +9,7 @@ class Activist extends Model
     //
     protected $table = 'activists';
 
-    protected $fillable = ['user_id', 'city_id', 'neighborhood', 'brth_day',
+    protected $fillable = ['user_id', 'ido' ,'shared','shared_ditalis','city_id', 'neighborhood', 'brth_day',
         'mobile', 'gender'
     ];
 
@@ -43,14 +43,14 @@ class Activist extends Model
         return $this->hasMany('App\Activists_interest');
     }
 
-    public function Initiative()
+    public function initiatives()
     {
-        return $this->belongsToMany('App\initiatives');
+        return $this->belongsToMany('App\Initiative','activists_initiatives');
     }
 
     public function interests()
     {
-        return $this->belongsToMany('App\Interest');
+        return $this->belongsToMany('App\Interest','activists_interests');
     }
 
     function activists_initiatives()

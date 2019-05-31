@@ -15,10 +15,14 @@ class Article extends Model
     {
         return $this->belongsTo('App\Admin');
     }
+    function article_files()
+    {
+        return $this->hasMany('App\Articel_file');
+    }
     public function category(){
         return $this->belongsTo('App\Category');
     }
-    public function initiativ(){
+    public function initiative(){
         return $this->belongsTo('App\Initiative');
     }
     function comments(){

@@ -14,6 +14,7 @@
                             <label class="control-label col-md-3">اسم الفئة
                                 <span class="required"> * </span>
                             </label>
+                            <input type="hidden" value="2" name="type">
                             <div class="col-md-4">
                                 <input type="text" name="name" value="{{old("name")}}" data-required="1"
                                        class="form-control"/></div>

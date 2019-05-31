@@ -28,7 +28,7 @@ class ActivistProfileRequest extends FormRequest
         });
         return [
             'name' => "required|max:50",
-            'mobile' => 'numeric|required|max:50',
+            'mobile' => 'numeric|required|digits_between:6,10',
             'email' => 'required|string|email',
             'last_name' => 'max:50',
             'city_id'=> 'required|max:3',

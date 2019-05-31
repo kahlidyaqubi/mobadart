@@ -15,6 +15,7 @@
                             <label class="control-label col-md-3">اسم فئة الطلب
                                 <span class="required"> * </span>
                             </label>
+                            <input type="hidden" value="1" name="type">
                             <div class="col-md-4">
                                 <input type="text" name="name" value="{{$item["name"]}}" data-required="1"
                                        class="form-control"/></div>

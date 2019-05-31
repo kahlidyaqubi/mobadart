@@ -19,6 +19,19 @@ class CreateAdminLinks extends Seeder
 
     public function run()
     {
+        /*******************الاعدادات ************************//*mult*/
+        $mult_id = DB::table('links')->insertGetId([
+            'title' => 'الاعدادات',
+            'icon' => 'icon-diamond',
+            'parent_id' => 0,
+            'in_menu' => 1,
+            'link' => '',
+            'mult'=>1,
+            'order_id' => 15,
+            'super' => 0,
+            'new_window' => 0,
+            'route' => '',
+        ]);
         /********************إدارة الحسابات*********************/
         $alink_id = DB::table('links')->insertGetId([
             'title' => 'الحسابات',
@@ -181,7 +194,7 @@ class CreateAdminLinks extends Seeder
             'title' => 'إنشاء نشاط',
             'icon' => 'icon-diamond',
             'parent_id' => $link_id,
-            'in_menu' => 1,
+            'in_menu' => 0,
             'link' => '/admin/activity/create',
             'order_id' => 2,
             'super' => 0,
@@ -261,6 +274,7 @@ class CreateAdminLinks extends Seeder
             'title' => 'مراكز العائلة',
             'icon' => 'icon-diamond',
             'parent_id' => 0,
+            'mult_id'=>$mult_id,
             'in_menu' => 1,
             'link' => '',
             'order_id' => 4,
@@ -496,7 +510,7 @@ class CreateAdminLinks extends Seeder
             'title' => 'النماذج',
             'icon' => 'icon-diamond',
             'parent_id' => 0,
-            'in_menu' => 1,
+            'in_menu' => 0,
             'link' => '',
             'order_id' => 8,
             'super' => 0,
@@ -563,6 +577,7 @@ class CreateAdminLinks extends Seeder
             'title' => 'الاهتمامات',
             'icon' => 'icon-diamond',
             'parent_id' => 0,
+            'mult_id'=>$mult_id,
             'in_menu' => 1,
             'link' => '',
             'order_id' => 9,
@@ -619,6 +634,7 @@ class CreateAdminLinks extends Seeder
             'title' => 'المدن',
             'icon' => 'icon-diamond',
             'parent_id' => 0,
+            'mult_id'=>$mult_id,
             'in_menu' => 1,
             'link' => '',
             'order_id' => 10,
@@ -675,6 +691,7 @@ class CreateAdminLinks extends Seeder
             'title' => 'المحافظات',
             'icon' => 'icon-diamond',
             'parent_id' => 0,
+            'mult_id'=>$mult_id,
             'in_menu' => 1,
             'link' => '',
             'order_id' => 11,
@@ -731,6 +748,7 @@ class CreateAdminLinks extends Seeder
             'title' => 'فئات النماذج',
             'icon' => 'icon-diamond',
             'parent_id' => 0,
+            'mult_id'=>$mult_id,
             'in_menu' => 1,
             'link' => '',
             'order_id' => 12,
@@ -787,6 +805,7 @@ class CreateAdminLinks extends Seeder
             'title' => 'فئات الأخبار',
             'icon' => 'icon-diamond',
             'parent_id' => 0,
+            'mult_id'=>$mult_id,
             'in_menu' => 1,
             'link' => '',
             'order_id' => 12,
@@ -844,6 +863,7 @@ class CreateAdminLinks extends Seeder
             'title' => 'اعدادات الموقع',
             'icon' => 'icon-diamond',
             'parent_id' => 0,
+            'mult_id'=>$mult_id,
             'in_menu' => 1,
             'link' => '',
             'order_id' => 13,
@@ -956,7 +976,7 @@ class CreateAdminLinks extends Seeder
         /*****انشاء مدير***/
         $user_id = DB::table('users')->insertGetId([
             'name' => 'khalid',
-            'user_name' => 'khalid94',
+            'user_name' => 'admin',
             'email' => 'khalid.yaqubi.94@gmail.com',
             'the_type' => 1,
             'password' => bcrypt('12345678'),
@@ -983,7 +1003,7 @@ class CreateAdminLinks extends Seeder
             'user_id' => $user_id,
             'family_center_id' => 1
         ]);
-        /*****ناشط مدير***/
+        /*****ناشط حساب***/
         $user_id = DB::table('users')->insertGetId([
             'name' => 'zaaer',
             'user_name' => 'fotnail',
@@ -992,13 +1012,14 @@ class CreateAdminLinks extends Seeder
             'password' => bcrypt('12345678'),
 
         ]);
-        $admin_id = DB::table('activists')->insertGetId([
+        $activist_id = DB::table('activists')->insertGetId([
             'city_id' => 1,
             'mobile' => '+972 599 624984',
             'user_id' => $user_id,
             'neighborhood' => 'hosameya',
             'brth_day' => '2019-05-01',
             'gender' => 'M',
+            'ido'=>'400012345',
 
         ]);
         /*****صلاحية مدير***/
@@ -1025,6 +1046,10 @@ class CreateAdminLinks extends Seeder
         DB::table('admins_links')->insertGetId([
             'admin_id' => $a_admin_id,
             'link_id' => $alink5,
+        ]);
+        DB::table('admins_links')->insertGetId([
+            'admin_id' => $a_admin_id,
+            'link_id' => $mult_id,
         ]);
         /**************مركز عائلة*************/
         $governorate_id = DB::table('governorates')->insertGetId([

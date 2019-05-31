@@ -3,16 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Admin;
+use App\Category;
+use App\City;
 use App\Family_center;
+use App\Governorate;
 use App\Http\Requests\AdminRequest;
+use App\Initiative;
+use App\Interest;
 use App\Link;
 use App\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Session;
 
-class AdminController extends Controller
+class AdminController extends BaseController
 {
     //
     public function index(Request $request)
@@ -146,14 +150,122 @@ class AdminController extends Controller
 
     }
 
-    public function initiaveToAdmin($id)
+    public function initiaveToAdmin($id,Request $request)
     {
-        //
+        $item=Admin::find($id);
+        if ($item == NULL) {
+            Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
+            return redirect("/admin/admin");
+        }
+
+        $q = $request["q"] ?? "";
+        $city_id = $request["city_id"] ?? "";
+        $governorate_id = $request["governorate_id"] ?? "";
+        $start_date = $request["start_date"] ?? "";
+        $end_date = $request["end_date"] ?? "";
+        $in_date = $request["in_date"] ?? "";
+        $donation = $request["donation"] ?? "";
+        $interests_ids = $request["interests_ids"] ?? "";
+
+        $items = $item->initiatives()->leftJoin('admins', 'admin_id', 'admins.id')->leftJoin('cities', 'city_id', 'cities.id')->whereRaw(true);
+
+
+        if ($q)
+            $items->whereRaw("(initiatives.title like ? or initiatives.team_name like ? or admins.name like ?)"
+                , ["%$q%", "%$q%", "%$q%"]);
+
+        if ($city_id)
+            $items->where('cities.id', '=', $city_id);
+
+        if (($governorate_id) && !($city_id)) {
+            $cities_ids = City::where('governorate_id', $governorate_id)->pluck('id')->toArray();
+            $items->whereIn('cities.id', $cities_ids);
+        }
+
+        if ($donation || $donation === '0') {
+            if ($donation == '1')
+                $items->where('initiatives.donation', '>=', 1);
+            else {
+                $items->where('initiatives.donation', '<=', 0);
+            }
+        }
+
+        if ($interests_ids) {
+            if ($interests_ids[0] != null || count($interests_ids) > 1) {
+                foreach ($interests_ids as $interest_id) {
+                    $items->whereHas('interests', function ($q) use ($interest_id) {
+                        $q->where('interests.id', $interest_id);
+                    });
+                }
+
+            }
+        }
+
+        if (($end_date) && ($start_date)) {
+            $items = $items->whereRaw("end_date <= ? and start_date >= ?", [$end_date, $start_date]);
+        } else {
+            if ($start_date)
+                $items = $items->whereRaw("start_date = ?", [$start_date]);
+
+            if ($end_date)
+                $items = $items->whereRaw("end_date = ?", [$end_date]);
+        }
+        if ($in_date)
+            $items = $items->whereRaw("end_date >= ? and start_date <= ?", [$in_date, $in_date]);
+
+        $items = Initiative::whereIn('id', $items->pluck('initiatives.id'))->orderBy("initiatives.id")->paginate(20)
+            ->appends([
+                "q" => $q, "city_id" => $city_id, 'governorate_id' => $governorate_id
+                , "in_date" => $in_date, 'end_date' => $end_date
+                , 'interests_ids' => $interests_ids, 'donation' => $donation,
+                'start_date' => $start_date]);
+        $cities = City::all();
+        $governorates = Governorate::all();
+        $interests = Interest::where('status', '1')->get();
+        return view('admin.admins.initiaveToAdmin', compact('item','items', 'interests', 'governorate_id', 'governorates', 'cities', 'city_id'));
+
+
     }
 
-    public function articleToAdmin($id)
+    public function articleToAdmin($id,Request $request)
     {
-        //
+        $q = $request["q"] ?? "";
+        $category_id = $request["category_id"] ?? "";
+        $initiative_id = $request["initiative_id"] ?? "";
+        $status = $request["status"] ?? "";
+        $the_item=Admin::find($id);
+        if ($the_item == NULL) {
+            Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
+            return redirect("/admin/admin");
+        }
+        $items = $the_item->articles()->join('categories', 'categories.id', '=', 'articles.category_id')->select('articles.*')->whereRaw("true");
+        if ($q)
+            $items->whereRaw("(title like ?)"
+                , ["%$q%"]);
+        if ($category_id)
+            $items->whereRaw("(category_id = ?)"
+                , [$category_id]);
+
+        if ($status || $status === '0')
+            $items->whereRaw("(status = ?)"
+                , [$status]);
+
+        if ($initiative_id)
+            $items->whereRaw("(initiative_id = ?)"
+                , [$initiative_id]);
+
+        $items = $items->orderBy("articles.id", 'desc')->paginate(12)->appends([
+            "q" => $q, "category_id" => $category_id,
+            'status' => $status, 'initiative_id' => $initiative_id]);
+        $admin = auth()->user()->admin;
+        if (!$admin->super_admin == 1) {
+            $categories = $admin->categories->all();
+            $initiatives = $admin->initiatives->all();
+        } else {
+            $categories = Category::where('type', '1')->get();
+            $initiatives = Initiative::all();
+        }
+        return view("admin.admins.articleToAdmin", compact('items','the_item', 'categories', 'initiatives'));
     }
 
     public function demanReplayedToAdmin($id)
@@ -175,8 +287,8 @@ class AdminController extends Controller
             return redirect("/admin/admin");
         }
 
-        $super_links=Link::where('super','=',1)->where("parent_id",0)->get();
-        $other_links=Link::where('super','!=',1)->where("parent_id",0)->get();
+        $super_links=Link::where('super','=',1)->where("parent_id",0)->where("mult",0)->get();
+        $other_links=Link::where('super','!=',1)->where("parent_id",0)->where("mult",0)->get();
 
         return view('admin.admins.permission',compact('other_links','super_links','item'));
 
@@ -190,15 +302,36 @@ class AdminController extends Controller
                 \DB::table("admins_links")->insert(["admin_id" => $id,
                     "link_id" => $link]);
         }
+        DB::table('admins_links')->insertGetId([
+            'admin_id' => $id,
+            'link_id' => \DB::table("links")->where("mult", 1)->first()->id,
+        ]);
         Session::flash("msg", "i:تمت حفظ الصلاحيات بنجاح");
         return redirect("/admin/admin");
     }
     public function hisCategoty($id)
     {
-        //
+        $item=Admin::find($id);
+        if ($item == NULL  ||   !(auth()->user()->admin->links->contains(\App\Link::where('title','=','صلاحيات حساب')->first()->id))
+        ) {
+            Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
+            return redirect("/admin/admin");
+        }
+
+        $his_category=Category::where('type','=',1)->get();
+
+        return view('admin.admins.hisCategoty',compact('his_category','item'));
+
     }
-    public function hisCategoty_post($id)
+    public function hisCategoty_post(Request $request,$id)
     {
-        //
+        \DB::table("admins_categoris")->where("admin_id", $id)->delete();
+        if ($request["categoreis"]) {
+            foreach ($request["categoreis"] as $category)
+                \DB::table("admins_categoris")->insert(["admin_id" => $id,
+                    "category_id" => $category]);
+        }
+        Session::flash("msg", "i:تمت حفظ الصلاحيات بنجاح");
+        return redirect("/admin/admin");
     }
 }

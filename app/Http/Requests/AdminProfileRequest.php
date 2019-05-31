@@ -28,7 +28,7 @@ class AdminProfileRequest extends FormRequest
             return preg_match('/^\S*$/u', $value);
         });
         $id = auth()->user()->id;
-        valid= [
+        $valid= [
             'name' => "required|max:50",
             'email' => 'required|number|email|unique:users,email,'.$id.',id',
             'last_name' => 'max:50',
@@ -37,7 +37,7 @@ class AdminProfileRequest extends FormRequest
         ];
 		
         if (request()->mobile)
-            $valid['mobile'] = 'numeric|min:6|max:10';
+            $valid['mobile'] = 'numeric|digits_between:6,10';
         return $valid;
     }
 }

@@ -34,7 +34,7 @@ class Family_centerRequest extends FormRequest
         ];
 
         if (request()->mobile)
-            $valid['mobile'] = 'numeric|min:6|max:10';
+            $valid['mobile'] = 'numeric|digits_between:6,10';
 
         return $valid;
     }

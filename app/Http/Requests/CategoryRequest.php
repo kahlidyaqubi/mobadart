@@ -29,7 +29,11 @@ class CategoryRequest extends FormRequest
         $id= $this->route('categoryArticle');
 
 		return [
-            'name'=> 'required|string|max:50|unique:categories,name,' . $id . ',id',
+            'name'=> 'required|string|max:50',
+            'name'=> Rule::unique('categories')->where(function ($query) use($id) {
+                return $query->where('name', request()->name)->where('id','!=', $id)
+                    ->where('type',request()->type);
+            }),
 			'type'=> 'max:1',
         ];
     }

@@ -15,11 +15,11 @@ class CreateArticlesTable extends Migration {
 		Schema::create('articles', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('initiative_id');
+			$table->integer('initiative_id')->nullable();
 			$table->integer('admin_id');
 			$table->integer('category_id');
-			$table->integer('title');
-			$table->string('detalis');
+			$table->string('title');
+			$table->longText('detalis');
 			$table->string('the_file');
 			$table->string('img')->nullable();
             $table->boolean('status');

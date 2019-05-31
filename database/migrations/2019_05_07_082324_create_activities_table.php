@@ -18,7 +18,7 @@ class CreateActivitiesTable extends Migration {
 			$table->integer('initiative_id');
 			$table->string('target_group');
 			$table->dateTime('start_date')->default(DB::raw('CURRENT_TIMESTAMP'));
-			$table->dateTime('end_date')->default(DB::raw('CURRENT_TIMESTAMP'));
+			$table->string('name');
 			$table->integer('count')->nullable();
 			$table->integer('ativiests_count')->nullable();
 			$table->softDeletes();

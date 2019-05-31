@@ -16,7 +16,9 @@ class CreateUsersTable extends Migration {
 		{
 		    $table->increments('id');
 			$table->string('name', 191);
-			$table->string('last_name', 191)->nullable();;
+            $table->string('father_name', 191)->nullable();
+            $table->string('grand_father_name', 191)->nullable();
+			$table->string('last_name', 191)->nullable();
 			$table->string('user_name', 191);
 			$table->string('email', 191);
 			$table->timestamp('email_verified_at')->nullable();

@@ -22,12 +22,13 @@ class CreateInitiativesTable extends Migration
             $table->double('donation')->default(0);
             $table->double('paid_up')->default(0);
             $table->integer('city_id');
+            $table->integer('activists_count');
             $table->string('neighborhood');
-            $table->string('details');
-            $table->string('Changing');
-            $table->string('justifications');
-            $table->string('problem');
-            $table->string('main_goale');
+            $table->longText('details');
+            $table->longText('changing');
+            $table->longText('justifications');
+            $table->longText('problem');
+            $table->longText('main_goale');
             $table->dateTime('start_date')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('end_date')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->softDeletes();

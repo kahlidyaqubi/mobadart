@@ -15,11 +15,14 @@ class CreateActivistsTable extends Migration {
 		Schema::create('activists', function(Blueprint $table)
 		{
 			$table->increments('id');
+            $table->boolean('shared')->default(0);
+            $table->longText('shared_ditalis', 1000)->nullable();
 			$table->integer('user_id');
 			$table->integer('city_id');
 			$table->string('neighborhood');
 			$table->date('brth_day');
-			$table->string('mobile');
+            $table->integer('ido');
+			$table->string('mobile')->nullable();;
 			$table->string('gender');
 			$table->softDeletes();
 			$table->timestamps();

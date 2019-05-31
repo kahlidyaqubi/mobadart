@@ -12,6 +12,11 @@
 */
 Auth::routes();
 Route::get('home', 'HomeController@index')->name('home');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/laravel-filemanager', '\UniSharp\LaravelFilemanager\Controllers\LfmController@show');
+    Route::post('/laravel-filemanager/upload', '\UniSharp\LaravelFilemanager\Controllers\UploadController@upload');
+    // list all lfm routes here...
+});
 Route::namespace('Admin')
     ->prefix('admin')
     ->group(function () {
@@ -38,8 +43,10 @@ Route::namespace('Admin')
         /********/
         Route::resource('initiative', 'InitiativeController');
         Route::get('/initiative/delete/{id}', 'InitiativeController@delete');
+        Route::get('/initiative/activitsInInitiative/{id}', 'InitiativeController@activitsInInitiative');
         Route::get('/initiative/acceptActivit/{id}', 'InitiativeController@acceptActivit');
-        Route::get('/initiative/evaluteToInitiav/{id}', 'InitiativeController@evaluteToInitiav');
+        Route::get('/initiative/evaluteToInitiave/{id}', 'InitiativeController@evaluteToInitiave');
+        Route::get('/initiative/articleToInitiave/{id}', 'InitiativeController@articleToInitiave');
         /********/
         Route::resource('donationList', 'DonationListController');
         Route::get('/donationList/delete/{id}', 'DonationListController@delete');

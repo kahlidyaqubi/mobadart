@@ -27,7 +27,10 @@ class InterestController extends BaseController
             Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
             return redirect("/admin/interest");
         }
-        $item->status=!$item->status;
+		if($item->status==0)
+			$item->status=1;
+		else
+			$item->status=0;
             $item->save();
 
 

@@ -12,8 +12,12 @@ class Activists_initiative extends Model
     protected $fillable=['initiative_id','activist_id'
     ];
 
-    public function Activist()
+    public function activist()
     {
-        return $this->belongsTo('App\activist');
+        return $this->belongsTo('App\Activist');
+    }
+    public function initiative()
+    {
+        return $this->belongsTo('App\Initiative');
     }
 }

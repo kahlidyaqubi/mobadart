@@ -17,16 +17,18 @@
                             <ul class="list-unstyled profile-nav">
                                 <li>
 
-                                    <img src="https://pngimage.net/wp-content/uploads/2018/05/admin-avatar-png.png" class="img-responsive pic-bordered" alt=""/>
+                                    <img src="https://pngimage.net/wp-content/uploads/2018/05/admin-avatar-png.png"
+                                         class="img-responsive pic-bordered" alt=""/>
                                 </li>
                                 <li>
-                                    <a > مركز العائلة : @if($item->family_center) {{$item->family_center->name}} @else عام @endif </a>
+                                    <a> مركز العائلة : @if($item->family_center) {{$item->family_center->name}} @else
+                                            عام @endif </a>
                                 </li>
                                 <li>
-                                    <a href="#"> مبادراتي </a>
+                                    <a href="/admin/admin/initiaveToAdmin/{{$item->id}}"> مبادراتي </a>
                                 </li>
                                 <li>
-                                    <a href="#"> أخباري </a>
+                                    <a href="/admin/admin/articleToAdmin/{{$item->id}}"> أخباري </a>
                                 </li>
 
                             </ul>
@@ -53,6 +55,7 @@
 
                             <!--end row-->
 
+
                             @if(1==1)
                                 <div class="tabbable-line tabbable-custom-profile">
 
@@ -75,19 +78,26 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                     <tr>
+                                                    @foreach($articles as $article)
+                                                        <tr>
                                                             <td style="max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
-                                                                <a href="#"> خبر تجريبي </a>
+                                                                <a href="#"> {{$article->title}} </a>
                                                             </td>
-                                                            <td class="hidden-xs">التجارب الملهمة</td>
-                                                            <td class="hidden-xs">15-12-2013</td>
+                                                            <td class="hidden-xs">{{$article->category->name}}</td>
+                                                            <td class="hidden-xs">{{date('d-m-Y', strtotime($article->created_at))}}</td>
                                                             <td>
                                                                 <a class="btn btn-sm grey-salsa btn-outline"
                                                                    href="#"> مشاهدة</a>
                                                             </td>
                                                         </tr>
-
+                                                    @endforeach
                                                     </tbody>
+                                                    <tfoot>
+                                                    <tr>
+                                                        <th colspan="4">
+                                                            <a href="/admin/admin/articleToAdmin/{{$item->id}}">عرض المزيد</a>
+                                                        </th>
+                                                    </tfoot>
                                                 </table>
                                             </div>
                                         </div>
@@ -109,7 +119,7 @@
     </div>
 @endsection
 @section('css')
-    <link href={{asset('metronic-rtl/assets/pages/css/profile-2-rtl.min.css')}} rel="stylesheet" type="text/css" />
+    <link href={{asset('metronic-rtl/assets/pages/css/profile-2-rtl.min.css')}} rel="stylesheet" type="text/css"/>
 
 @endsection
 @section('js')

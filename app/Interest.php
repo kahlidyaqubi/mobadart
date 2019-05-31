@@ -13,11 +13,19 @@ class Interest extends Model
 
     public function activists()
     {
-        return $this->belongsToMany('App\Activist');
+        return $this->belongsToMany('App\Activist','activists_interests');
     }
     public function initiatives()
     {
-        return $this->belongsToMany('App\Initiative');
+        return $this->belongsToMany('App\Initiative','initiatives_interests');
+    }
+    function activists_interests()
+    {
+        return $this->hasMany('App\Activists_interest');
+    }
+    function initiatives_interests()
+    {
+        return $this->hasMany('App\Initiatives_interest');
     }
 
 }

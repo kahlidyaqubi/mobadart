@@ -30,10 +30,14 @@ class AdminRequest extends FormRequest
             return preg_match('/^\S*$/u', $value);
         });
         $id_admin = $this->route('admin');
+        if($id_admin=='')
+            $id='';
+        else
         $id = Admin::find($id_admin)->user->id;
         $valid = [
             //'user_id'=> 'required|max:3',
             'name' => 'required|max:30',
+            'password' => 'required|string|min:6',
             'user_name' => 'required|max:30|without_spaces|unique:users,user_name,' . $id . ',id',
             'email' => 'required|email|max:30|unique:users,email,' . $id . ',id',
             'family_center_id' => 'max:3',
@@ -41,7 +45,7 @@ class AdminRequest extends FormRequest
             'super_admin' => 'required|max:1',
         ];
         if (request()->mobile)
-            $valid['mobile'] = 'numeric|min:6|max:10';
+            $valid['mobile'] = 'numeric|digits_between:6,10';
         return $valid;
     }
 }

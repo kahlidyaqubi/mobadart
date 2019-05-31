@@ -19,6 +19,6 @@ class Category extends Model
     }
     public function admins()
     {
-        return $this->belongsToMany('App\Admin');
+        return $this->belongsToMany('App\Admin','admins_categoris');
     }
 }

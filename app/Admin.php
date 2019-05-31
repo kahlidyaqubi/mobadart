@@ -32,7 +32,7 @@ class Admin extends Model
     }
     public function categories()
     {
-        return $this->belongsToMany('App\Category');
+        return $this->belongsToMany('App\Category','admins_categoris');
     }
     function articles(){
         return $this->hasMany('App\Article');

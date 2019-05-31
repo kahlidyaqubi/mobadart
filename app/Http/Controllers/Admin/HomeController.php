@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Article;
 use App\Family_center;
 use App\Http\Requests\AdminProfileRequest;
 use Illuminate\Http\Request;
@@ -53,7 +54,8 @@ class HomeController extends BaseController
             $type = "المنشط";
         }
         $item=auth()->user()->admin;
-        return view('admin.home.profile',compact('type','item'));
+        $articles=Article::take(5)->get();
+        return view('admin.home.profile',compact('type','item','articles'));
     }
 
     public function editProfile()

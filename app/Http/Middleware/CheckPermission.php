@@ -34,6 +34,7 @@ class CheckPermission
                 }
                 $currentPath= Route::getFacadeRoot()->current()->uri();
                 $url = "/".delete_all_between('/{', '}', $currentPath);
+
                 $link = \DB::table("links")->where('link', $url)->first();
                 //معناه انه الرابط عليه صلاحيات
                 if ($link != NULL) {

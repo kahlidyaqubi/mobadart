@@ -24,15 +24,19 @@ class ArticleRequest extends FormRequest
      */
     public function rules()
     {
-		return [
-            'initiative_id'=> 'required|max:3',
-			'admin_id'=> 'required|max:3',
-			'category_id'=> 'required|max:3',
-			'title'=> 'required|string|max:70',
-			'detalis'=> 'required|string|max:255',
-			'the_file'=> 'required|string|max:255',
-			'img'=> 'string|max:255',
+        $id = $this->route('article');
+        $valid = [
+            'category_id' => 'required|max:3',
+            'title' => 'required|string|max:70|unique:articles,title,' . $id . ',id',
+            'detalis' => 'required|string|max:400',
+            'the_file' => 'required|string|max:255',
+
         ];
+
+        if (request()->images) {
+           $valid['images.*'] = 'image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+        }
+        return $valid;
     }
 }
 

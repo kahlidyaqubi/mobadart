@@ -104,9 +104,7 @@
                     url: "/admin/interest/active/" + id,
                     data: {_token: '{{ csrf_token() }}'},
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // User Not Logged In
-                        // 401 Unauthorized Response
-                        //window.location.href = "/account/project";
+
                     },
                 });
             });

@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Activity;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class ActivityRequest extends FormRequest
 {
@@ -23,14 +25,19 @@ class ActivityRequest extends FormRequest
      * @return array
      */
     public function rules(){
-	
+
+        $id = $this->route('activity');
         return [
             'initiative_id'=> 'required|max:3',
-			'target_group'=> 'required|string|max:70',
-			'start_date'=> 'required|date',
-			'end_date'=> 'required|date',
+            'name'=> 'required|string|max:70',
+            'name'=> Rule::unique('activities')->where(function ($query) use($id) {
+                return $query->where('name', request()->name)->where('id','!=', $id)
+                    ->where('initiative_id',request()->initiative_id);
+            }),
+            'target_group'=> 'required|string|max:70',
 			'count'=> 'required|max:4',
 			'ativiests_count'=> 'required|max:3',
+            'start_date'=> 'required|date',
         ];
     }
 }

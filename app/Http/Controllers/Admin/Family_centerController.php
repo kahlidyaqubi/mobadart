@@ -29,7 +29,7 @@ class Family_centerController extends BaseController
             $items->where('cities.id','=',$city_id);
 
         if (($governorate_id)&&!($city_id)) {
-            $cities_ids=City::where('governorate_id',$governorate_id)->get()->toArray();
+            $cities_ids=City::where('governorate_id',$governorate_id)->pluck('id')->toArray();
             $items->whereIN('cities.id', $cities_ids);
         }
 
@@ -40,6 +40,7 @@ class Family_centerController extends BaseController
 
         $cities=City::all();
         $governorates=Governorate::all();
+
         return view('admin.family_centers.index',compact('items','governorate_id','governorates','cities','city_id'));
 
     }

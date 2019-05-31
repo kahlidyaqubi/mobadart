@@ -1,6 +1,6 @@
 @extends("layouts._admin_layout")
 
-@section("title", "تعديل حساب ".$item->user->name)
+@section("title", "تعديل حساب ".$item->user->name." ".$item->user->last_name)
 @section("content")
 
     <div class="row">
