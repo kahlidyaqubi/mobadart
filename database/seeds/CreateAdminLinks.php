@@ -749,7 +749,7 @@ class CreateAdminLinks extends Seeder
             'icon' => 'icon-diamond',
             'parent_id' => 0,
             'mult_id'=>$mult_id,
-            'in_menu' => 1,
+            'in_menu' => 0,
             'link' => '',
             'order_id' => 12,
             'super' => 1,
