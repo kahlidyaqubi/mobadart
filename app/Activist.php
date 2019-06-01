@@ -10,7 +10,7 @@ class Activist extends Model
     protected $table = 'activists';
 
     protected $fillable = ['user_id', 'ido' ,'shared','shared_ditalis','city_id', 'neighborhood', 'brth_day',
-        'mobile', 'gender'
+        'mobile', 'gender','face_url'
     ];
 
     function user()

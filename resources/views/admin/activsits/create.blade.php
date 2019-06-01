@@ -135,6 +135,16 @@
                                                 <span class="help-block"> حقل اختياري </span>
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">حساب الفيسيوك
+                                            </label>
+                                            <div class="col-md-4">
+                                                <input type="url" class="form-control" value="{{old("face_url")}}"
+                                                       name="face_url" minlength="6"
+                                                       />
+                                                <span class="help-block"> حقل اختياري /يجب رابط</span>
+                                            </div>
+                                        </div>
 
                                         <div class="form-group" id="governorate_id">
                                             <label class="control-label col-md-3">المحافظة</label>

@@ -51,6 +51,9 @@ class ActivistRequest extends FormRequest
         ];
         if (request()->mobile)
             $valid['mobile'] = 'numeric|digits_between:6,10';
+        if (request()->face_url)
+            $valid['face_url'] ='regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/';
+
         return $valid;
     }
 }

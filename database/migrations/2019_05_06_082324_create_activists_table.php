@@ -19,10 +19,11 @@ class CreateActivistsTable extends Migration {
             $table->longText('shared_ditalis', 1000)->nullable();
 			$table->integer('user_id');
 			$table->integer('city_id');
-			$table->string('neighborhood');
+            $table->string('face_url')->nullable();
+            $table->string('neighborhood');
 			$table->date('brth_day');
             $table->integer('ido');
-			$table->string('mobile')->nullable();;
+			$table->string('mobile')->nullable();
 			$table->string('gender');
 			$table->softDeletes();
 			$table->timestamps();

@@ -250,7 +250,7 @@ class CreateAdminLinks extends Seeder
             'title' => 'عرض تبرع',
             'icon' => 'icon-diamond',
             'parent_id' => $link_id,
-            'in_menu' => 1,
+            'in_menu' => 0,
             'link' => '/admin/donationList/show',
             'order_id' => 3,
             'super' => 0,
@@ -1019,6 +1019,7 @@ class CreateAdminLinks extends Seeder
             'neighborhood' => 'hosameya',
             'brth_day' => '2019-05-01',
             'gender' => 'M',
+            'face_url'=>'https://www.facebook.com/khaled.yaqubi.3',
             'ido'=>'400012345',
 
         ]);
@@ -1089,6 +1090,11 @@ class CreateAdminLinks extends Seeder
             'img1'=> 'notfound',
             'img2'=> 'notfound',
             'img3'=> 'notfound',
+        ]);
+        /**********************/
+        DB::table('categories')->insertGetId([
+            'name' => 'تجارب ملهمة',
+            'type' => 1,
         ]);
     }
 }

@@ -63,9 +63,7 @@ class AdminController extends BaseController
             ]);
         }
         $testeroor=$this->validate($request,[
-
-            'password'=>'required|min:6',
-
+            'password' => 'required|string|min:6',
         ]);
         $user_id = User::create([
             'name' => request()->name,

@@ -23,19 +23,29 @@ class ActivistProfileRequest extends FormRequest
      */
     public function rules()
     {
-        Validator::extend('without_spaces', function($attr, $value){
+        Validator::extend('without_spaces', function ($attr, $value) {
             return preg_match('/^\S*$/u', $value);
         });
-        return [
-            'name' => "required|max:50",
-            'mobile' => 'numeric|required|digits_between:6,10',
-            'email' => 'required|string|email',
-            'last_name' => 'max:50',
+        $id = auth()->user()->id;
+        $id_activsit = auth()->user()->activsi->id;
+        $valid = [
+            'name' => 'required|max:30',
+            'father_name' => 'required|max:30',
+            'grand_father_name' => 'required|max:30',
+            'last_name'=> 'required|max:30',
+            'ido'=>'required|min:9|max:9|unique:activists,ido,' . $id_activsit . ',id',
+            'user_name' => 'required|max:30|without_spaces|unique:users,user_name,' . $id . ',id',
+            'email' => 'required|email|max:30|unique:users,email,' . $id . ',id',
             'city_id'=> 'required|max:3',
             'neighborhood'=> 'required|string|max:70',
             'brth_day'=> 'required|date',
-            'user_name' => 'required|string|max:255|without_spaces|unique:users',
-
+            'gender'=> 'required|string|max:1',
+            'governorate_id'=> 'required|max:3',
         ];
+        if (request()->mobile)
+            $valid['mobile'] = 'numeric|digits_between:6,10';
+        if (request()->face_url)
+            $valid['face_url'] = 'regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/';
+        return $valid;
     }
 }

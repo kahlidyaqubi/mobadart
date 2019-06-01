@@ -194,8 +194,7 @@
                     $adminId = Auth::user()->admin->id;
                     /*$links = \DB::table("links")->where("parent_id",0)->
                         whereRaw('id in (select link_id from admin_link where admin_id=?)',$adminId)->get();*/
-                    $the_links = Auth::user()->admin->links()->where("in_menu", 1)->where("parent_id", 0)->where("mult_id", 0)->orderBy('order_id')->pluck('links.id');
-                    $links = \App\Link::find($the_links);
+                    $links = Auth::user()->admin->links()->where("in_menu", 1)->where("parent_id", 0)->where("mult_id", 0)->orderBy('order_id')->get();
                     ?>
 
 

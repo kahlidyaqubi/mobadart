@@ -37,7 +37,6 @@ class AdminRequest extends FormRequest
         $valid = [
             //'user_id'=> 'required|max:3',
             'name' => 'required|max:30',
-            'password' => 'required|string|min:6',
             'user_name' => 'required|max:30|without_spaces|unique:users,user_name,' . $id . ',id',
             'email' => 'required|email|max:30|unique:users,email,' . $id . ',id',
             'family_center_id' => 'max:3',
@@ -46,7 +45,7 @@ class AdminRequest extends FormRequest
         ];
         if (request()->mobile)
             $valid['mobile'] = 'numeric|digits_between:6,10';
-        return $valid;
+         return $valid;
     }
 }
 

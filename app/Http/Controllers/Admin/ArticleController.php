@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Admin;
 use App\Articel_file;
 use App\Article;
 use App\Category;
@@ -121,7 +120,11 @@ class ArticleController extends BaseController
 
         $item->update(request()->all());
 
-        Session::flash("msg", "تمت عملية الاضافة بنجاح");
+        if (!$admin->super_admin == 1) {
+            Session::flash("msg", "تمت انشاء خبر وسيتم نشره بعد موافقة إدارة المنصة");
+        }else{
+            Session::flash("msg", "تمت انشاء خبر ونشره بنجاح");
+        }
         return redirect("/admin/article/create");
     }
 
@@ -165,6 +168,7 @@ class ArticleController extends BaseController
             Session::flash("msg", "e:لا تملك صلاحية تعديل خبر نشره منشط آخر");
             return redirect("/admin/article");
         }
+
 
         if (request()->hasFile('main_image')) {
 

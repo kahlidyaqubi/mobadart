@@ -268,7 +268,10 @@ class ActivsitController extends BaseController
         }
 
         if (request()['interest']) {
+            if ($request["other_interests"])
             $all_interests = array_merge($other_interests_ids, request()['interest']);
+            else
+                $all_interests= request()['interest'];
             \DB::table("activists_interests")->where("activist_id", $id)->delete();
             if ($all_interests) {
                 foreach ($all_interests as $interest)
