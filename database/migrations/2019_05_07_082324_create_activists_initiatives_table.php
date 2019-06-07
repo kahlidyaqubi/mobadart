@@ -17,7 +17,7 @@ class CreateActivistsInitiativesTable extends Migration {
 			$table->increments('id');
 			$table->integer('initiative_id');
 			$table->integer('activist_id');
-            $table->boolean('accept');
+            $table->boolean('accept')->default(0);
 			$table->softDeletes();
 			$table->timestamps();
 		});

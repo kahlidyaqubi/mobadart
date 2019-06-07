@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Validator;
 
-class Initiative_evaluationRequest extends FormRequest
+class Initiative_evaluation_towRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,16 +24,14 @@ class Initiative_evaluationRequest extends FormRequest
      */
     public function rules()
     {
+        request()['attributes']=array_filter(request()['attributes']);
+        request()['values']=array_filter(request()['values']);
+        request()['attributes']=array_values(request()['attributes']);
+        request()['values']=array_values(request()['values']);
         return [
             'initiative_id' => 'required|max:2',
-            'changing'=> 'required|max:2',
-            'changing_ditalis'=> 'required|max:600',
-            'impacting'=> 'required|max:2',
-            'impacting_ditalis'=> 'required|max:600',
-            'continuing'=> 'required|max:2',
-            'continuing_ditalis'=> 'required|max:600',
-            'improving'=> 'required|max:2',
-            'improving_ditalis'=> 'required|max:600',
+            'attributes'=> 'required',
+            'values'=> 'required',
         ];
     }
 }

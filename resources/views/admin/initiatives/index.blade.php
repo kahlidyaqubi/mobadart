@@ -137,12 +137,19 @@
                                                             class="fa fa-newspaper-o"></i>عرض</span></a>
                                         </li>
                                         @if(auth()->user()->admin->links->contains(\App\Link::where('title','=','إدارة الأخبار')->first()->id))
-                                            <li>
-                                                <a href="/admin/initiative/articleToInitiave/{{$item->id}}">
+                                                <li>
+                                                    <a href="/admin/initiative/articleToInitiave/{{$item->id}}">
                                                     <span class="text-primary"><i
                                                                 class="fa fa-sitemap"></i>أخبارها</span></a>
-                                            </li>
-                                        @endif
+                                                </li>
+                                            @endif
+                                            @if(auth()->user()->admin->links->contains(\App\Link::where('title','=','إدارة التقيمات')->first()))
+                                                <li>
+                                                    <a href="/admin/initiative/evaluteToInitiave/{{$item->id}}">
+                                                    <span class="text-primary"><i
+                                                                class="fa fa-sitemap"></i>تقييماتها</span></a>
+                                                </li>
+                                            @endif
                                         @if(auth()->user()->admin->links->contains(\App\Link::where('title','=','إضافة خبر')->first()->id))
                                             <li>
                                                 <a href="/admin/article/create?initiative_id={{$item->id}}">

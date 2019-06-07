@@ -25,14 +25,15 @@ class DonationListsRequest extends FormRequest
     {
         return [
             'initiative_id' => "required|max:3",
-            'city_id' => "required|max:3",
-            'bank_account' => 'required|number|max:50',
+           // 'city_id' => "required|max:3",
+            'country'=> "required|max:30",
+            'bank_account' => 'required|numeric|max:50',
             'financier_name' => 'required|string|email',
-            'amount' => 'required|number|max:50',
-            'financier_phone'=> 'required|min:6|max:10',
+            'amount' => 'required|numeric|max:50',
+            'financier_phone'=> 'required|numeric|min:6|max:10',
             'financier_email'=> 'required|email|string|max:70',
             'financier_address'=> 'required|string|max:70',
-            'status' => 'required|string|max:255|without_spaces|unique:users',
+            //'status' => 'required|string|max:255|without_spaces|unique:users',
 
         ];
     }

@@ -40,6 +40,7 @@ Route::namespace('Admin')
         Route::post('/admin/permission/{id}', 'AdminController@permission_post');
         Route::get('/admin/hisCategoty/{id}', 'AdminController@hisCategoty');
         Route::post('/admin/hisCategoty/{id}', 'AdminController@hisCategoty_post');
+        Route::get('/admin/evaluteToAdmin/{id}', 'AdminController@evaluteToAdmin');
         /********/
         Route::resource('initiative', 'InitiativeController');
         Route::get('/initiative/delete/{id}', 'InitiativeController@delete');
@@ -50,7 +51,6 @@ Route::namespace('Admin')
         /********/
         Route::resource('donationList', 'DonationListController');
         Route::get('/donationList/delete/{id}', 'DonationListController@delete');
-        Route::post('/donationList/show/{id}', 'DonationListController@show_accept');
         /********/
         Route::resource('activity', 'ActivityController');
         Route::get('/activity/delete/{id}', 'ActivityController@delete');
@@ -66,9 +66,9 @@ Route::namespace('Admin')
         Route::get('/activsit/demandToActivsit/{id}', 'ActivsitController@demandToActivsit');
         Route::get('/activsit/evaluteToActivsit/{id}', 'ActivsitController@evaluteToActivsit');
         /********/
-        Route::resource('evalution', 'EvalutionControlle');
-        Route::get('/evalution/delete/{id}', 'EvalutionControlle@delete');
-        Route::get('/evalution/printEval/{id}', 'EvalutionControlle@printEval');//الي معاه يشوف يطبع
+        Route::resource('evalution', 'EvalutionController');
+        Route::get('/evalution/delete/{id}', 'EvalutionController@delete');
+        Route::get('/evalution/printEval/{id}', 'EvalutionController@printEval');//الي معاه يشوف يطبع
         /********/
         Route::resource('article', 'ArticleController');
         Route::get('/article/delete/{id}', 'ArticleController@delete');
@@ -139,7 +139,7 @@ Route::namespace('Activist')
 
 Route::namespace('Guest')
     ->group(function () {
-        Route::get('/','HomeController@mainPage');
+        Route::get('/', 'HomeController@mainPage');
         /********/
         Route::get('/initiative/showCalender', 'InitiativeController@showCalender');
         Route::resource('initiative', 'InitiativeController');

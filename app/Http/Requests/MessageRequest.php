@@ -25,10 +25,10 @@ class MessageRequest extends FormRequest
     {
         return [
 		    'name' => 'max:50',
-            'title' => 'required|max:50',
             'email' => 'max:50|email',
-            'content' => 'required|max:300',
             'mopile' => 'max:12|min:6',
+            'content' => 'required|max:300',
+           // 'title' => 'required|max:50',
 			
         ];
     }

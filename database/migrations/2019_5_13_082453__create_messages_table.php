@@ -15,13 +15,12 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('email');
             $table->string('name');
+            $table->string('email');
+            $table->string('mopile');
+            $table->longText('content');
             $table->string('title')->nullable();
-            $table->string('mopile')->nullable();
-			$table->string('datee');
-             $table->longText('content');
-            
+            $table->date('datee')->nullable();
             $table->timestamps();
         });
     }

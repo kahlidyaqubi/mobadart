@@ -9,6 +9,7 @@ use App\Family_center;
 use App\Governorate;
 use App\Http\Requests\AdminRequest;
 use App\Initiative;
+use App\Initiative_evaluation;
 use App\Interest;
 use App\Link;
 use App\User;
@@ -331,5 +332,41 @@ class AdminController extends BaseController
         }
         Session::flash("msg", "i:تمت حفظ الصلاحيات بنجاح");
         return redirect("/admin/admin");
+    }
+    public function evaluteToAdmin($id,Request $request)
+    {
+        $initiative_id = $request["initiative_id"] ?? "";
+        $status = $request["status"] ?? "";
+
+        $item=Admin::find($id);
+        if ($item == NULL) {
+            Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
+            return redirect("/admin/activsit");
+        }
+        $items = $item->initiative_evaluations()->whereRaw(true);
+
+
+        if ($initiative_id) {
+            $items->whereRaw("(initiative_id = ?)"
+                , [$initiative_id]);
+        }
+        if ($status || $status === '0') {
+            if ($status == 1)
+                $items->whereHas('admin');
+            else
+                $items->whereHas('activist');
+        }
+        $admin = auth()->user()->admin;
+        if (!$admin->super_admin == 1) {
+            $initiatives = $admin->initiatives->all();
+        } else {
+            $initiatives = Initiative::all();
+        }
+
+        $items = Initiative_evaluation::whereIn('id', $items->pluck('initiative_evaluation.id'))->paginate(20)
+            ->appends(['initiative_id' => $initiative_id, 'status' => $status]);
+
+        return view('admin.admins.evaluteToAdmin', compact('items','item', 'initiatives'));
+
     }
 }

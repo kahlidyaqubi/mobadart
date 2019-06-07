@@ -23,21 +23,21 @@
                                 <li>
                                     <a> المشاركين : {{$item->activists->count()}} / {{$item->activists_count}} </a>
                                 </li>
+                                @if($item->donation>0)
+                                    <li>
+                                        <a> التبرع : {{$item->paid_up}} / {{$item->donation}} &#36;</a>
+                                    </li>
+                                @endif
                                 <li>
                                     <a> العنوان :{{$item->city->governorate->name}} / {{$item->city->name}}
                                         / {{$item->neighborhood}} </a>
                                 </li>
-                                @if($item->donation>0)
-                                    <li>
-                                        <a> التمويل : {{$item->paid_up}} / {{$item->donation}} </a>
-                                    </li>
-                                @endif
                                 @if($item->admin_id==auth()->user()->admin->id || auth()->user()->admin->super_admin==1 )
-                                <li>
-                                    <a style="color:#042e51;"
-                                       href="/admin/initiative/activitsInInitiative/{{$item->id}}?accept=0"> طلبات
-                                        الانضمام </a>
-                                </li>
+                                    <li>
+                                        <a style="color:#042e51;"
+                                           href="/admin/initiative/activitsInInitiative/{{$item->id}}?accept=0"> طلبات
+                                            الانضمام </a>
+                                    </li>
                                 @endif
                                 <li>
                                     <a style="color:#042e51;"
@@ -46,6 +46,20 @@
                                 <li>
                                     <a style="color:#042e51;" href="#"> الأخبار </a>
                                 </li>
+                                @if($item->end_date <= Carbon\Carbon::now() && $item->admin_id==auth()->user()->admin->id
+                                && \App\Initiative_evaluation::where('admin_id',auth()->user()->admin->id)->where('initiative_id',$item->id)->first()==null)
+                                    <li>
+                                        <a style="color:lightgoldenrodyellow;background: darkred;  !important"
+                                           href="/admin/evalution/create?initiative_id={{$item->id}}"> أدخل التقييم </a>
+                                    </li>
+                                @endif
+                                @if(auth()->user()->admin->links->contains(\App\Link::where('title','=','إدارة التقيمات')->first()))
+                                    <li>
+                                        <a style="color:#042e51;"
+                                           href="/admin/initiative/evaluteToInitiave/{{$item->id}}"> التقييمات
+                                        </a>
+                                    </li>
+                                @endif
                             </ul>
                         </div>
                         <div class="col-md-9">
@@ -145,10 +159,10 @@
                                                             <i v-show="loadingSearch"
                                                                class="fas fa-spinner fa-spin"></i>
                                                         </button>
-														@if($item->admin_id==auth()->user()->admin->id)
-                                                        <a @click.prevent="showCreateActivity()" href="#"
-                                                           class="btn btn-success ">أنشئ نشاطاً جديدا</a>
-														   @endif
+                                                        @if($item->admin_id==auth()->user()->admin->id)
+                                                            <a @click.prevent="showCreateActivity()" href="#"
+                                                               class="btn btn-success ">أنشئ نشاطاً جديدا</a>
+                                                        @endif
                                                     </div>
                                                 </form>
                                                 <div class="alert mt-3 alert-danger" v-show="homeErrors.length>0">
@@ -499,7 +513,7 @@
                         vm.activityOld.initiative_id = initiative_id;
                         vm.setEditIndex(-1);
                         axios.post('/admin/activity/' + id, {
-                            _method:'PATCH',
+                            _method: 'PATCH',
                             initiative_id: initiative_id,
                             name: name,
                             target_group: target_group,
@@ -526,7 +540,8 @@
                     axios.get('/admin/activity', {
                         params: {
                             id: '{{$item->id}}'
-                        }})
+                        }
+                    })
                         .then(function (response) {
                             vm.result = response.data;
                             vm.loadingSearch = false;

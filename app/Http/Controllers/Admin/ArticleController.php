@@ -64,7 +64,7 @@ class ArticleController extends BaseController
                 $initiative = $admin->initiatives->find(request()['initiative_id']);
                 if ($initiative == null) {
                     Session::flash("msg", "e:يرجى التأكد من الرابط المطلوب");
-                    return redirect('admin/admin/create')->withInput();
+                    return redirect('admin/article')->withInput();
                 }
             }
         } else {

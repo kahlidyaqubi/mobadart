@@ -46,9 +46,9 @@
                                             {{$item->shared_ditalis}} </a>
                                     </li>
                                 @endif
-                                @if(auth()->user()->admin->links->contains(\App\Link::where('title','=','إدارة النماذج')->first()->id))
+                                @if(auth()->user()->admin->links->contains(\App\Link::where('title','=','إدارة التقيمات')->first()->id))
                                     <li>
-                                        <a style="color:#042e51;" href="#"> نماذجي </a>
+                                        <a style="color:#042e51;" href="/admin/activsit/evaluteToActivsit/{{$item->id}}"> تقييماته </a>
                                     </li>
                                 @endif
 

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Activity;
 use App\Http\Requests\ActivityRequest;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class ActivityController extends BaseController
 {

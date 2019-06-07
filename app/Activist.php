@@ -23,7 +23,7 @@ class Activist extends Model
         return $this->hasMany('App\Follow_up');
     }
 
-    function initiative_evaluation()
+    function initiative_evaluations()
     {
         return $this->hasMany('App\Initiative_evaluation');
     }

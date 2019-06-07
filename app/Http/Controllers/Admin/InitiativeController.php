@@ -10,6 +10,7 @@ use App\City;
 use App\Governorate;
 use App\Http\Requests\InitiativeRequest;
 use App\Initiative;
+use App\Initiative_evaluation;
 use App\Initiatives_goal;
 use App\Interest;
 use Illuminate\Http\Request;
@@ -98,15 +99,15 @@ class InitiativeController extends BaseController
         $cities = City::all();
         $governorates = Governorate::all();
         $interests = Interest::where('status', '1')->get();
-        $item='';
-        if(request()['id']){
-            $item=Admin::find(request()['id']);
-            if($item==null){
+        $item = '';
+        if (request()['id']) {
+            $item = Admin::find(request()['id']);
+            if ($item == null) {
                 Session::flash("msg", "e:يرجى التأكد من الرابط المطلوب");
                 return redirect('admin/admin/create')->withInput();
             }
         }
-        return view('admin.initiatives.create', compact('governorates', 'cities', 'interests','item'));
+        return view('admin.initiatives.create', compact('governorates', 'cities', 'interests', 'item'));
 
     }
 
@@ -114,7 +115,7 @@ class InitiativeController extends BaseController
     {
 
         $testeroor = $this->validate($request, [
-            'image'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($request['end_date'] < $request['start_date']) {
@@ -130,14 +131,14 @@ class InitiativeController extends BaseController
         }
 
 
-        if(!request()['admin_id'])
-        request()['admin_id'] = auth()->user()->admin->id;
+        if (!request()['admin_id'])
+            request()['admin_id'] = auth()->user()->admin->id;
 
         if (request()['donation'] == "")
             request()['donation'] = 0;
         $initiative_id = Initiative::create(request()->all())->id;
 
-        if($request["other_goals"]) {
+        if ($request["other_goals"]) {
             $other_goals = explode(",", $request["other_goals"]);
             for ($i = 0; $i < count($other_goals); $i++) {
                 if (!Initiatives_goal::where('initiative_id', $initiative_id)->where('details', $other_goals[$i])->first()) {
@@ -148,13 +149,13 @@ class InitiativeController extends BaseController
                 }
             }
         }
-        if(request()['interest'])
-        for ($i = 0; $i < count(request()['interest']); $i++) {
-            DB::table('initiatives_interests')->insertGetId([
-                'initiative_id' => $initiative_id,
-                'interest_id' => request()['interest'][$i],
-            ]);
-        }
+        if (request()['interest'])
+            for ($i = 0; $i < count(request()['interest']); $i++) {
+                DB::table('initiatives_interests')->insertGetId([
+                    'initiative_id' => $initiative_id,
+                    'interest_id' => request()['interest'][$i],
+                ]);
+            }
 
 
         Session::flash("msg", "تمت عملية الاضافة بنجاح");
@@ -182,7 +183,7 @@ class InitiativeController extends BaseController
             Session::flash("msg", "e:يرجى التأكد من الرابط المطلوب");
             return redirect("/admin/initiative");
         }
-        if(!($item->admin_id==auth()->user()->admin->id || auth()->user()->admin->super_admin==1)){
+        if (!($item->admin_id == auth()->user()->admin->id || auth()->user()->admin->super_admin == 1)) {
             Session::flash("msg", "e:لا تملك صلاحية تعديل مبادرة لست منشطها");
             return redirect("/admin/initiative");
         }
@@ -205,17 +206,16 @@ class InitiativeController extends BaseController
             Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
             return redirect("/admin/initiative");
         }
-        if(!($item->admin_id==auth()->user()->admin->id || auth()->user()->admin->super_admin==1)){
+        if (!($item->admin_id == auth()->user()->admin->id || auth()->user()->admin->super_admin == 1)) {
             Session::flash("msg", "e:لا تملك صلاحية تعديل مبادرة لست منشطها");
             return redirect("/admin/initiative");
         }
 
 
-
         if ($request->hasFile('image')) {
 
-            if (file_exists( public_path()."".$item->img) && $item->img != null) {//اذا يوجد ملف قديم مخزن
-                unlink( public_path()."".$item->img);//يقوم بحذف القديم
+            if (file_exists(public_path() . "" . $item->img) && $item->img != null) {//اذا يوجد ملف قديم مخزن
+                unlink(public_path() . "" . $item->img);//يقوم بحذف القديم
             }
 
             $myfile = $request->file('image'); // جلد الجديد من الانبوت فورم
@@ -230,7 +230,7 @@ class InitiativeController extends BaseController
 
         $item->update(request()->all());
 
-        if(request()['other_goals']) {
+        if (request()['other_goals']) {
             $other_goals = explode(",", $request["other_goals"]);
             for ($i = 0; $i < count($other_goals); $i++) {
                 if (!Initiatives_goal::where('initiative_id', $id)->where('details', $other_goals[$i])->first()) {
@@ -242,7 +242,7 @@ class InitiativeController extends BaseController
             }
         }
 
-        if(request()['interest']) {
+        if (request()['interest']) {
             \DB::table("initiatives_interests")->where("initiative_id", $id)->delete();
             if (request()['interest']) {
                 foreach (request()['interest'] as $interest)
@@ -268,7 +268,7 @@ class InitiativeController extends BaseController
             Session::flash("msg", "e:يرجى التأكد من الرابط المطلوب");
             return redirect("/admin/initiative");
         }
-        if(!($item->admin_id==auth()->user()->admin->id || auth()->user()->admin->super_admin==1)){
+        if (!($item->admin_id == auth()->user()->admin->id || auth()->user()->admin->super_admin == 1)) {
             Session::flash("msg", "e:لا تملك صلاحية تعديل مبادرة لست منشطها");
             return redirect("/admin/initiative");
         }
@@ -279,8 +279,8 @@ class InitiativeController extends BaseController
             return redirect("/admin/initiative");
         }
 
-        if (file_exists( public_path()."".$item->img) && $item->img != null) {//اذا يوجد ملف قديم مخزن
-            unlink( public_path()."".$item->img);//يقوم بحذف القديم
+        if (file_exists(public_path() . "" . $item->img) && $item->img != null) {//اذا يوجد ملف قديم مخزن
+            unlink(public_path() . "" . $item->img);//يقوم بحذف القديم
         }
 
         $initiativeinterests = DB::table('initiatives_interests')->whereIn('initiative_id', [$item->id])->pluck('id');
@@ -288,8 +288,8 @@ class InitiativeController extends BaseController
             DB::table('initiatives_interests')->whereIn('id', $initiativeinterests)->delete();
 
 
-        if($item->initiatives_goals->pluck('id')>0)
-        Initiatives_goal::destroy($item->initiatives_goals->pluck('id'));
+        if ($item->initiatives_goals->pluck('id') > 0)
+            Initiatives_goal::destroy($item->initiatives_goals->pluck('id'));
 
         $item->delete();
         Session::flash("msg", "تم حذف مبادرة بنجاح");
@@ -303,23 +303,30 @@ class InitiativeController extends BaseController
         $item = Activists_initiative::find($id);
 
         if ($item == NULL ||
-            !(auth()->user()->admin->links->contains(\App\Link::where('title','=','قبول منضمين')->first()->id))
+            !(auth()->user()->admin->links->contains(\App\Link::where('title', '=', 'قبول منضمين')->first()->id))
         ) {
-            Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
-            return 0;
+            return response()->json([
+                'message' => 'الرجاء التاكد من الرابط المطلوب'
+            ], 401);
         }
 
-        if(!($item->initiative->admin_id==auth()->user()->admin->id || auth()->user()->admin->super_admin==1)){
-            Session::flash("msg", "e:لا تملك صلاحية تعديل مبادرة لست منشطها");
-            return 0;
+        if (!($item->initiative->admin_id == auth()->user()->admin->id || auth()->user()->admin->super_admin == 1)) {
+             return response()->json([
+                'message' => 'لا تملك صلاحية تعديل مبادرة لست منشطها'
+            ], 401);
+        }
+        $z=count($item->initiative->activists_initiatives()->where('accept',1)->pluck('activist_id')->toArray());
+        if ($item->accept == 0 && $item->initiative->activists_count <= $z) {
+            return response()->json([
+                'message' => 'لا يمكن تجاوز الحد المسموح للمشاركة'.$item->initiative->activists_count.'<'.$z
+            ], 401);
         }
 
 
-
-        if($item->accept==0)
-            $item->accept=1;
+        if ($item->accept == 0)
+            $item->accept = 1;
         else
-            $item->accept=0;
+            $item->accept = 0;
         $item->save();
 
 
@@ -330,7 +337,7 @@ class InitiativeController extends BaseController
         //
     }
 
-    public function activitsInInitiative($id,Request $request)
+    public function activitsInInitiative($id, Request $request)
     {
         $the_item = Initiative::find($id);
         if ($the_item == NULL) {
@@ -339,7 +346,7 @@ class InitiativeController extends BaseController
         }
 
         $q = $request["q"] ?? "";
-        $accept= $request["accept"] ?? "";
+        $accept = $request["accept"] ?? "";
         $city_id = $request["city_id"] ?? "";
         $governorate_id = $request["governorate_id"] ?? "";
         $gender = $request["gender"] ?? "";
@@ -361,11 +368,9 @@ class InitiativeController extends BaseController
         }
 
         $items = $the_item->activists()->leftJoin('users', 'user_id', 'users.id')
-            ->leftJoin('activists_initiatives as soso_one', 'activists_initiatives.activist_id','activists.id' )
-            ->where('activists_initiatives.initiative_id',$id)
+            ->leftJoin('activists_initiatives as soso_one', 'activists_initiatives.activist_id', 'activists.id')
+            ->where('activists_initiatives.initiative_id', $id)
             ->leftJoin('cities', 'city_id', 'cities.id')->whereRaw(true);
-
-
 
 
         if ($q)
@@ -403,7 +408,7 @@ class InitiativeController extends BaseController
             $items->whereIn('cities.id', $cities_ids);
         }
 
-        if($accept ||$accept==='0' ) {
+        if ($accept || $accept === '0') {
             $items->where('activists_initiatives.accept', '=', $accept);
 
         }
@@ -423,9 +428,6 @@ class InitiativeController extends BaseController
         }
 
 
-
-
-
         if ($request['theaction'] == 'excel') {
             $items = Activist::whereIn('activists.id', $items->pluck('activists.id'))
                 ->leftJoin('users', 'user_id', 'users.id')
@@ -442,27 +444,127 @@ class InitiativeController extends BaseController
                     "q" => $q, "city_id" => $city_id, 'governorate_id' => $governorate_id
                     , "gender" => $gender
                     , 'interests_ids' => $interests_ids
-                ,'accept'=>$accept]);
+                    , 'accept' => $accept]);
             $cities = City::all();
             $governorates = Governorate::all();
             $initiatives = Initiative::all();
-            $interests = Interest::where('status','1')->get();
-            return view('admin.initiatives.activitsInInitiative', compact('the_item','items', 'interests', 'initiatives', 'governorate_id', 'governorates', 'cities', 'city_id'));
+            $interests = Interest::where('status', '1')->get();
+            return view('admin.initiatives.activitsInInitiative', compact('the_item', 'items', 'interests', 'initiatives', 'governorate_id', 'governorates', 'cities', 'city_id'));
         }
 
     }
 
-    public function evaluteToInitiave($id)
+    public function evaluteToInitiave($id, Request $request)
     {
-        //
+        $q = $request["q"] ?? "";
+        $status = $request["status"] ?? "";
+        $keywords = preg_split("/[\s,]+/", $q);
+        $item = Initiative::find($id);
+        if ($item == NULL) {
+            Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
+            return redirect("/admin/initiative");
+        }
+
+        if (count($keywords) == 3) {
+            $keywords[3] = "";
+        }
+        if (count($keywords) == 2) {
+            $keywords[2] = "";
+            $keywords[3] = "";
+        }
+        if (count($keywords) == 1) {
+            $keywords[1] = "";
+            $keywords[2] = "";
+            $keywords[3] = "";
+        }
+
+        $items1 = $item->initiative_evaluations()->join('admins', 'admins.id', '=', 'initiative_evaluation.admin_id')->
+        leftJoin('users', 'admins.user_id', 'users.id')->
+        whereRaw(true);
+        if ($q)
+            $items1->whereRaw("(
+            (users.name like ? and users.father_name like ? and users.grand_father_name like ? and users.last_name like ?) 
+            or (users.name like ? and users.last_name like ? and users.grand_father_name like ? and users.father_name like ?) 
+            or (users.name like ? and users.grand_father_name like ? and users.last_name like ? and users.father_name like ?) 
+            or (users.father_name like ? and users.grand_father_name like ? and users.name like ? and users.last_name like ?) 
+            or (users.father_name like ? and users.last_name like ? and users.grand_father_name like ? and users.name like ?) 
+            or (users.grand_father_name like ? and users.last_name like ? and users.father_name like ? and users.name like ?) 
+            or users.name like ? or  users.father_name like? or users.grand_father_name like?  or  users.last_name like?
+            )"
+                , ["%$keywords[0]%", "%$keywords[1]%", "%$keywords[2]%", "%$keywords[3]%",
+                    /**/
+                    "%$keywords[0]%", "%$keywords[1]%", "%$keywords[2]%", "%$keywords[3]%",
+                    /**/
+                    "%$keywords[0]%", "%$keywords[1]%", "%$keywords[2]%", "%$keywords[3]%",
+                    /**/
+                    "%$keywords[0]%", "%$keywords[1]%", "%$keywords[2]%", "%$keywords[3]%",
+                    /**/
+                    "%$keywords[0]%", "%$keywords[1]%", "%$keywords[2]%", "%$keywords[3]%",
+                    /**/
+                    "%$keywords[0]%", "%$keywords[1]%", "%$keywords[2]%", "%$keywords[3]%",
+                    /**/
+                    "%$q%", "%$q%", "%$q%", "%$q%"
+                ]);
+        $items2 = $item->initiative_evaluations()->join('activists', 'activists.id', '=', 'initiative_evaluation.activist_id')->
+        leftJoin('users', 'activists.user_id', 'users.id')->
+        whereRaw(true);
+        if ($q)
+            $items2->whereRaw("(
+            (users.name like ? and users.father_name like ? and users.grand_father_name like ? and users.last_name like ?) 
+            or (users.name like ? and users.last_name like ? and users.grand_father_name like ? and users.father_name like ?) 
+            or (users.name like ? and users.grand_father_name like ? and users.last_name like ? and users.father_name like ?) 
+            or (users.father_name like ? and users.grand_father_name like ? and users.name like ? and users.last_name like ?) 
+            or (users.father_name like ? and users.last_name like ? and users.grand_father_name like ? and users.name like ?) 
+            or (users.grand_father_name like ? and users.last_name like ? and users.father_name like ? and users.name like ?) 
+            or users.name like ? or  users.father_name like? or users.grand_father_name like?  or  users.last_name like?
+            )"
+                , ["%$keywords[0]%", "%$keywords[1]%", "%$keywords[2]%", "%$keywords[3]%",
+                    /**/
+                    "%$keywords[0]%", "%$keywords[1]%", "%$keywords[2]%", "%$keywords[3]%",
+                    /**/
+                    "%$keywords[0]%", "%$keywords[1]%", "%$keywords[2]%", "%$keywords[3]%",
+                    /**/
+                    "%$keywords[0]%", "%$keywords[1]%", "%$keywords[2]%", "%$keywords[3]%",
+                    /**/
+                    "%$keywords[0]%", "%$keywords[1]%", "%$keywords[2]%", "%$keywords[3]%",
+                    /**/
+                    "%$keywords[0]%", "%$keywords[1]%", "%$keywords[2]%", "%$keywords[3]%",
+                    /**/
+                    "%$q%", "%$q%", "%$q%", "%$q%"
+                ]);
+
+        $items_id = array_merge($items2->pluck('initiative_evaluation.id')->toArray(),$items1->pluck('initiative_evaluation.id')->toArray());
+
+
+        $items = Initiative_evaluation::whereIn('id', $items_id)->whereRaw(true);
+
+        if ($status || $status === '0') {
+            if ($status == 1)
+                $items->whereHas('admin');
+            else
+                $items->whereHas('activist');
+        }
+        $admin = auth()->user()->admin;
+        if (!$admin->super_admin == 1) {
+            $initiatives = $admin->initiatives->all();
+        } else {
+            $initiatives = Initiative::all();
+        }
+
+        $items = Initiative_evaluation::whereIn('id', $items->pluck('initiative_evaluation.id'))->paginate(20)
+            ->appends([
+                "q" => $q, 'status' => $status]);
+
+        return view('admin.initiatives.evaluteToInitiave', compact('items', 'initiatives','item'));
+
     }
 
-    public function articleToInitiave($id,Request $request)
+    public function articleToInitiave($id, Request $request)
     {
         $q = $request["q"] ?? "";
         $category_id = $request["category_id"] ?? "";
         $status = $request["status"] ?? "";
-        $the_item=Initiative::find($id);
+        $the_item = Initiative::find($id);
         if ($the_item == NULL) {
             Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
             return redirect("/admin/admin");
@@ -491,7 +593,7 @@ class InitiativeController extends BaseController
             $categories = Category::where('type', '1')->get();
             $initiatives = Initiative::all();
         }
-        return view("admin.initiatives.articleToInitiave", compact('items','the_item', 'categories', 'initiatives'));
+        return view("admin.initiatives.articleToInitiave", compact('items', 'the_item', 'categories', 'initiatives'));
     }
 
 

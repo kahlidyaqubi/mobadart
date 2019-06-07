@@ -18,12 +18,13 @@ class CreateDonationListsTable extends Migration {
 			$table->integer('initiative_id');
 			$table->integer('bank_account');
 			$table->string('financier_name');
-			$table->integer('amount');
+			$table->double('amount');
 			$table->string('financier_phone');
 			$table->string('financier_email');
-			$table->integer('city_id');
-            $table->string('financier_address');
-			$table->boolean('status');
+			$table->string('financier_address');
+            $table->integer('city_id')->nullable();
+            $table->string('country');
+            $table->double('accept_amount')->default(0);
 			$table->softDeletes();
 			$table->timestamps();
 		});

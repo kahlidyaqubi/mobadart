@@ -28,13 +28,13 @@
                         </select>
                     </div>
                     @if($the_item->admin_id==auth()->user()->admin->id || auth()->user()->admin->super_admin==1)
-                    <div class="col-sm-4" style="margin-top: 12px">
-                        <select class="form-control" name="accept">
-                            <option value="">المقبولين والمتقدمين</option>
-                            <option value="1" @if(request('accept')==1) selected @endif>المقبولين </option>
-                            <option value="0" @if(request('accept')==='0') selected @endif>المتقدمين </option>
-                        </select>
-                    </div>
+                        <div class="col-sm-4" style="margin-top: 12px">
+                            <select class="form-control" name="accept">
+                                <option value="">المقبولين والمتقدمين</option>
+                                <option value="1" @if(request('accept')==1) selected @endif>المقبولين</option>
+                                <option value="0" @if(request('accept')==='0') selected @endif>المتقدمين</option>
+                            </select>
+                        </div>
                     @endif
                     <div class="col-sm-4" style="margin-top: 12px">
                         <select class="form-control" name="gender">
@@ -47,7 +47,8 @@
                         <label>فــــرز حســــب الاهتمـــامـــات</label>
                         <select id="multi-select-demo" name="interests_ids[]" multiple="multiple">
                             @foreach($interests as $interest)
-                                <option value="{{$interest->id}}" @if(collect(request('interests_ids'))->contains($interest->id))selected @endif>{{$interest->name}}</option>
+                                <option value="{{$interest->id}}"
+                                        @if(collect(request('interests_ids'))->contains($interest->id))selected @endif>{{$interest->name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -68,7 +69,10 @@
             </div>
         </div>
     </div>
+    <br>
+    <div class="portlet-body " id="the_error">
 
+    </div>
     <div class="portlet-body">
         @if($items->count()>0)
             <div class="table-scrollable">
@@ -84,7 +88,7 @@
                         <th>العمر</th>
                         <th>المدينة</th>
                         @if($the_item->admin_id==auth()->user()->admin->id || auth()->user()->admin->super_admin==1)
-                        <th>القبول</th>
+                            <th>القبول</th>
                         @endif
                         <th width="15%" class="hidden-xs"> إجراءات</th>
                     </tr>
@@ -101,13 +105,14 @@
                             <td> {{\Carbon\Carbon::parse($item->brth_day)->age}}</td>
                             <td> {{$item->city->name}}</td>
                             @if($the_item->admin_id==auth()->user()->admin->id || auth()->user()->admin->super_admin==1)
-                            <td> <input
-                                        @if(!Auth::user()->admin->links->contains(\App\Link::where('title','=','قبول منضمين')
-                                      ->first()->id)) disabled
-                                        title="لا تملك صلاحية قبول منضمين"
-                                        @endif
-                                        class="cbActive" type="checkbox" {{$item->activists_initiatives->where('initiative_id',$the_item->id)->first()->accept==1?"checked":""}} value="{{$item->activists_initiatives->where('initiative_id',$the_item->id)->first()->id}}"/>
-                            </td>
+                                <td><input
+                                            @if(!Auth::user()->admin->links->contains(\App\Link::where('title','=','قبول منضمين')
+                                          ->first()->id)) disabled
+                                            title="لا تملك صلاحية قبول منضمين"
+                                            @endif
+                                            class="cbActive" type="checkbox"
+                                            {{$item->activists_initiatives->where('initiative_id',$the_item->id)->first()->accept==1?"checked":""}} value="{{$item->activists_initiatives->where('initiative_id',$the_item->id)->first()->id}}"/>
+                                </td>
                             @endif
                             <td width="17%" class="hidden-xs">
                                 <div class="btn-group">
@@ -135,13 +140,13 @@
             <br><br>
             <div class="alert alert-warning">نأسف لا يوجد بيانات لعرضها</div>
         @endif
-            <div class="form-actions">
-                <div class="row">
-                    <div class="col-md-offset-1 col-md-9">
-                        <a href="/admin/initiative/{{$the_item->id}}" class="btn grey-salsa btn-outline">إلغاء</a>
-                    </div>
+        <div class="form-actions">
+            <div class="row">
+                <div class="col-md-offset-1 col-md-9">
+                    <a href="/admin/initiative/{{$the_item->id}}" class="btn grey-salsa btn-outline">إلغاء</a>
                 </div>
             </div>
+        </div>
     </div>
     </div>
 
@@ -161,11 +166,19 @@
         $(function () {
             $(".cbActive").click(function () {
                 var id = $(this).val();
+                var mythis=this;
+                console.log(mythis);
+
                 $.ajax({
                     url: "/admin/initiative/acceptActivit/" + id,
                     data: {_token: '{{ csrf_token() }}'},
                     error: function (jqXHR, textStatus, errorThrown) {
-
+                        document.getElementById("the_error").innerHTML = '<div class="alert alert-danger alert-dismissible">\n' + jqXHR.responseJSON.message +
+                            '        <button type="button" class="close" data-dismiss="alert" aria-label="Close">\n' +
+                            '            <span aria-hidden="true">&times;</span>\n' +
+                            '        </button>\n' +
+                            '    </div>';
+                        mythis.checked = false;
                     },
                 });
             });

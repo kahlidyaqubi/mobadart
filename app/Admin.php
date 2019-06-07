@@ -19,6 +19,10 @@ class Admin extends Model
     {
         return $this->hasMany('App\Demand');
     }
+    function initiative_evaluations()
+    {
+        return $this->hasMany('App\Initiative_evaluation');
+    }
     public function family_center(){
         return $this->belongsTo('App\Family_center');
     }

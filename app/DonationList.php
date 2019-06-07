@@ -10,12 +10,12 @@ class DonationList extends Model
     protected $table = 'donation_lists';
 
     protected $fillable = ['initiative_id', 'bank_account', 'financier_name', 'brth_day',
-        'amount', 'financier_phone', 'financier_email', 'city_id','financier_address', 'status'
+        'amount', 'financier_phone', 'financier_email', 'city_id','financier_address','country' ,'accept_amount'
     ];
 
 
 
-    public function initiativ(){
+    public function initiative(){
         return $this->belongsTo('App\Initiative');
     }
     public function city()

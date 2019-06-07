@@ -8,6 +8,7 @@ use App\City;
 use App\Governorate;
 use App\Http\Requests\ActivistRequest;
 use App\Initiative;
+use App\Initiative_evaluation;
 use App\Interest;
 use App\User;
 use App\Imports\ActivistExport;
@@ -182,13 +183,18 @@ class ActivsitController extends BaseController
                         'name' => "$other_interests[$i]",
                         'status' => "2"
                     ])->id;
-                    $other_interests_ids[$i] = $interest_id;
+                } else {
+                    $interest_id = Interest::where('name', $other_interests[$i])->first()->id;
                 }
+                $other_interests_ids[$i] = $interest_id;
             }
         }
 
         if (request()['interest']) {
-            $all_interests = array_merge($other_interests_ids, request()['interest']);
+            if ($request["other_interests"])
+                $all_interests = array_merge($other_interests_ids, request()['interest']);
+            else
+                $all_interests = request()['interest'];
 
             for ($i = 0; $i < count($all_interests); $i++) {
                 DB::table('activists_interests')->insertGetId([
@@ -196,12 +202,23 @@ class ActivsitController extends BaseController
                     'interest_id' => $all_interests[$i],
                 ]);
             }
+        } else {
+            if ($request["other_interests"]) {
+                $all_interests = $other_interests_ids;
+                for ($i = 0; $i < count($all_interests); $i++) {
+                    DB::table('activists_interests')->insertGetId([
+                        'activist_id' => $activist_id,
+                        'interest_id' => $all_interests[$i],
+                    ]);
+                }
+            }
         }
         Session::flash("msg", "تمت عملية الاضافة بنجاح");
         return redirect("/admin/activsit/create");
     }
 
-    public function show($id)
+    public
+    function show($id)
     {
         $item = Activist::find($id);
         if ($item == NULL) {
@@ -215,7 +232,8 @@ class ActivsitController extends BaseController
 
     }
 
-    public function edit($id)
+    public
+    function edit($id)
     {
         $item = Activist::find($id);
         if ($item == NULL) {
@@ -231,7 +249,8 @@ class ActivsitController extends BaseController
         return view('admin.activsits.edit', compact('cities', 'governorates', 'hisinterests', 'interests', 'item'));
     }
 
-    public function update(ActivistRequest $request, $id)
+    public
+    function update(ActivistRequest $request, $id)
     {
         $item = Activist::find($id);
         if ($item == NULL) {
@@ -262,22 +281,37 @@ class ActivsitController extends BaseController
                         'name' => "$other_interests[$i]",
                         'status' => "2"
                     ])->id;
-                    $other_interests_ids[$i] = $interest_id;
+
+                } else {
+                    $interest_id = Interest::where('name', $other_interests[$i])->first()->id;
                 }
+                $other_interests_ids[$i] = $interest_id;
             }
         }
 
         if (request()['interest']) {
             if ($request["other_interests"])
-            $all_interests = array_merge($other_interests_ids, request()['interest']);
+                $all_interests = array_merge($other_interests_ids, request()['interest']);
             else
-                $all_interests= request()['interest'];
+                $all_interests = request()['interest'];
             \DB::table("activists_interests")->where("activist_id", $id)->delete();
+
             if ($all_interests) {
                 foreach ($all_interests as $interest)
                     \DB::table("activists_interests")->insert([
                         "activist_id" => $id,
                         "interest_id" => $interest]);
+            }
+        } else {
+            if ($request["other_interests"]) {
+                $all_interests = $other_interests_ids;
+                \DB::table("activists_interests")->where("activist_id", $id)->delete();
+                if ($all_interests) {
+                    foreach ($all_interests as $interest)
+                        \DB::table("activists_interests")->insert([
+                            "activist_id" => $id,
+                            "interest_id" => $interest]);
+                }
             }
         }
 
@@ -285,29 +319,65 @@ class ActivsitController extends BaseController
         return redirect("/admin/activsit");
     }
 
-    public function destroy($id)
+    public
+    function destroy($id)
     {
         //
     }
 
-    public function initiaveToActivsit($id)
+    public
+    function initiaveToActivsit($id)
     {
         //
     }
 
-    public function demandToActivsit($id)
+    public
+    function demandToActivsit($id)
     {
         //
     }
 
-    public function evaluteToActivsit($id)
+    public
+    function evaluteToActivsit($id, Request $request)
     {
-        //
+        $initiative_id = $request["initiative_id"] ?? "";
+        $status = $request["status"] ?? "";
+
+        $item = Activist::find($id);
+        if ($item == NULL) {
+            Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
+            return redirect("/admin/activsit");
+        }
+        $items = $item->initiative_evaluations()->whereRaw(true);
+
+
+        if ($initiative_id) {
+            $items->whereRaw("(initiative_id = ?)"
+                , [$initiative_id]);
+        }
+        if ($status || $status === '0') {
+            if ($status == 1)
+                $items->whereHas('admin');
+            else
+                $items->whereHas('activist');
+        }
+        $admin = auth()->user()->admin;
+        if (!$admin->super_admin == 1) {
+            $initiatives = $admin->initiatives->all();
+        } else {
+            $initiatives = Initiative::all();
+        }
+
+        $items = Initiative_evaluation::whereIn('id', $items->pluck('initiative_evaluation.id'))->paginate(20)
+            ->appends(['initiative_id' => $initiative_id, 'status' => $status]);
+
+        return view('admin.activsits.evaluteToActivsit', compact('items', 'item', 'initiatives'));
+
     }
 
 
-
-    public function delete($id)
+    public
+    function delete($id)
     {
         $item = Activist::find($id);
         if ($item == NULL) {

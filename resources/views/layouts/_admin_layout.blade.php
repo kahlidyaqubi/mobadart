@@ -206,10 +206,10 @@
 
                         $the_sublinks = Auth::user()->admin->links()->where("in_menu", 1)->where("parent_id", $link->id)->orWhere("mult_id", $link->id)->pluck('links.id');
                         $sublinks = \App\Link::find($the_sublinks);
+                        $preventeroor=\App\Link::find(Auth::user()->admin->links()->where("parent_id", $link->id)->orWhere("mult_id", $link->id)->pluck('links.id'));
                         ?>
-
-
-                        <li class="nav-item @if($link->mult!=1){{ strstr("/".Route::getFacadeRoot()->current()->uri(),$sublinks->first()->link)?
+                        <li class="nav-item @if($link->mult!=1)
+                        {{ strstr("/".Route::getFacadeRoot()->current()->uri(),$preventeroor->first()->link)?
                                             "open":'' }}@endif
                                 ">
                             <a href="{{$link->link}}" class="nav-link nav-toggle">
@@ -219,15 +219,17 @@
                             </a>
 
                             <ul class="sub-menu"
-                            @if($link->mult!=1) {{ strstr("/".Route::getFacadeRoot()->current()->uri(),$sublinks->first()->link)?"style=display:block;":'' }} @endif
+                            @if($link->mult!=1) {{ strstr("/".Route::getFacadeRoot()->current()->uri(),$preventeroor->first()->link)?"style=display:block;":'' }} @endif
                             @if($link->mult==1) {{ in_array("/".Route::getFacadeRoot()->current()->uri(),
                             Auth::user()->admin->links->where("in_menu", 1)->whereIn("parent_id", $sublinks->pluck('id'))->pluck('link')->toArray())?"style=display:block;":'' }} @endif>
 
                                 @foreach($sublinks as $sublink)
                                     <?php
                                     $sub_sublinks = Auth::user()->admin->links->where("in_menu", 1)->where("parent_id", $sublink->id);
+                                    $sub_sublinks_error = Auth::user()->admin->links->where("parent_id", $sublink->id);
+
                                     ?>
-                                    <li class="nav-item @if($link->mult==1){{ strstr("/".Route::getFacadeRoot()->current()->uri(),$sub_sublinks->first()->link)?
+                                    <li class="nav-item @if($link->mult==1){{ strstr("/".Route::getFacadeRoot()->current()->uri(),$sub_sublinks_error->first()->link)?
                                             "open":'' }}@endif">
 
                                         <a @if($link->mult!=1)href="{{$sublink->link}}" @endif class="nav-link ">
@@ -238,7 +240,7 @@
                                         @if($link->mult==1)
 
 
-                                            <ul class="sub-menu" {{ strstr("/".Route::getFacadeRoot()->current()->uri(),$sub_sublinks->first()->link)?"style=display:block;":'' }}>
+                                            <ul class="sub-menu" {{ strstr("/".Route::getFacadeRoot()->current()->uri(),$sub_sublinks_error->first()->link)?"style=display:block;":'' }}>
                                                 @foreach($sub_sublinks as $sub_sublink)
                                                     <li class="nav-item">
                                                         <a href="{{$sub_sublink->link}}" class="nav-link">

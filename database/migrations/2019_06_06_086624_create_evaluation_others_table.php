@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateInitiativeEvaluationTable extends Migration {
+class CreateEvaluationOthersTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,12 +12,13 @@ class CreateInitiativeEvaluationTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('initiative_evaluation', function(Blueprint $table)
+		Schema::create('evaluation_others', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('initiative_id');
-			$table->integer('activist_id');
-			$table->softDeletes();
+			$table->integer('initiative_evaluation_id');
+            $table->string('attribute');
+            $table->string('value');
+            $table->softDeletes();
 			$table->timestamps();
 		});
 	}
@@ -30,7 +31,7 @@ class CreateInitiativeEvaluationTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('initiative_evaluation');
+		Schema::drop('evaluation_others');
 	}
 
 }

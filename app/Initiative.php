@@ -45,7 +45,7 @@ class Initiative extends Model
         return $this->hasMany('App\Initiatives_goal');
     }
 
-    function initiative_evaluation(){
+    function initiative_evaluations(){
         return $this->hasMany('App\Initiative_evaluation');
     }
 

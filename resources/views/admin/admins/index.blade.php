@@ -129,6 +129,13 @@
                                                                 class="fa fa-comment"></i>نماذجه</span></a>
                                             </li>
                                         @endif
+                                        @if(auth()->user()->admin->links->contains(\App\Link::where('title','=','إدارة التقيمات')->first()->id))
+                                            <li>
+                                                <a href="/admin/admin/evaluteToAdmin/{{$item->id}}">
+                                                    <span class="text-primary"><i
+                                                                class="fa fa-comment"></i>تقيماته</span></a>
+                                            </li>
+                                        @endif
                                     </ul>
                                 </div>
                             </td>

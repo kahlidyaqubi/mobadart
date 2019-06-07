@@ -24,12 +24,22 @@
                                     <a> مركز العائلة : @if($item->family_center) {{$item->family_center->name}} @else
                                             عام @endif </a>
                                 </li>
-                                <li>
-                                    <a href="/admin/admin/initiaveToAdmin/{{$item->id}}"> مبادراتي </a>
-                                </li>
-                                <li>
-                                    <a href="/admin/admin/articleToAdmin/{{$item->id}}"> أخباري </a>
-                                </li>
+                                @if(auth()->user()->admin->links->contains(\App\Link::where('title','=','إدارة المبادرات')->first()->id))
+                                    <li>
+                                        <a href="/admin/admin/initiaveToAdmin/{{$item->id}}"> مبادراتي </a>
+                                    </li>
+                                @endif
+                                @if(auth()->user()->admin->links->contains(\App\Link::where('title','=','إدارة الأخبار')->first()->id))
+                                    <li>
+                                        <a href="/admin/admin/articleToAdmin/{{$item->id}}"> أخباري </a>
+                                    </li>
+                                @endif
+                                @if(auth()->user()->admin->links->contains(\App\Link::where('title','=','إدارة التقيمات')->first()->id))
+                                    <li>
+                                        <a style="color:#042e51;"
+                                           href="/admin/admin/evaluteToAdmin/{{$item->id}}"> تقييماتي </a>
+                                    </li>
+                                @endif
 
                             </ul>
                         </div>
@@ -95,7 +105,8 @@
                                                     <tfoot>
                                                     <tr>
                                                         <th colspan="4">
-                                                            <a href="/admin/admin/articleToAdmin/{{$item->id}}">عرض المزيد</a>
+                                                            <a href="/admin/admin/articleToAdmin/{{$item->id}}">عرض
+                                                                المزيد</a>
                                                         </th>
                                                     </tfoot>
                                                 </table>
