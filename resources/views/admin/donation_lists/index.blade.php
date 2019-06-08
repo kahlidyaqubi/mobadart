@@ -76,6 +76,10 @@
                                             <a href="/admin/donationList/{{$item->id}}/edit">
                                                 <span class="text-warning"><i class="icon-pencil"></i> عرض واعتماد </span></a>
                                         </li>
+                                        <li>
+                                            <a href="/admin/donationList/delete/{{$item->id}}" class="Confirm">
+                                                <span class="text-danger"><i class="icon-trash"></i> حذف</span></a>
+                                        </li>
                                     </ul>
                                 </div>
                             </td>

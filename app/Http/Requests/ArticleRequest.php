@@ -36,6 +36,8 @@ class ArticleRequest extends FormRequest
         if (request()->images) {
            $valid['images.*'] = 'image|mimes:jpeg,png,jpg,gif,svg|max:2048';
         }
+        if (request()->image)
+            $valid['main_image'] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
         return $valid;
     }
 }

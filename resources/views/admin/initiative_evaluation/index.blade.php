@@ -76,6 +76,10 @@
                                                 <span class="text-primary"><i
                                                             class="fa fa-eye"></i>عرض</span></a>
                                         </li>
+                                            <li>
+                                                <a href="/admin/evalution/delete/{{$item->id}}" class="Confirm">
+                                                    <span class="text-danger"><i class="icon-trash"></i> حذف</span></a>
+                                            </li>
                                     </ul>
                                 </div>
                             </td>

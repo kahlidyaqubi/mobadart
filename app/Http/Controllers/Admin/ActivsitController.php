@@ -100,12 +100,12 @@ class ActivsitController extends BaseController
 
         if ($usefull) {
             if ($usefull == 1) {
-                $activistsids = Activists_initiative::pluck('activist_id');
-                $items->whereIn("id"
+                $activistsids = Activists_initiative::where('accept',1)->pluck('activist_id');
+                $items->whereIn("activists.id"
                     , $activistsids);
             } else if ($usefull == 2) {
-                $activistsids = Activists_initiative::pluck('activist_id');
-                $items->whereNotIn("id"
+                $activistsids = Activists_initiative::where('accept',1)->pluck('activist_id');
+                $items->whereNotIn("activists.id"
                     , $activistsids);
             }
         }
@@ -227,7 +227,7 @@ class ActivsitController extends BaseController
         }
 
         $hisinterests = $item->interests->all();
-        $hisinitiative = $item->initiatives()->paginate(20);
+        $hisinitiative = $item->initiatives()->where('accept',1)->paginate(20);
         return view('admin.activsits.show', compact('hisinterests', 'hisinitiative', 'item'));
 
     }

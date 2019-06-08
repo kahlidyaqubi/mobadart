@@ -26,7 +26,7 @@ class CreateAdminLinks extends Seeder
             'parent_id' => 0,
             'in_menu' => 1,
             'link' => '',
-            'mult'=>1,
+            'mult' => 1,
             'order_id' => 15,
             'super' => 0,
             'new_window' => 0,
@@ -188,7 +188,7 @@ class CreateAdminLinks extends Seeder
             'new_window' => 0,
             'route' => '',
         ]);
-		 /********************إدارة الأنشطة*********************/
+        /********************إدارة الأنشطة*********************/
 
         $link1 = DB::table('links')->insertGetId([
             'title' => 'إنشاء نشاط',
@@ -257,13 +257,23 @@ class CreateAdminLinks extends Seeder
             'new_window' => 0,
             'route' => '',
         ]);
-       
+        $link1 = DB::table('links')->insertGetId([
+            'title' => 'حذف تبرع',
+            'icon' => 'icon-diamond',
+            'parent_id' => $link_id,
+            'in_menu' => 0,
+            'link' => '/admin/donationList/delete',
+            'order_id' => 3,
+            'super' => 0,
+            'new_window' => 0,
+            'route' => '',
+        ]);
         /********************إدارة مراكز العائلة*********************/
         $link_id = DB::table('links')->insertGetId([
             'title' => 'مراكز العائلة',
             'icon' => 'icon-diamond',
             'parent_id' => 0,
-            'mult_id'=>$mult_id,
+            'mult_id' => $mult_id,
             'in_menu' => 1,
             'link' => '',
             'order_id' => 4,
@@ -450,7 +460,7 @@ class CreateAdminLinks extends Seeder
             'new_window' => 0,
             'route' => '',
         ]);
-		$link1 = DB::table('links')->insertGetId([
+        $link1 = DB::table('links')->insertGetId([
             'title' => 'إضافة خبر',
             'icon' => 'icon-diamond',
             'parent_id' => $link_id,
@@ -566,7 +576,7 @@ class CreateAdminLinks extends Seeder
             'title' => 'الاهتمامات',
             'icon' => 'icon-diamond',
             'parent_id' => 0,
-            'mult_id'=>$mult_id,
+            'mult_id' => $mult_id,
             'in_menu' => 1,
             'link' => '',
             'order_id' => 9,
@@ -623,7 +633,7 @@ class CreateAdminLinks extends Seeder
             'title' => 'المدن',
             'icon' => 'icon-diamond',
             'parent_id' => 0,
-            'mult_id'=>$mult_id,
+            'mult_id' => $mult_id,
             'in_menu' => 1,
             'link' => '',
             'order_id' => 10,
@@ -680,7 +690,7 @@ class CreateAdminLinks extends Seeder
             'title' => 'المحافظات',
             'icon' => 'icon-diamond',
             'parent_id' => 0,
-            'mult_id'=>$mult_id,
+            'mult_id' => $mult_id,
             'in_menu' => 1,
             'link' => '',
             'order_id' => 11,
@@ -737,7 +747,7 @@ class CreateAdminLinks extends Seeder
             'title' => 'فئات النماذج',
             'icon' => 'icon-diamond',
             'parent_id' => 0,
-            'mult_id'=>$mult_id,
+            'mult_id' => $mult_id,
             'in_menu' => 0,
             'link' => '',
             'order_id' => 12,
@@ -789,12 +799,12 @@ class CreateAdminLinks extends Seeder
             'new_window' => 0,
             'route' => '',
         ]);
-/********************فئات الأخبار*********************/
+        /********************فئات الأخبار*********************/
         $link_id = DB::table('links')->insertGetId([
             'title' => 'فئات الأخبار',
             'icon' => 'icon-diamond',
             'parent_id' => 0,
-            'mult_id'=>$mult_id,
+            'mult_id' => $mult_id,
             'in_menu' => 1,
             'link' => '',
             'order_id' => 12,
@@ -852,7 +862,7 @@ class CreateAdminLinks extends Seeder
             'title' => 'اعدادات الموقع',
             'icon' => 'icon-diamond',
             'parent_id' => 0,
-            'mult_id'=>$mult_id,
+            'mult_id' => $mult_id,
             'in_menu' => 1,
             'link' => '',
             'order_id' => 13,
@@ -921,14 +931,14 @@ class CreateAdminLinks extends Seeder
             'icon' => 'icon-diamond',
             'parent_id' => $link_id,
             'in_menu' => 1,
-            'link' => '/admin/chart/donationToInitiatives',
+            'link' => '/admin/chart',
             'order_id' => 14,
             'super' => 1,
             'new_window' => 0,
             'route' => '',
         ]);
         $link1 = DB::table('links')->insertGetId([
-            'title' => 'اهتمامات النشطاء',
+            'title' => 'النشطاء للإهتمامات',
             'icon' => 'icon-diamond',
             'parent_id' => $link_id,
             'in_menu' => 1,
@@ -939,7 +949,7 @@ class CreateAdminLinks extends Seeder
             'route' => '',
         ]);
         $link1 = DB::table('links')->insertGetId([
-            'title' => 'مبادرات الشباب',
+            'title' => 'النشطاء في المبادرات',
             'icon' => 'icon-diamond',
             'parent_id' => $link_id,
             'in_menu' => 1,
@@ -955,6 +965,28 @@ class CreateAdminLinks extends Seeder
             'parent_id' => $link_id,
             'in_menu' => 1,
             'link' => '/admin/chart/activistTOCities',
+            'order_id' => 14,
+            'super' => 1,
+            'new_window' => 0,
+            'route' => '',
+        ]);
+        $link1 = DB::table('links')->insertGetId([
+            'title' => 'الأعمار للنشطاء',
+            'icon' => 'icon-diamond',
+            'parent_id' => $link_id,
+            'in_menu' => 1,
+            'link' => '/admin/chart/ageTOActivists',
+            'order_id' => 14,
+            'super' => 1,
+            'new_window' => 0,
+            'route' => '',
+        ]);
+        $link1 = DB::table('links')->insertGetId([
+            'title' => 'الجنس للنشطاء',
+            'icon' => 'icon-diamond',
+            'parent_id' => $link_id,
+            'in_menu' => 1,
+            'link' => '/admin/chart/genderTOActivists',
             'order_id' => 14,
             'super' => 1,
             'new_window' => 0,
@@ -1008,8 +1040,8 @@ class CreateAdminLinks extends Seeder
             'neighborhood' => 'hosameya',
             'brth_day' => '2019-05-01',
             'gender' => 'M',
-            'face_url'=>'https://www.facebook.com/khaled.yaqubi.3',
-            'ido'=>'400012345',
+            'face_url' => 'https://www.facebook.com/khaled.yaqubi.3',
+            'ido' => '400012345',
 
         ]);
         /*****صلاحية مدير***/
@@ -1058,27 +1090,24 @@ class CreateAdminLinks extends Seeder
         ]);
         /***************اليوزر سيتنج******************/
         DB::table('site_sting')->insertGetId([
-            'about_project'=> 'مشروع يهدف لاشراك الشباب في خدمة المجتمع ورفع روح التطوع',
-            'motivational_words'=> 'كن سراجا كن قمر كن كما الله أمر',
-            'who_are'=> 'نحن مركز تنموي يعمل في الضفة والقطاع منذ زمن بعيد',
-            'maan_msg'=> 'معا مركز وصرح لخدمة المجتمع والشباب',
-            'call_us'=> 'اتصل بنا على الأرقام التالية ',
-            'donation_msg'=> 'شكرا لمساهمتك نتمنى ان نكون عند حسن ثقتكم بنا',
-            'complaint_msg'=> 'شكرا لمشاركتك سوف يتم مراجعة شكواك بعين الاعتبار',
-            'proposal_msg'=> 'شكرا لمشاركتك سوف يتم اخذ الاقتراح بعين الاعتبار',
-            'recommendation_msg'=> 'شكرا لمشاركتك سوف يتم اخذ التوصية بعين الاعتبار',
-            'accession_msg'=> 'سوف يتم الرد على طلب انضمامك في أقرب وقت',
-            'acceptance_msg'=> 'تهانينا، تم قبول انضمامك للمبادرة',
-            'rejection_msg'=> 'نعتذ، لم يتم قبولك في المبادرة لعدم موافقة الشروط',
-            'contact_msg'=> 'شكرا، سوف يتم الاطلاع على رسالتك ورد عليه في قرب وقت',
-            'bank_account'=> '0599636064',
-            'experiences'=>'تجارب السابقين هي الحافز الذي يبنى عليه لالهام القادمين',
-            'mobile1'=> '0599636064',
-            'mobile2'=> '0599636064',
-            'mobile3'=> '0599636064',
-            'img1'=> 'notfound',
-            'img2'=> 'notfound',
-            'img3'=> 'notfound',
+            'title_page' => 'مركز العمل التنموي/معا',
+            'project_title' => 'مشروع تعزيز قدرة اللاجئين الفلسطينيين على التأثير في ظروف معيشتهم',
+            'about_project' => 'مشروع ممول من الوكالة الألمانية للتأمين يهدف لتغيير مخيمات اللاجئين وتعزيز قدرتهم يستهدف هذا المشروع  الشباب اللاجئين من خلال القيام بالعديد من المبادرات والحملات الشبابية',
+            'img1' => '/setting/pr-video6.jpg',
+            'who_are' => '
+    مركز معا للتطوير هو مؤسسة فلسطينية للتدريب مستقلة وغير حكومية وغير حزبية تأسست في كانون الثاني (يناير) 1989 ، وهي مسجلة بموجب القانون كمنظمة غير ربحية. يقع المكتب الرئيسي في رام الله والمكاتب الفرعية الأربعة في غزة وخان يونس وطولكرم وجنين. إن عمل معان مستنير بضرورة إنشاء مبادرات مستقلة تعتمد على الذات تؤدي إلى تنمية الموارد البشرية من أجل التنمية المستدامة ، والتي تتضمن قيم الاكتفاء الذاتي والتمكين الذات ',
+            'img2' => '/setting/200.jpg',
+            'motivational_words' => 'هدفنا أن يصنع الشباب العربي نموذجا عالمياً في بناء الإنسان والأوطان',
+            'img3' => '/setting/102.jpg',
+            'experiences' => 'هي قصص نجاح عالمية تتقاطع عبرها قصص الكفاح والإصرار والإبداع والتفكير خارج الصندوق المعتاد والرتيب. في هذه التجارب الملهمة ما قد يفتح بعض نوافذ الأمل',
+            'email'=>'info@maan-ctr.org',
+            'address' => 'دوار حيدر عبد الشافي /عمارة المعتز2 الطابق الأرضي /بجوار بنك الدم',
+            'mobile1' => '2823712',
+            'mobile2' => ' 2840287',
+            'bank_account' => '100200300',
+            'accession_msg' => 'تم استلام طلب انضمامك،في حال قبولك سيتم ابلاغك في أقرب وقت',
+            'acceptance_msg' => 'لقد تم قبول انضمام في المبادرة التي طلبت الإنضمام لها مؤخراً',
+            'donation_msg' => 'شكرا لمساهمتك المالية في دعم مشروعنا، سنكون عند حسن ظنك',
         ]);
         /**********************/
         DB::table('categories')->insertGetId([

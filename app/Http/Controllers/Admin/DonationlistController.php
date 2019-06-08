@@ -68,7 +68,7 @@ class DonationListController extends BaseController
         $item = DonationList::find($id);
         if ($item == NULL) {
             Session::flash("msg", "e:يرجى التأكد من الرابط المطلوب");
-            return redirect("/admin/article");
+            return redirect("/admin/donationList");
         }
         return view('admin.donation_lists.edit', compact('item'));
 
@@ -104,7 +104,18 @@ class DonationListController extends BaseController
 
     public function delete($id)
     {
-        //
+        $item = DonationList::find($id);
+        if ($item == NULL) {
+            Session::flash("msg", "e:يرجى التأكد من الرابط المطلوب");
+            return redirect("/admin/donationList");
+        }
+        if ($item->accept_amount > 0) {
+            Session::flash("msg", "e:لا يمكن حذف تبرع معتمد");
+            return redirect("/admin/donationList");
+        }
+        $item->delete();
+        Session::flash("msg", "تم حذف تبرع بنجاح");
+        return redirect("/admin/donationList");
     }
 
 

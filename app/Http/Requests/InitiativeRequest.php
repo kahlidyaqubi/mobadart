@@ -43,6 +43,8 @@ class InitiativeRequest  extends FormRequest
         ];
         if (request()->mobile)
             $valid['donation'] = 'max:6';
+        if (request()->image)
+            $valid['image'] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
         return $valid;
     }
 }

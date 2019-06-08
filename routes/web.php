@@ -108,15 +108,18 @@ Route::namespace('Admin')
         Route::get('/categoryArticle/articlesInCate/{id}', 'CategoryArticleController@articlesInCate');
         /********/
         Route::resource('/siteSting/message', 'MessageController');
+        Route::get('/siteSting/message/delete/{id}', 'MessageController@delete');
         Route::get('/siteSting/editSting', 'SiteStingController@editSting');
         Route::post('/siteSting/editSting', 'SiteStingController@editSting_post');
         Route::get('/siteSting/menuOrder', 'SiteStingController@menuOrder');
         Route::post('/siteSting/menuOrder', 'SiteStingController@menuOrder_post');
         /********/
-        Route::get('/chart/donationToInitiatives', 'ChartController@donationToInitiatives');
+        Route::get('/chart', 'ChartController@donationToInitiatives');
         Route::get('/chart/activistTOInterests', 'ChartController@activistTOInterests');
         Route::get('/chart/activistTOInitiatives', 'ChartController@activistTOInitiatives');
         Route::get('/chart/activistTOCities', 'ChartController@activistTOCities');
+        Route::get('/chart/genderTOActivists', 'ChartController@genderTOActivists');
+        Route::get('/chart/ageTOActivists', 'ChartController@ageTOActivists');
     });
 
 Route::namespace('Activist')

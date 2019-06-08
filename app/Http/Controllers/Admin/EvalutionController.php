@@ -10,6 +10,7 @@ use App\Initiative_evaluation;
 use Illuminate\Http\Request;
 use Session;
 use  PDF;
+use DB;
 
 class EvalutionController extends BaseController
 {
@@ -89,7 +90,7 @@ class EvalutionController extends BaseController
                     "%$q%", "%$q%", "%$q%", "%$q%"
                 ]);
 
-        $items_id = array_merge($items2->pluck('initiative_evaluation.id')->toArray(),$items1->pluck('initiative_evaluation.id')->toArray());
+        $items_id = array_merge($items2->pluck('initiative_evaluation.id')->toArray(), $items1->pluck('initiative_evaluation.id')->toArray());
 
         $items = Initiative_evaluation::whereIn('id', $items_id)->whereRaw(true);
 
@@ -173,17 +174,17 @@ class EvalutionController extends BaseController
         }
         $others = $item->evaluation_others;
         $initiative = $item->initiative;
-        $all_count=$item->initiative->activists_initiatives()->where('accept',1)->pluck('activist_id');
-        $all=Activist::whereIn('id',$all_count)->count();
-        $male_count = Activist::whereIn('id',$all_count)->where('gender', 'M')->count();
-        $male_young_count =  Activist::whereIn('id',$all_count)->where('gender', 'M')->where('brth_day', '>', date('Y-m-d', strtotime('-18 year')))->count();
+        $all_count = $item->initiative->activists_initiatives()->where('accept', 1)->pluck('activist_id');
+        $all = Activist::whereIn('id', $all_count)->count();
+        $male_count = Activist::whereIn('id', $all_count)->where('gender', 'M')->count();
+        $male_young_count = Activist::whereIn('id', $all_count)->where('gender', 'M')->where('brth_day', '>', date('Y-m-d', strtotime('-18 year')))->count();
         $male_old_count = $male_count - $male_young_count;
-        $female_count =  Activist::whereIn('id',$all_count)->where('gender', 'F')->count();
-        $female_young_count =  Activist::whereIn('id',$all_count)->where('gender', 'F')->where('brth_day', '>', date('Y-m-d', strtotime('-18 year')))->count();
+        $female_count = Activist::whereIn('id', $all_count)->where('gender', 'F')->count();
+        $female_young_count = Activist::whereIn('id', $all_count)->where('gender', 'F')->where('brth_day', '>', date('Y-m-d', strtotime('-18 year')))->count();
         $female_old_count = $female_count - $female_young_count;
 
         return view('admin.initiative_evaluation.show', compact('item', 'initiative'
-            , 'others', 'male_count', 'male_young_count','all',
+            , 'others', 'male_count', 'male_young_count', 'all',
             'male_old_count', 'female_count', 'female_young_count',
             'female_old_count', 'type', 'name'));
     }
@@ -234,7 +235,19 @@ class EvalutionController extends BaseController
 
     public function delete($id)
     {
-        //
+        $item = Initiative_evaluation::find($id);
+        if ($item == NULL) {
+            Session::flash("msg", "e:يرجى التأكد من الرابط المطلوب");
+            return redirect("/admin/evalution");
+        }
+
+        $evaluation_others = DB::table('evaluation_others')->whereIn('initiative_evaluation_id', [$item->id])->pluck('id');
+        if (count($evaluation_others) > 0)
+            DB::table('evaluation_others')->whereIn('id', $evaluation_others)->delete();
+
+        $item->delete();
+        Session::flash("msg", "تم حذف تقييم بنجاح");
+        return redirect("/admin/evalution");
     }
 
     public function printEval($id)
@@ -253,17 +266,17 @@ class EvalutionController extends BaseController
         }
         $others = $item->evaluation_others;
         $initiative = $item->initiative;
-        $all_count=$item->initiative->activists_initiatives()->where('accept',1)->pluck('activist_id');
-        $all=Activist::whereIn('id',$all_count)->count();
-        $male_count = Activist::whereIn('id',$all_count)->where('gender', 'M')->count();
-        $male_young_count =  Activist::whereIn('id',$all_count)->where('gender', 'M')->where('brth_day', '>', date('Y-m-d', strtotime('-18 year')))->count();
+        $all_count = $item->initiative->activists_initiatives()->where('accept', 1)->pluck('activist_id');
+        $all = Activist::whereIn('id', $all_count)->count();
+        $male_count = Activist::whereIn('id', $all_count)->where('gender', 'M')->count();
+        $male_young_count = Activist::whereIn('id', $all_count)->where('gender', 'M')->where('brth_day', '>', date('Y-m-d', strtotime('-18 year')))->count();
         $male_old_count = $male_count - $male_young_count;
-        $female_count =  Activist::whereIn('id',$all_count)->where('gender', 'F')->count();
-        $female_young_count =  Activist::whereIn('id',$all_count)->where('gender', 'F')->where('brth_day', '>', date('Y-m-d', strtotime('-18 year')))->count();
+        $female_count = Activist::whereIn('id', $all_count)->where('gender', 'F')->count();
+        $female_young_count = Activist::whereIn('id', $all_count)->where('gender', 'F')->where('brth_day', '>', date('Y-m-d', strtotime('-18 year')))->count();
         $female_old_count = $female_count - $female_young_count;
 
         $pdf = PDF::loadView('admin.initiative_evaluation.print', compact('item', 'initiative'
-            , 'others', 'male_count', 'male_young_count','all',
+            , 'others', 'male_count', 'male_young_count', 'all',
             'male_old_count', 'female_count', 'female_young_count',
             'female_old_count', 'type', 'name'));
         return $pdf->download("تقييم  $type $name لمبادرة $initiative->title .pdf");

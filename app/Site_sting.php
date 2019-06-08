@@ -8,8 +8,8 @@ class Site_sting extends Model
 {
     //
     protected $table = "site_sting";
-    protected $fillable =['about_project','motivational_words','who_are','experiences','maan_msg','call_us'
-        ,'donation_msg','complaint_msg','proposal_msg','recommendation_msg'
-        ,'accession_msg','acceptance_msg','rejection_msg','contact_msg','bank_account'
-        ,'mobile1','mobile2','mobile3','img1','img2','img3'];
+    protected $fillable =['title_page','project_title','about_project','img1','who_are','img2'
+        ,'motivational_words','img3','experiences','address'
+        ,'mobile1','mobile2','bank_account','accession_msg','acceptance_msg'
+        ,'donation_msg'];
 }
