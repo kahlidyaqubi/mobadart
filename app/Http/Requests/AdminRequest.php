@@ -6,6 +6,7 @@ use App\Admin;
 use App\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class AdminRequest extends FormRequest
 {
@@ -37,8 +38,16 @@ class AdminRequest extends FormRequest
         $valid = [
             //'user_id'=> 'required|max:3',
             'name' => 'required|max:30',
-            'user_name' => 'required|max:30|without_spaces|unique:users,user_name,' . $id . ',id',
-            'email' => 'required|email|max:30|unique:users,email,' . $id . ',id',
+            'user_name' => 'required|max:30|without_spaces',
+            'user_name' => Rule::unique('users')->where(function ($query) use ($id) {
+                return $query->where('user_name', request()->name)->where('id', '!=', $id)
+                    ->where('the_type', request()->type);
+            }),
+            'email' => 'required|email|max:30',
+            'email' => Rule::unique('users')->where(function ($query) use ($id) {
+                return $query->where('email', request()->name)->where('id', '!=', $id)
+                    ->where('the_type', request()->type);
+            }),
             'family_center_id' => 'max:3',
             'is_cor' => 'max:1',
             'super_admin' => 'required|max:1',

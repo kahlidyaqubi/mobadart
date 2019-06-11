@@ -100,11 +100,11 @@ class ActivsitController extends BaseController
 
         if ($usefull) {
             if ($usefull == 1) {
-                $activistsids = Activists_initiative::where('accept',1)->pluck('activist_id');
+                $activistsids = Activists_initiative::where('accept', 1)->pluck('activist_id');
                 $items->whereIn("activists.id"
                     , $activistsids);
             } else if ($usefull == 2) {
-                $activistsids = Activists_initiative::where('accept',1)->pluck('activist_id');
+                $activistsids = Activists_initiative::where('accept', 1)->pluck('activist_id');
                 $items->whereNotIn("activists.id"
                     , $activistsids);
             }
@@ -154,7 +154,8 @@ class ActivsitController extends BaseController
     {
         $testeroor = $this->validate($request, [
 
-            'password' => 'required|min:6',
+            'password' => 'required|min:6|confirmed',
+            'password_confirmation' => 'required|max:50',
             'shared' => 'required|max:2',
             'shared_ditalis' => 'max:1000',
 
@@ -217,8 +218,7 @@ class ActivsitController extends BaseController
         return redirect("/admin/activsit/create");
     }
 
-    public
-    function show($id)
+    public function show($id)
     {
         $item = Activist::find($id);
         if ($item == NULL) {
@@ -227,13 +227,12 @@ class ActivsitController extends BaseController
         }
 
         $hisinterests = $item->interests->all();
-        $hisinitiative = $item->initiatives()->where('accept',1)->paginate(20);
+        $hisinitiative = $item->initiatives()->where('accept', 1)->paginate(20);
         return view('admin.activsits.show', compact('hisinterests', 'hisinitiative', 'item'));
 
     }
 
-    public
-    function edit($id)
+    public function edit($id)
     {
         $item = Activist::find($id);
         if ($item == NULL) {
@@ -249,8 +248,7 @@ class ActivsitController extends BaseController
         return view('admin.activsits.edit', compact('cities', 'governorates', 'hisinterests', 'interests', 'item'));
     }
 
-    public
-    function update(ActivistRequest $request, $id)
+    public function update(ActivistRequest $request, $id)
     {
         $item = Activist::find($id);
         if ($item == NULL) {
@@ -319,26 +317,22 @@ class ActivsitController extends BaseController
         return redirect("/admin/activsit");
     }
 
-    public
-    function destroy($id)
+    public function destroy($id)
     {
         //
     }
 
-    public
-    function initiaveToActivsit($id)
+    public function initiaveToActivsit($id)
     {
         //
     }
 
-    public
-    function demandToActivsit($id)
+    public function demandToActivsit($id)
     {
         //
     }
 
-    public
-    function evaluteToActivsit($id, Request $request)
+    public function evaluteToActivsit($id, Request $request)
     {
         $initiative_id = $request["initiative_id"] ?? "";
         $status = $request["status"] ?? "";
@@ -375,9 +369,7 @@ class ActivsitController extends BaseController
 
     }
 
-
-    public
-    function delete($id)
+    public function delete($id)
     {
         $item = Activist::find($id);
         if ($item == NULL) {

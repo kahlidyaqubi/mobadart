@@ -262,6 +262,7 @@ return [
         'accession_msg'=> 'رسالة طلب انضمام',
         'acceptance_msg'=> 'رسالة القبول',
         'donation_msg'=> 'رسالة استلام تبرع',
+        'ido'=>'رقم الهوية',
 
 
     ],

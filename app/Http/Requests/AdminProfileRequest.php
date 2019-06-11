@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class AdminProfileRequest extends FormRequest
 {
@@ -30,10 +31,17 @@ class AdminProfileRequest extends FormRequest
         $id = auth()->user()->id;
         $valid= [
             'name' => "required|max:50",
-            'email' => 'required|number|email|unique:users,email,'.$id.',id',
+            'email' => 'required|email|max:30',
+            'email' => Rule::unique('users')->where(function ($query) use ($id) {
+                return $query->where('email', request()->name)->where('id', '!=', $id)
+                    ->where('the_type', request()->type);
+            }),
             'last_name' => 'max:50',
-            'user_name' => 'required|string|max:255|without_spaces|unique:users,user_name,'.$id.',id',
-
+            'user_name' => 'required|max:30|without_spaces',
+            'user_name' => Rule::unique('users')->where(function ($query) use ($id) {
+                return $query->where('user_name', request()->name)->where('id', '!=', $id)
+                    ->where('the_type', request()->type);
+            }),
         ];
 		
         if (request()->mobile)

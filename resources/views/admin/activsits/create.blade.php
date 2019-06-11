@@ -214,6 +214,18 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                            <label class="control-label col-md-3">تأكيد كلمة مرورة
+                                                <span class="required"> * </span>
+                                            </label>
+                                            <div class="col-md-4">
+                                                <input type="password" class="form-control" value="{{old("password_confirmation")}}"
+                                                       name="password_confirmation" required
+                                                       minlength="7"
+                                                       id="submit_form_password"/>
+                                                <span class="help-block"> يرجى تأكيد كلمة المرور. </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="control-label col-md-3">تاريخ الميلاد
                                                 <span class="required"> * </span>
                                             </label>

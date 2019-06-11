@@ -10,11 +10,7 @@ use Session;
 
 class GovernorateController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index( Request $request)
     {
         $q = $request["q"]??"";
