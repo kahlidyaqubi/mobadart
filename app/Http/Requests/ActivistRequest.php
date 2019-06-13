@@ -38,7 +38,7 @@ class ActivistRequest extends FormRequest
             $id = '';
         else
             $id = Activist::find($id_activsit)->user->id;
-        
+
         $valid = [
 
             'name' => 'required|max:30',
