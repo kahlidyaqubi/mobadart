@@ -279,7 +279,7 @@
                             </div>
                             <div class=" row mt-5">
                                 <div class="col-sm-8 formSubmitBtnWrap text-center">
-                                    <a href="#"
+                                    <a href="{{ route('password.request') }}"
                                        style="color:grey;font-size:15px;text-decoration:underline;margin-top:px;margin-right:120px;">نسيت
                                         كلمة المرور</a>
                                 </div>

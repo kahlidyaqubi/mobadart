@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Activist;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -29,7 +30,7 @@ class ActivistRequest extends FormRequest
         Validator::extend('without_spaces', function ($attr, $value) {
             return preg_match('/^\S*$/u', $value);
         });
-        if (auth()->user()->activist)
+        if (auth()->user() && auth()->user()->activist)
             $id_activsit = auth()->user()->activist->id;
         else
             $id_activsit = $this->route('activsit');
@@ -37,8 +38,7 @@ class ActivistRequest extends FormRequest
             $id = '';
         else
             $id = Activist::find($id_activsit)->user->id;
-
-
+        
         $valid = [
 
             'name' => 'required|max:30',
@@ -48,13 +48,13 @@ class ActivistRequest extends FormRequest
             'ido' => 'required|min:9|max:9|unique:activists,ido,' . $id_activsit . ',id',
             'user_name' => 'required|max:30|without_spaces',
             'user_name' => Rule::unique('users')->where(function ($query) use ($id) {
-                return $query->where('user_name', request()->name)->where('id', '!=', $id)
-                    ->where('the_type', request()->type);
+                return $query->where('user_name', request()->user_name)->where('id', '!=', $id)
+                    ->where('the_type', 2);
             }),
             'email' => 'required|email|max:30',
             'email' => Rule::unique('users')->where(function ($query) use ($id) {
-                return $query->where('email', request()->name)->where('id', '!=', $id)
-                    ->where('the_type', request()->type);
+                return $query->where('email', request()->email)->where('id', '!=', $id)
+                    ->where('the_type', 2);
             }),
             'city_id' => 'required|max:3',
             'neighborhood' => 'required|string|max:70',

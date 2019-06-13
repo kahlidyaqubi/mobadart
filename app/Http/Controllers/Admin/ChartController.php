@@ -24,7 +24,7 @@ class ChartController extends BaseController
         $interests_ids = $request["interests_ids"] ?? "";
         $items = Initiative::select('title', 'paid_up')->whereRaw(true);
         if ($city_id)
-            $items->where('cities.id', '=', $city_id);
+            $items->where('city_id', '=', $city_id);
 
         if (($governorate_id) && !($city_id)) {
             $cities_ids = City::where('governorate_id', $governorate_id)->pluck('id')->toArray();
@@ -77,7 +77,7 @@ class ChartController extends BaseController
 
         $activistsbeforjeson = Interest::select('name')->withcount(['activists' => function ($items) use ($city_id, $governorate_id, $gender, $usefull, $initiative_id) {
             if ($city_id)
-                $items->where('cities.id', '=', $city_id);
+                $items->where('city_id', '=', $city_id);
 
             if (($governorate_id) && !($city_id)) {
                 $cities_ids = City::where('governorate_id', $governorate_id)->pluck('id')->toArray();
@@ -101,7 +101,7 @@ class ChartController extends BaseController
             }
             if ($initiative_id) {
                 $activistsids = Initiative::find($initiative_id)->activists_initiatives->pluck('initiative_id');
-                $items->whereIn("id"
+                $items->whereIn("activists.id"
                     , $activistsids);
             }
 
@@ -132,7 +132,7 @@ class ChartController extends BaseController
             $items->leftJoin('activists', 'activists_initiatives.activist_id', 'activists.id');
 
             if ($city_id)
-                $items->where('cities.id', '=', $city_id);
+                $items->where('city_id', '=', $city_id);
 
             if (($governorate_id) && !($city_id)) {
                 $cities_ids = City::where('governorate_id', $governorate_id)->pluck('id')->toArray();
@@ -191,7 +191,7 @@ class ChartController extends BaseController
 
         $activistsbeforjeson = City::select('name')->withcount(['activists' => function ($items) use ($city_id, $governorate_id, $gender, $usefull, $initiative_id, $interests_ids) {
             if ($city_id)
-                $items->where('cities.id', '=', $city_id);
+                $items->where('city_id', '=', $city_id);
 
             if (($governorate_id) && !($city_id)) {
                 $cities_ids = City::where('governorate_id', $governorate_id)->pluck('id')->toArray();
@@ -227,7 +227,7 @@ class ChartController extends BaseController
             }
             if ($initiative_id) {
                 $activistsids = Initiative::find($initiative_id)->activists_initiatives->pluck('initiative_id');
-                $items->whereIn("id"
+                $items->whereIn("activists.id"
                     , $activistsids);
             }
 
@@ -257,7 +257,7 @@ class ChartController extends BaseController
             ->whereRaw(true);
 
         if ($city_id)
-                $items->where('cities.id', '=', $city_id);
+                $items->where('city_id', '=', $city_id);
 
             if (($governorate_id) && !($city_id)) {
                 $cities_ids = City::where('governorate_id', $governorate_id)->pluck('id')->toArray();
@@ -293,7 +293,7 @@ class ChartController extends BaseController
             }
             if ($initiative_id) {
                 $activistsids = Initiative::find($initiative_id)->activists_initiatives->pluck('initiative_id');
-                $items->whereIn("id"
+                $items->whereIn("activists.id"
                     , $activistsids);
             }
 
@@ -377,9 +377,9 @@ class ChartController extends BaseController
         }
         if ($initiative_id) {
             $activistsids = Initiative::find($initiative_id)->activists_initiatives->pluck('initiative_id');
-            $items_young_count->whereIn("id"
+            $items_young_count->whereIn("activists.id"
                 , $activistsids);
-            $items_old_count->whereIn("id"
+            $items_old_count->whereIn("activists.id"
                 , $activistsids);
         }
 

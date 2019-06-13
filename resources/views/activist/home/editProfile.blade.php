@@ -408,12 +408,7 @@
 
 
 </div>
-</div>
-</div>
 
-</div>
-</div>
-</div>
 <!--**************************************************************الفوتر الاخير بداية *****************************************-->
 <footer>
     <div class="copyRight" style="background:black;opacity:.8;margin-top:50px;height:40px;padding-top:20px">

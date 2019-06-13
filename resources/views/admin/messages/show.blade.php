@@ -24,6 +24,9 @@
         </div>
     </div>
     <div class="form-group row">
+	 <div class="col-sm-1 col-md-offset-1">
+	<a style="background-color: #0ab20a;color: #fceeb6" class="btn grey-salsa btn-outline" href = "mailto:{{ $item->email }}"> رد بالبريد الإلكتروني </a>
+           </div>         
         <div class="col-sm-5 col-md-offset-1">
             <a href="/admin/siteSting/message" class="btn btn-success">الغاء الامر</a>
         </div>

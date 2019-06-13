@@ -87,7 +87,7 @@
         <div class="form-actions">
             <div class="row">
                 <div class="col-md-offset-3 col-md-9">
-                    <a href="/admin/evalution/printEval/{{$item->id}}" style="background-color: #0ab20a;color: #fceeb6" class="btn grey-salsa btn-outline">طباعة</a>
+				 <a href="/admin/evalution/printEval/{{$item->id}}" style="background-color: #0ab20a;color: #fceeb6" class="btn grey-salsa btn-outline">طباعة</a>
                     <a href="/admin/evalution" class="btn grey-salsa btn-outline">إلغاء</a>
                 </div>
             </div>

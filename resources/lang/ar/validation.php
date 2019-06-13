@@ -263,6 +263,14 @@ return [
         'acceptance_msg'=> 'رسالة القبول',
         'donation_msg'=> 'رسالة استلام تبرع',
         'ido'=>'رقم الهوية',
+        'financier_name'=>'اسم الممول',
+        'amount'=>'المبلغ',
+        'initiative_id' => "اسم المبادرة",
+        'bank_account' => 'الحساب المبادرة',//
+        'financier_email'=> 'البريد الإلكتروني',//
+        'financier_phone'=> 'رقم التواصل',//
+        'country'=> "الدولة",
+        'financier_address'=> 'عنوان التفصيلي',//
 
 
     ],

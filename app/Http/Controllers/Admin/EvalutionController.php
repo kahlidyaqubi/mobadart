@@ -6,6 +6,10 @@ use App\Activist;
 use App\Evaluation_other;
 use App\Http\Requests\Initiative_evaluation_towRequest;
 use App\Initiative;
+use App\Action;
+use App\User;
+use Notification;
+use App\Notifications\NotifyUsers;
 use App\Initiative_evaluation;
 use Illuminate\Http\Request;
 use Session;
@@ -154,8 +158,12 @@ class EvalutionController extends BaseController
                 'value' => request()['values'][$i],
             ]);
         }
+        $action = Action::create(['title'=>'موظف أدخل تقييم','type'=>'من موظف','link'=>'/admin/evalution/'.$item->id]);
+        $users=User::where('the_type','=',1)->get();
+        Notification::send($users, new NotifyUsers($action));
+        
         Session::flash("msg", "s:تم ادخال التقييم بنجاج");
-        return redirect('admin/initiative/' . request()['initiative_id'])->withInput();
+        return redirect('/admin/initiative/' . request()['initiative_id'])->withInput();
     }
 
     public function show($id)

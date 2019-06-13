@@ -2,6 +2,7 @@
 <html lang="en" dir="rtl">
 <head>
     <meta charset="utf-8"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>مركز معا | @yield('title')</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -72,6 +73,7 @@
 @yield('css')
 
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-md">
+    
 <!-- BEGIN HEADER -->
 <div class="page-header navbar navbar-fixed-top">
     <!-- BEGIN HEADER INNER -->
@@ -99,32 +101,45 @@
             @if(auth()->user())
                 <ul class="nav navbar-nav pull-right">
                     <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
-
+                   <?php
+                        $notifications = auth()->user()->unreadNotifications;
+                        $count = count($notifications);
+                    ?>
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
                            data-close-others="true">
                             <i class="icon-bell"></i>
-                            <span class="badge badge-default" id="num_notif"> 15 </span>
+                            <span class="badge badge-default" id="num_notif"> {{$count}} 
+                            
+                            
+                            
+                            </span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="external">
                                 <h3>
                                     <span class="bold">الإشعارات</span> الغير مقروءة</h3>
-                                <a href="#">عرض الجميع</a>
+                                <a href="#"></a>
                             </li>
                             <li>
                                 <ul class="dropdown-menu-list scroller" id="notif" style="height: 250px;"
                                     data-handle-color="#637283">
+                                    @foreach($notifications as $notification)
+                                     <?php $action = $notification->data['action']; 
+                                    
+                                   
+                                    ?>
                                     <li>
-                                        <a href="#">
-                                            <span class="time">15-11-2019</span>
+                                        <a href="{{$action['link']}}" onclick="pop(this)" class="notfiylink"  the_id='{{$notification->id}}'>
+                                            <span class="time">{{date('Y-m-d',strtotime($action['created_at']))}}</span>
                                             <span class="details"
                                                   style="display:block; max-width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
                                                         <span class="label label-sm label-icon label-success">
-                                                           رسالة</i> </span>
-                                                     كيف حالك
+                                                           {{$action['type']}}</i> </span>
+                                                      {{$action['title']}}
                                             </span>
                                         </a>
                                     </li>
+                                   @endforeach
                                 </ul>
                             </li>
                         </ul>
@@ -311,6 +326,62 @@
         </div>
     </div>
 </div>
+@if(auth()->user()) 
+
+
+<meta name="userId" content="{{ Auth::check() ? Auth::user()->id : '' }}">
+<script type="text/javascript" src="{{asset('js/app.js')}}"></script>
+	<script>
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+        
+    var userId = $('meta[name="userId"]').attr('content');
+        Echo.private('App.User.' + userId).notification((notification) => {
+           // this.notifications.push(notification);
+           
+            var action = notification.data.action;
+             var the_id = notification.id;
+
+             console.log(the_id);
+            
+            var li = document.createElement("li");
+            var dateobj =formatDate(new Date(action.created_at));
+             li.innerHTML = "<a class='notfiylink' onclick='pop(this)' the_id='"+the_id+"' href='" + action.link + "'> <span class='time'>" + dateobj.toString() + "</span>  " +
+                 "<span class='details' style='display:block; max-width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'> " +
+                 "<span class='label label-sm label-icon label-success'>" + action.type +"</i> " +
+                 "</span> " + action.title + " </span> </a>";
+
+             document.getElementById("notif").appendChild(li);
+             var num_notif = document.getElementById("num_notif");
+            var num_notif_count = 1+parseInt(document.getElementById("num_notif").innerText);
+             num_notif.innerHTML ="<span>" +num_notif_count+ "</span>";
+
+             var audio = new Audio('audio/unsure.mp3');
+             audio.play();
+        });
+        
+</script>
+<script>
+
+function pop(e) {
+    event.preventDefault();
+    var the_id = e.getAttribute('the_id');
+    var the_href = e.href;
+    $.get('/getnotfiy/'+the_id,function(data, status){});
+    location.href=the_href;
+};
+    
+</script>
+@endif
 
 <script src="/metronic-rtl/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 <script src="/metronic-rtl/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
@@ -332,6 +403,9 @@
 
 <script src="/metronic-rtl/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"
         type="text/javascript"></script>
+
+
+
 <script>
 
 
@@ -344,6 +418,8 @@
         });
     });
 </script>
+
+
 
 @yield("js")
 </body>
