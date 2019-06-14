@@ -6,15 +6,16 @@ use App\Activist;
 use App\Evaluation_other;
 use App\Http\Requests\Initiative_evaluation_towRequest;
 use App\Initiative;
-use App\Action;
-use App\User;
-use Notification;
-use App\Notifications\NotifyUsers;
 use App\Initiative_evaluation;
 use Illuminate\Http\Request;
+use App\User;
+use App\Admin;
+use App\Action;
 use Session;
 use  PDF;
 use DB;
+use Notification;
+use App\Notifications\NotifyUsers;
 
 class EvalutionController extends BaseController
 {
@@ -158,10 +159,19 @@ class EvalutionController extends BaseController
                 'value' => request()['values'][$i],
             ]);
         }
-        $action = Action::create(['title'=>'موظف أدخل تقييم','type'=>'من موظف','link'=>'/admin/evalution/'.$item->id]);
-        $users=User::where('the_type','=',1)->get();
+        /**************start Notification*******************/
+        $action = Action::create(['title' => 'موظف أدخل تقييم', 'type' => 'من موظف', 'link' => '/admin/evalution/' . $item->id]);
+
+        $suber_admins_ids = User::whereIn('id', Admin::where('super_admin', 1)->pluck('user_id'))->whereNotIn('id', [auth()->user()->id])->pluck('id')->toArray();
+
+        $have_prmission = User::whereIn('id',  Admin::whereIn('id',DB::table('admins_links')->leftJoin("links","link_id","links.id")->where('links.title', 'إدارة التقيمات')->pluck('admin_id'))->pluck('user_id'))->whereNotIn('id', [auth()->user()->id])->pluck('id')->toArray();
+
+        $users_ids = array_merge($suber_admins_ids, $have_prmission);
+
+        $users = User::whereIn('id', $users_ids)->get();
+
         Notification::send($users, new NotifyUsers($action));
-        
+        /**************end Notification*******************/
         Session::flash("msg", "s:تم ادخال التقييم بنجاج");
         return redirect('/admin/initiative/' . request()['initiative_id'])->withInput();
     }

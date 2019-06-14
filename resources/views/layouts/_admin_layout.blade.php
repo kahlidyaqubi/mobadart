@@ -73,7 +73,7 @@
 @yield('css')
 
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-md">
-    
+
 <!-- BEGIN HEADER -->
 <div class="page-header navbar navbar-fixed-top">
     <!-- BEGIN HEADER INNER -->
@@ -101,10 +101,10 @@
             @if(auth()->user())
                 <ul class="nav navbar-nav pull-right">
                     <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
-                   <?php
-                        $notifications = auth()->user()->unreadNotifications;
+                        <?php
+                        $notifications = auth()->user()->unreadNotifications()->orderBy('id', 'desc')->get();
                         $count = count($notifications);
-                    ?>
+                        ?>
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
                            data-close-others="true">
                             <i class="icon-bell"></i>
@@ -114,7 +114,7 @@
                             
                             </span>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu" style="width: 337px;max-width: 337px">
                             <li class="external">
                                 <h3>
                                     <span class="bold">الإشعارات</span> الغير مقروءة</h3>
@@ -124,22 +124,23 @@
                                 <ul class="dropdown-menu-list scroller" id="notif" style="height: 250px;"
                                     data-handle-color="#637283">
                                     @foreach($notifications as $notification)
-                                     <?php $action = $notification->data['action']; 
-                                    
-                                   
-                                    ?>
-                                    <li>
-                                        <a href="{{$action['link']}}" onclick="pop(this)" class="notfiylink"  the_id='{{$notification->id}}'>
-                                            <span class="time">{{date('Y-m-d',strtotime($action['created_at']))}}</span>
-                                            <span class="details"
-                                                  style="display:block; max-width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+                                        <?php $action = $notification->data['action'];
+
+
+                                        ?>
+                                        <li>
+                                            <a href="{{$action['link']}}" onclick="pop(this)" class="notfiylink"
+                                               the_id='{{$notification->id}}'>
+                                                <span class="time">{{date('Y-m-d',strtotime($action['created_at']))}}</span>
+                                                <span class="details"
+                                                      style="display:block; max-width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
                                                         <span class="label label-sm label-icon label-success">
                                                            {{$action['type']}}</i> </span>
                                                       {{$action['title']}}
                                             </span>
-                                        </a>
-                                    </li>
-                                   @endforeach
+                                            </a>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </li>
                         </ul>
@@ -221,7 +222,7 @@
 
                         $the_sublinks = Auth::user()->admin->links()->where("in_menu", 1)->where("parent_id", $link->id)->orWhere("mult_id", $link->id)->pluck('links.id');
                         $sublinks = \App\Link::find($the_sublinks);
-                        $preventeroor=\App\Link::find(Auth::user()->admin->links()->where("parent_id", $link->id)->orWhere("mult_id", $link->id)->pluck('links.id'));
+                        $preventeroor = \App\Link::find(\App\Link::where("parent_id", $link->id)->orWhere("mult_id", $link->id)->pluck('links.id'));
                         ?>
                         <li class="nav-item @if($link->mult!=1)
                         {{ strstr("/".Route::getFacadeRoot()->current()->uri(),$preventeroor->first()->link)?
@@ -239,32 +240,34 @@
                             Auth::user()->admin->links->where("in_menu", 1)->whereIn("parent_id", $sublinks->pluck('id'))->pluck('link')->toArray())?"style=display:block;":'' }} @endif>
 
                                 @foreach($sublinks as $sublink)
-                                    <?php
-                                    $sub_sublinks = Auth::user()->admin->links->where("in_menu", 1)->where("parent_id", $sublink->id);
-                                    $sub_sublinks_error = Auth::user()->admin->links->where("parent_id", $sublink->id);
+                                    @if(auth()->user()->admin->links->contains(\App\Link::where('title','=',$sublink->title)->first()))
+                                        <?php
+                                        $sub_sublinks = Auth::user()->admin->links->where("in_menu", 1)->where("parent_id", $sublink->id);
+                                        $sub_sublinks_error = \App\Link::where("parent_id", $sublink->id);
 
-                                    ?>
-                                    <li class="nav-item @if($link->mult==1){{ strstr("/".Route::getFacadeRoot()->current()->uri(),$sub_sublinks_error->first()->link)?
+                                        ?>
+                                        <li class="nav-item @if($link->mult==1){{ strstr("/".Route::getFacadeRoot()->current()->uri(),$sub_sublinks_error->first()->link)?
                                             "open":'' }}@endif">
 
-                                        <a @if($link->mult!=1)href="{{$sublink->link}}" @endif class="nav-link ">
+                                            <a @if($link->mult!=1)href="{{$sublink->link}}" @endif class="nav-link ">
                                             <span
                                                     @if($link->mult==1)class="arrow nav-toggle"
                                                     @else class="title" @endif>{{$sublink->title}}</span>
-                                        </a>
-                                        @if($link->mult==1)
+                                            </a>
+                                            @if($link->mult==1)
 
 
-                                            <ul class="sub-menu" {{ strstr("/".Route::getFacadeRoot()->current()->uri(),$sub_sublinks_error->first()->link)?"style=display:block;":'' }}>
-                                                @foreach($sub_sublinks as $sub_sublink)
-                                                    <li class="nav-item">
-                                                        <a href="{{$sub_sublink->link}}" class="nav-link">
-                                                            {{$sub_sublink->title}}</a>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        @endif
-                                    </li>
+                                                <ul class="sub-menu" {{ strstr("/".Route::getFacadeRoot()->current()->uri(),$sub_sublinks_error->first()->link)?"style=display:block;":'' }}>
+                                                    @foreach($sub_sublinks as $sub_sublink)
+                                                        <li class="nav-item">
+                                                            <a href="{{$sub_sublink->link}}" class="nav-link">
+                                                                {{$sub_sublink->title}}</a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
+                                        </li>
+                                    @endif
                                 @endforeach
                             </ul>
                         </li>
@@ -326,61 +329,62 @@
         </div>
     </div>
 </div>
-@if(auth()->user()) 
+@if(auth()->user())
 
 
-<meta name="userId" content="{{ Auth::check() ? Auth::user()->id : '' }}">
-<script type="text/javascript" src="{{asset('js/app.js')}}"></script>
-	<script>
-function formatDate(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
+    <meta name="userId" content="{{ Auth::check() ? Auth::user()->id : '' }}">
+    <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
+    <script>
+        function formatDate(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
 
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
 
-    return [year, month, day].join('-');
-}
-        
-    var userId = $('meta[name="userId"]').attr('content');
+            return [year, month, day].join('-');
+        }
+
+        var userId = $('meta[name="userId"]').attr('content');
         Echo.private('App.User.' + userId).notification((notification) => {
-           // this.notifications.push(notification);
-           
+            // this.notifications.push(notification);
+
             var action = notification.data.action;
-             var the_id = notification.id;
+            var the_id = notification.id;
 
-             console.log(the_id);
-            
+            console.log(the_id);
+
             var li = document.createElement("li");
-            var dateobj =formatDate(new Date(action.created_at));
-             li.innerHTML = "<a class='notfiylink' onclick='pop(this)' the_id='"+the_id+"' href='" + action.link + "'> <span class='time'>" + dateobj.toString() + "</span>  " +
-                 "<span class='details' style='display:block; max-width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'> " +
-                 "<span class='label label-sm label-icon label-success'>" + action.type +"</i> " +
-                 "</span> " + action.title + " </span> </a>";
+            var dateobj = formatDate(new Date(action.created_at));
+            li.innerHTML = "<a class='notfiylink' onclick='pop(this)' the_id='" + the_id + "' href='" + action.link + "'> <span class='time'>" + dateobj.toString() + "</span>  " +
+                "<span class='details' style='display:block; max-width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'> " +
+                "<span class='label label-sm label-icon label-success'>" + action.type + "</i> " +
+                "</span> " + action.title + " </span> </a>";
 
-             document.getElementById("notif").appendChild(li);
-             var num_notif = document.getElementById("num_notif");
-            var num_notif_count = 1+parseInt(document.getElementById("num_notif").innerText);
-             num_notif.innerHTML ="<span>" +num_notif_count+ "</span>";
+            document.getElementById("notif").appendChild(li);
+            var num_notif = document.getElementById("num_notif");
+            var num_notif_count = 1 + parseInt(document.getElementById("num_notif").innerText);
+            num_notif.innerHTML = "<span>" + num_notif_count + "</span>";
 
-             var audio = new Audio('audio/unsure.mp3');
-             audio.play();
+            var audio = new Audio('audio/unsure.mp3');
+            audio.play();
         });
-        
-</script>
-<script>
 
-function pop(e) {
-    event.preventDefault();
-    var the_id = e.getAttribute('the_id');
-    var the_href = e.href;
-    $.get('/getnotfiy/'+the_id,function(data, status){});
-    location.href=the_href;
-};
-    
-</script>
+    </script>
+    <script>
+
+        function pop(e) {
+            event.preventDefault();
+            var the_id = e.getAttribute('the_id');
+            var the_href = e.href;
+            $.get('/getnotfiy/' + the_id, function (data, status) {
+            });
+            location.href = the_href;
+        };
+
+    </script>
 @endif
 
 <script src="/metronic-rtl/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
@@ -405,7 +409,6 @@ function pop(e) {
         type="text/javascript"></script>
 
 
-
 <script>
 
 
@@ -418,7 +421,6 @@ function pop(e) {
         });
     });
 </script>
-
 
 
 @yield("js")

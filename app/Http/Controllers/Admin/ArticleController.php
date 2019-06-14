@@ -11,6 +11,13 @@ use App\Initiative;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Session;
+use App\User;
+use App\Admin;
+use App\Action;
+use  PDF;
+use DB;
+use Notification;
+use App\Notifications\NotifyUsers;
 
 
 class ArticleController extends BaseController
@@ -56,7 +63,7 @@ class ArticleController extends BaseController
     public function create()
     {
         $admin = auth()->user()->admin;
-        $initiative ='';
+        $initiative = '';
         if (!$admin->super_admin == 1) {
             $categories = $admin->categories->all();
             $initiatives = $admin->initiatives->all();
@@ -78,7 +85,7 @@ class ArticleController extends BaseController
                 }
             }
         }
-        return view('admin.articles.create', compact('categories','initiative', 'initiatives'));
+        return view('admin.articles.create', compact('categories', 'initiative', 'initiatives'));
     }
 
     public function store(ArticleRequest $request)
@@ -120,9 +127,35 @@ class ArticleController extends BaseController
 
         $item->update(request()->all());
 
+
+        /**************start Notification*******************/
+        /*use App\User;
+        use App\Admin;
+        use App\Action;
+        use  PDF;
+        use DB;
+        use Notification;
+        use App\Notifications\NotifyUsers;*/
+        if (!$admin->super_admin == 1) {
+            $action = Action::create(['title' => 'منشط أضاف خبر بانتظار قبوله', 'type' => 'من موظف', 'link' => '/admin/article/']);
+        } else {
+            $action = Action::create(['title' => 'إداري أضاف خبر جديد', 'type' => 'من موظف', 'link' => '/admin/article/']);
+        }
+
+        $suber_admins_ids = User::whereIn('id', Admin::where('super_admin', 1)->pluck('user_id'))->whereNotIn('id', [auth()->user()->id])->pluck('id')->toArray();
+
+        $have_prmission = User::whereIn('id', Admin::whereIn('id', DB::table('admins_links')->leftJoin("links", "link_id", "links.id")->where('links.title', 'إدارة الأخبار')->pluck('admin_id'))->pluck('user_id'))->whereNotIn('id', [auth()->user()->id])->pluck('id')->toArray();
+
+        $users_ids = array_merge($suber_admins_ids, $have_prmission);
+
+        $users = User::whereIn('id', $users_ids)->get();
+
+        Notification::send($users, new NotifyUsers($action));
+        /**************end Notification*******************/
+
         if (!$admin->super_admin == 1) {
             Session::flash("msg", "تمت انشاء خبر وسيتم نشره بعد موافقة إدارة المنصة");
-        }else{
+        } else {
             Session::flash("msg", "تمت انشاء خبر ونشره بنجاح");
         }
         return redirect("/admin/article/create");
@@ -273,5 +306,15 @@ class ArticleController extends BaseController
         else
             $item->status = 0;
         $item->save();
+        /**************start Notification*******************/
+        if ($item->status==1) {
+
+            $action = Action::create(['title' => 'تم قبول نشر خبرك الذي أضفته', 'type' => 'من موظف', 'link' => '/admin/article/']);
+
+            $users = User::where('id', $item->admin->user->id)->get();
+
+            Notification::send($users, new NotifyUsers($action));
+        }
+        /**************end Notification*******************/
     }
 }

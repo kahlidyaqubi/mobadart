@@ -3,10 +3,16 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Initiative;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Validator;
+use Carbon\Carbon;
+use DB;
+use App\Action;
+use Notification;
+use App\Notifications\NotifyUsers;
 
 class LoginController extends Controller
 {
@@ -45,6 +51,31 @@ class LoginController extends Controller
         }
         if (auth()->attempt(['email' => $request['email'], 'password' => request('password')])) {
             // Authentication passed...
+
+
+            /************/
+            /**************start Notification*******************/
+            /**/
+            $notify_initiaves=DB::table('notify_initiaves')->pluck('initiative_id')->toArray();
+            if(count($notify_initiaves)>0) {
+                $initiatives = Initiative::where('end_date', '<=', Carbon::now())->whereNotIn('id',$notify_initiaves)->get();
+            }else
+                $initiatives = Initiative::where('end_date', '<=', Carbon::now())->get();
+
+            foreach ($initiatives as $initiative){
+                DB::table('notify_initiaves')->insert([ 'initiative_id' => $initiative->id]);
+                $action = Action::create(['title' => "يرجى تقييم المبادرة $initiative->title ", 'type' => 'تذكير', 'link' => '/admin/initiative/'.$initiative->id]);
+                $have_prmission = User::where('id', $initiative->admin->user->id)->pluck('id')->toArray();
+                $activsits_ids = User::whereIn('id', $initiative->activists()->pluck('user_id')->toArray())->pluck('id')->toArray();
+
+                $users_ids = array_merge($activsits_ids, $have_prmission);
+                $users = User::whereIn('id', $users_ids)->get();
+
+                Notification::send($users, new NotifyUsers($action));
+            }
+
+            /**************end Notification*******************/
+
             return $this->sendLoginResponse($request);
         } else {
             return $this->sendFailedLoginResponse($request);

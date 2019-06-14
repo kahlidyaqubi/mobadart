@@ -18,6 +18,11 @@ use App\Imports\ActivistExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Session;
 use DB;
+use App\User;
+use App\Action;
+use  PDF;
+use Notification;
+use App\Notifications\NotifyUsers;
 
 class InitiativeController extends BaseController
 {
@@ -80,7 +85,7 @@ class InitiativeController extends BaseController
         if ($in_date)
             $items = $items->whereRaw("end_date >= ? and start_date <= ?", [$in_date, $in_date]);
 
-        $items = Initiative::whereIn('id', $items->pluck('initiatives.id'))->orderBy("initiatives.id")->paginate(20)
+        $items = Initiative::whereIn('id', $items->pluck('initiatives.id'))->orderBy("initiatives.id","desc")->paginate(20)
             ->appends([
                 "q" => $q, "city_id" => $city_id, 'governorate_id' => $governorate_id
                 , "in_date" => $in_date, 'end_date' => $end_date
@@ -104,7 +109,7 @@ class InitiativeController extends BaseController
             $item = Admin::find(request()['id']);
             if ($item == null) {
                 Session::flash("msg", "e:يرجى التأكد من الرابط المطلوب");
-                return redirect('admin/admin/create')->withInput();
+                return redirect('admin/initiative/create')->withInput();
             }
         }
         return view('admin.initiatives.create', compact('governorates', 'cities', 'interests', 'item'));
@@ -157,7 +162,26 @@ class InitiativeController extends BaseController
                 ]);
             }
 
+        /**************start Notification*******************/
+        /*use App\User;
+        use App\Admin;
+        use App\Action;
+        use  PDF;
+        use DB;
+        use Notification;
+        use App\Notifications\NotifyUsers;*/
 
+        $action = Action::create(['title' => 'تم اضافة مبادرة جديدة', 'type' => 'من موظف', 'link' => '/admin/initiative/']);
+        $suber_admins_ids = User::whereIn('id', Admin::where('super_admin', 1)->pluck('user_id'))->whereNotIn('id', [auth()->user()->id])->pluck('id')->toArray();
+
+        $have_prmission = User::whereIn('id', Admin::whereIn('id', DB::table('admins_links')->leftJoin("links", "link_id", "links.id")->where('links.title', 'إدارة المبادرات')->pluck('admin_id'))->pluck('user_id'))->whereNotIn('id', [auth()->user()->id])->pluck('id')->toArray();
+
+        $users_ids = array_merge($suber_admins_ids, $have_prmission);
+
+        $users = User::whereIn('id', $users_ids)->get();
+
+        Notification::send($users, new NotifyUsers($action));
+        /**************end Notification*******************/
         Session::flash("msg", "تمت عملية الاضافة بنجاح");
         return redirect("/admin/initiative/create");
     }
@@ -311,14 +335,14 @@ class InitiativeController extends BaseController
         }
 
         if (!($item->initiative->admin_id == auth()->user()->admin->id || auth()->user()->admin->super_admin == 1)) {
-             return response()->json([
+            return response()->json([
                 'message' => 'لا تملك صلاحية تعديل مبادرة لست منشطها'
             ], 401);
         }
-        $z=count($item->initiative->activists_initiatives()->where('accept',1)->pluck('activist_id')->toArray());
+        $z = count($item->initiative->activists_initiatives()->where('accept', 1)->pluck('activist_id')->toArray());
         if ($item->accept == 0 && $item->initiative->activists_count <= $z) {
             return response()->json([
-                'message' => 'لا يمكن تجاوز الحد المسموح للمشاركة'.$item->initiative->activists_count.'<'.$z
+                'message' => 'لا يمكن تجاوز الحد المسموح للمشاركة' . $item->initiative->activists_count . '<' . $z
             ], 401);
         }
 
@@ -328,6 +352,24 @@ class InitiativeController extends BaseController
         else
             $item->accept = 0;
         $item->save();
+
+        /**************start Notification*******************/
+
+        if ($item->accept == 1) {
+            $action = Action::create(['title' => 'تم قبول ناشط في مبادرة', 'type' => 'من موظف', 'link' => '/admin/initiative/'.$item->initiative->id]);
+            $suber_admins_ids = User::whereIn('id', Admin::where('super_admin', 1)->pluck('user_id'))->whereNotIn('id', [auth()->user()->id])->pluck('id')->toArray();
+
+            $have_prmission = User::whereIn('id', [$item->initiative->admin->user->id])->whereNotIn('id', [auth()->user()->id])->pluck('id')->toArray();
+
+            $activsits_ids = User::whereIn('id', [$item->activist_id])->pluck('id')->toArray();
+
+            $users_ids = array_merge($suber_admins_ids, $have_prmission, $activsits_ids);
+
+            $users = User::whereIn('id', $users_ids)->get();
+
+            Notification::send($users, new NotifyUsers($action));
+        }
+        /**************end Notification*******************/
 
 
     }
@@ -533,7 +575,7 @@ class InitiativeController extends BaseController
                     "%$q%", "%$q%", "%$q%", "%$q%"
                 ]);
 
-        $items_id = array_merge($items2->pluck('initiative_evaluation.id')->toArray(),$items1->pluck('initiative_evaluation.id')->toArray());
+        $items_id = array_merge($items2->pluck('initiative_evaluation.id')->toArray(), $items1->pluck('initiative_evaluation.id')->toArray());
 
 
         $items = Initiative_evaluation::whereIn('id', $items_id)->whereRaw(true);
@@ -555,7 +597,7 @@ class InitiativeController extends BaseController
             ->appends([
                 "q" => $q, 'status' => $status]);
 
-        return view('admin.initiatives.evaluteToInitiave', compact('items', 'initiatives','item'));
+        return view('admin.initiatives.evaluteToInitiave', compact('items', 'initiatives', 'item'));
 
     }
 

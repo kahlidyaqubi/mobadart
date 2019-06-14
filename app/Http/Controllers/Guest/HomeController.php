@@ -11,6 +11,10 @@ use Illuminate\Http\Request;
 use DB;
 use Session;
 use App\User;
+use App\Admin;
+use App\Action;
+use Notification;
+use App\Notifications\NotifyUsers;
 
 class HomeController extends BaseController
 {
@@ -90,6 +94,28 @@ class HomeController extends BaseController
                 }
             }
         }
+
+
+        /**************start Notification*******************/
+        /*use App\User;
+        use App\Admin;
+        use App\Action;
+        use DB;
+        use Notification;
+        use App\Notifications\NotifyUsers;*/
+
+        $action = Action::create(['title' => 'قام ناشط بانشاء حساب جديد', 'type' => 'من ناشط', 'link' => '/admin/activsit/']);
+        $suber_admins_ids = User::whereIn('id', Admin::where('super_admin', 1)->pluck('user_id'))->pluck('id')->toArray();
+
+        $have_prmission = User::whereIn('id', Admin::whereIn('id', DB::table('admins_links')->leftJoin("links", "link_id", "links.id")->where('links.title', 'إدارة الحسابات')->pluck('admin_id'))->pluck('user_id'))->pluck('id')->toArray();
+
+        $users_ids = array_merge($suber_admins_ids, $have_prmission);
+
+        $users = User::whereIn('id', $users_ids)->get();
+
+        Notification::send($users, new NotifyUsers($action));
+        /**************end Notification*******************/
+
         Session::flash("msg", "تمت عملية الاضافة بنجاح");
         return redirect("/register");
     }

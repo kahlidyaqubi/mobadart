@@ -130,6 +130,13 @@
                                                 <a href="/admin/initiative/activitsInInitiative/{{$item->id}}?accept=0">
                                                     <span class="text-primary"><i class="fa fa-users"></i>طلبات الانضمام</span></a>
                                             </li>
+
+                                            @if(auth()->user()->admin->links->contains(\App\Link::where('title','=','إضافة خبر')->first()->id))
+                                                <li>
+                                                    <a href="/admin/article/create?initiative_id={{$item->id}}">
+                                                        <span class="text-primary"><i class="fa fa-plus"></i>أضف خبر</span></a>
+                                                </li>
+                                            @endif
                                         @endif
                                         <li>
                                             <a href="/admin/initiative/{{$item->id}}">
@@ -150,12 +157,6 @@
                                                                 class="fa fa-sitemap"></i>تقييماتها</span></a>
                                                 </li>
                                             @endif
-                                        @if(auth()->user()->admin->links->contains(\App\Link::where('title','=','إضافة خبر')->first()->id))
-                                            <li>
-                                                <a href="/admin/article/create?initiative_id={{$item->id}}">
-                                                    <span class="text-primary"><i class="fa fa-plus"></i>أضف خبر</span></a>
-                                            </li>
-                                        @endif
                                     </ul>
                                 </div>
                             </td>
