@@ -37,6 +37,19 @@
     <link rel="stylesheet" href="/platform/mobadarate/css/nprogress.css">
     <link rel="stylesheet" href="/platform/mobadarate/css/style.css">
     <link rel="stylesheet" href="/platform/dist/styles/main_ar.css">
+    <link rel="stylesheet" href="/dooz/sweetalert.css">
+    <link rel="stylesheet" href="/dooz/calendar.css">
+    <link rel="stylesheet" href="/dooz/custom_2.css">
+    <style>
+        .fc-calendar .fc-row > div {
+            margin-left: 4px;
+        }
+
+        .fc-calendar .fc-row > div, .fc-calendar .fc-head > div {
+            width: 12%;
+        !important
+        }
+    </style>
     <!--style css  -->
     <style type="text/css">
 
@@ -256,8 +269,9 @@
                             <div class="row" style="margin-bottom:-20px">
                                 <div class="input-field col s11" style="padding-left:30px;">
 
-                                    <input  id="email" type="text" class="form-control" name="email" value="{{ old('email') }}" required autofocus
-                                              class="materialize-textarea" style="padding: 10px"/>
+                                    <input id="email" type="text" class="form-control" name="email"
+                                           value="{{ old('email') }}" required autofocus
+                                           class="materialize-textarea" style="padding: 10px"/>
                                     <label for="textarea1" style="padding-top:-5px;padding-bottom:-5px">اسم
                                         المستخدم</label>
                                 </div>
@@ -266,7 +280,7 @@
                                 <div class="input-field col s11" style="padding-left:30px;">
 
                                     <input id="password" type="password" class="form-control" name="password" required
-                                              class="materialize-textarea" style="padding: 10px"/>
+                                           class="materialize-textarea" style="padding: 10px"/>
                                     <label for="textarea1"
                                            style="padding-top:-5px;padding-bottom:10px">كلمةالمرور</label>
                                 </div>
@@ -394,7 +408,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/117.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/117.jpg"
+                                                                                alt=""></a>
                                                                 </div>
                                                                 <div class="cause-meta">
                                                                     <h3><a href="single-cause.html" title=""
@@ -415,7 +430,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/105.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/105.jpg"
+                                                                                alt=""></a>
 
                                                                 </div>
                                                                 <div class="cause-meta">
@@ -439,7 +455,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/116.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/116.jpg"
+                                                                                alt=""></a>
 
                                                                 </div>
                                                                 <div class="cause-meta">
@@ -463,7 +480,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/112.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/112.jpg"
+                                                                                alt=""></a>
                                                                 </div>
                                                                 <div class="cause-meta">
                                                                     <h3><a href="single-cause.html" title=""
@@ -484,7 +502,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/107.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/107.jpg"
+                                                                                alt=""></a>
 
                                                                 </div>
                                                                 <div class="cause-meta">
@@ -508,7 +527,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/108.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/108.jpg"
+                                                                                alt=""></a>
 
                                                                 </div>
                                                                 <div class="cause-meta">
@@ -532,7 +552,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/117.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/117.jpg"
+                                                                                alt=""></a>
                                                                 </div>
                                                                 <div class="cause-meta">
                                                                     <h3><a href="single-cause.html" title=""
@@ -553,7 +574,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/105.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/105.jpg"
+                                                                                alt=""></a>
 
                                                                 </div>
                                                                 <div class="cause-meta">
@@ -577,7 +599,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/116.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/116.jpg"
+                                                                                alt=""></a>
 
                                                                 </div>
                                                                 <div class="cause-meta">
@@ -601,7 +624,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/112.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/112.jpg"
+                                                                                alt=""></a>
                                                                 </div>
                                                                 <div class="cause-meta">
                                                                     <h3><a href="single-cause.html" title=""
@@ -622,7 +646,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/107.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/107.jpg"
+                                                                                alt=""></a>
 
                                                                 </div>
                                                                 <div class="cause-meta">
@@ -646,7 +671,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/108.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/108.jpg"
+                                                                                alt=""></a>
 
                                                                 </div>
                                                                 <div class="cause-meta">
@@ -670,7 +696,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/117.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/117.jpg"
+                                                                                alt=""></a>
                                                                 </div>
                                                                 <div class="cause-meta">
                                                                     <h3><a href="single-cause.html" title=""
@@ -691,7 +718,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/105.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/105.jpg"
+                                                                                alt=""></a>
 
                                                                 </div>
                                                                 <div class="cause-meta">
@@ -715,7 +743,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/116.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/116.jpg"
+                                                                                alt=""></a>
 
                                                                 </div>
                                                                 <div class="cause-meta">
@@ -739,7 +768,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/112.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/112.jpg"
+                                                                                alt=""></a>
                                                                 </div>
                                                                 <div class="cause-meta">
                                                                     <h3><a href="single-cause.html" title=""
@@ -760,7 +790,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/107.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/107.jpg"
+                                                                                alt=""></a>
 
                                                                 </div>
                                                                 <div class="cause-meta">
@@ -784,7 +815,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/108.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/108.jpg"
+                                                                                alt=""></a>
 
                                                                 </div>
                                                                 <div class="cause-meta">
@@ -808,7 +840,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/108.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/108.jpg"
+                                                                                alt=""></a>
 
                                                                 </div>
                                                                 <div class="cause-meta">
@@ -846,7 +879,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/117.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/117.jpg"
+                                                                                alt=""></a>
                                                                 </div>
                                                                 <div class="cause-meta">
                                                                     <h3><a href="single-cause.html" title=""
@@ -867,7 +901,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/105.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/105.jpg"
+                                                                                alt=""></a>
 
                                                                 </div>
                                                                 <div class="cause-meta">
@@ -891,7 +926,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/116.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/116.jpg"
+                                                                                alt=""></a>
 
                                                                 </div>
                                                                 <div class="cause-meta">
@@ -928,7 +964,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/117.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/117.jpg"
+                                                                                alt=""></a>
                                                                 </div>
                                                                 <div class="cause-meta">
                                                                     <h3><a href="single-cause.html" title=""
@@ -949,7 +986,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/105.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/105.jpg"
+                                                                                alt=""></a>
 
                                                                 </div>
                                                                 <div class="cause-meta">
@@ -973,7 +1011,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/116.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/116.jpg"
+                                                                                alt=""></a>
 
                                                                 </div>
                                                                 <div class="cause-meta">
@@ -998,7 +1037,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/112.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/112.jpg"
+                                                                                alt=""></a>
                                                                 </div>
                                                                 <div class="cause-meta">
                                                                     <h3><a href="single-cause.html" title=""
@@ -1019,7 +1059,8 @@
                                                             <div class="caro-unit fadein">
                                                                 <div class="cause-avatar">
                                                                     <a href="single-cause.html" title=""><img
-                                                                                src="/platform/dist/images/107.jpg" alt=""></a>
+                                                                                src="/platform/dist/images/107.jpg"
+                                                                                alt=""></a>
 
                                                                 </div>
                                                                 <div class="cause-meta">
@@ -1061,93 +1102,28 @@
                                     +120 الشباب في المبادرات
 
                                 </div><!-- tags widget -->
-                                <div class="widget fadein">
-                                    <div class="search ">
-                                        <form style="text-align:center">
-                                            <input type="text" placeholder="بحث عن المبادرات"
-                                                   style="margin-top:80px;margin-right:20px">
-                                            <button><i class="ion-search"></i></button>
-                                        </form>
+                                <div class="row" style="margin-top: 125px;">
+                                    <div class="col-md-4">
+                                        <div id="calendar">
+                                            <div class="custom-header clearfix"
+                                                 style="text-align:center;display:inline-block;width: 190px;height: 13px;">
+                                                <nav style="margin-top:-10px">
+                                                    <span id="custom-prev" class="custom-prev"
+                                                          style="margin-left:-8px"></span>
+                                                    <span id="custom-next" class="custom-next"
+                                                          style="margin-right:-38px"></span>
+                                                </nav>
+
+                                                <span id="custom-year" class="custom-year">2019</span>
+                                                <span style="text-align: center; direction: rtl" id="custom-month"
+                                                      class="custom-month">حزيران</span>
+                                            </div>
+
+                                        </div>
+
                                     </div>
                                 </div>
 
-                                <div class="widget fadein">
-                                    <div class="container">
-                                        <div class="row ml-5">
-                                            <div class="span12">
-                                                <table class="table-condensed table-bordered table-striped"
-                                                       style="width:300px;">
-                                                    <thead>
-                                                    <tr>
-                                                        <th colspan="7">
-                                                            <!-- <a class="btn " style="background:#c4233d;width:50px"><i class="icon-chevron-left"></i></a> -->
-                                                            <a class="btn" style="background:#c4233d;width:300px">February
-                                                                2012</a>
-                                                            <!-- <a class="btn" style="background:#c4233d;width:50px"><i class="icon-chevron-right"></i></a> -->
-                                                        </th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Su</th>
-                                                        <th>Mo</th>
-                                                        <th>Tu</th>
-                                                        <th>We</th>
-                                                        <th>Th</th>
-                                                        <th>Fr</th>
-                                                        <th>Sa</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td class="muted">29</td>
-                                                        <td class="muted">30</td>
-                                                        <td class="muted">31</td>
-                                                        <td>1</td>
-                                                        <td>2</td>
-                                                        <td>3</td>
-                                                        <td>4</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>5</td>
-                                                        <td>6</td>
-                                                        <td>7</td>
-                                                        <td>8</td>
-                                                        <td>9</td>
-                                                        <td>10</td>
-                                                        <td>11</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>12</td>
-                                                        <td>13</td>
-                                                        <td>14</td>
-                                                        <td>15</td>
-                                                        <td>16</td>
-                                                        <td>17</td>
-                                                        <td>18</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>19</td>
-                                                        <td><strong>20</strong></td>
-                                                        <td>21</td>
-                                                        <td>22</td>
-                                                        <td>23</td>
-                                                        <td>24</td>
-                                                        <td>25</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>26</td>
-                                                        <td>27</td>
-                                                        <td>28</td>
-                                                        <td>29</td>
-                                                        <td class="muted">1</td>
-                                                        <td class="muted">2</td>
-                                                        <td class="muted">3</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                         </aside>
                     </div><!-- side widgets -->
                 </div>
@@ -3038,7 +3014,8 @@
     <!-- *********************************************** نهاية التجارب الملهمة*************************************** -->
     <!--*********************************************** contact us start **************************************  -->
     <section class="homeSection bgDarkBlue sectionContact" id="contact">
-        <div id="map" style="background-image:url('/platform/dist/images/map.jpg'); margin-top: 55px;border-top:1px solid black;">
+        <div id="map"
+             style="background-image:url('/platform/dist/images/map.jpg'); margin-top: 55px;border-top:1px solid black;">
         </div>
 
         <div class="bgDark">
@@ -3147,6 +3124,7 @@
         </div>
     </div>
 </footer>
+
 <!--*********************************************** footer end ***************************************  -->
 <!--*********************************************** scripts start ************************************  -->
 <script src="/platform/mobadarate/js/jquery.js"></script>
@@ -3521,6 +3499,101 @@
         })();
     // ]]>
 </script>
+<script type="text/javascript" src="/dooz/sweetalert.min.js"></script>
+<script type="text/javascript" src="/dooz/jquery.calendario.js"></script>
+<script type="text/javascript" src="/dooz/modernizr.custom.63321.js"></script>
+
+<script type="text/javascript">
+
+
+    $(function () {
+
+        var transEndEventNames = {
+                'WebkitTransition': 'webkitTransitionEnd',
+                'MozTransition': 'transitionend',
+                'OTransition': 'oTransitionEnd',
+                'msTransition': 'MSTransitionEnd',
+                'transition': 'transitionend'
+            },
+            transEndEventName = transEndEventNames[Modernizr.prefixed('transition')],
+            $wrapper = $('#custom-inner'),
+            $calendar = $('#calendar'),
+
+            cal = $calendar.calendario({
+                caldata: JSON.parse(` {!! $initiatives !!}`),
+
+                displayWeekAbbr: true,
+                weeks: ['أحد', 'اثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت'],
+                weekabbrs: ['أحد', 'اثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت'],
+                months: ['كانون الثاني', 'شباط', 'آذار', 'نيسان', 'أيار', 'حزيران', 'تموز', 'آب', 'أيلول', 'تشرين الأول', 'تشرين الثاني', 'كانون الأول'],
+                monthabbrs: ['كانون الثاني', 'شباط', 'آذار', 'نيسان', 'أيار', 'حزيران', 'تموز', 'آب', 'أيلول', 'تشرين الأول', 'تشرين الثاني', 'كانون الأول'],
+                startIn: 6,
+                onDayClick: function ($el, $contentEl, dateProperties) {
+
+                    if ($contentEl.length > 0) {
+                        showEvents($contentEl, dateProperties);
+
+                    }
+
+                },
+
+            }),
+            $month = $('#custom-month').html(cal.getMonthName()),
+            $year = $('#custom-year').html(cal.getYear());
+
+        $('#custom-next').on('click', function () {
+            cal.gotoNextMonth(updateMonthYear);
+            for (i = 0; i < document.querySelectorAll('span.fc-date').length; i++) {
+                document.querySelectorAll('span.fc-date')[i].style.top = "38%";
+            }
+        });
+        $('#custom-prev').on('click', function () {
+            cal.gotoPreviousMonth(updateMonthYear);
+            for (i = 0; i < document.querySelectorAll('span.fc-date').length; i++) {
+                document.querySelectorAll('span.fc-date')[i].style.top = "38%";
+            }
+        });
+
+        function updateMonthYear() {
+            $month.html(cal.getMonthName());
+            $year.html(cal.getYear());
+
+        }
+
+        // just an example..
+        function showEvents($contentEl, dateProperties) {
+
+
+            swal({
+                title: "مبادرات اليوم " + dateProperties.day + '/' + dateProperties.month + '/' + dateProperties.year,
+                text: $contentEl.html(),
+                html: true
+            });
+
+
+        }
+
+        for (i = 0; i < document.querySelectorAll('span.fc-date').length; i++) {
+            document.querySelectorAll('span.fc-date')[i].style.top = "38%";
+        }
+        for (i = 0; i < document.querySelectorAll('.fc-calendar .fc-head div').length; i++) {
+            document.querySelectorAll('.fc-calendar .fc-head div')[i].style.fontSize = "12px";
+            document.querySelectorAll('.fc-calendar .fc-head div')[i].style.margin = "2px";
+        }
+    });
+
+
+</script>
+
+<style>
+
+    span.fc-date {
+        top: 38%;
+    !important
+    }
+</style>
+
 </body>
 
 </html>
+

@@ -2,14 +2,8 @@
 <html>
 <head>
     <title>@yield('title')</title>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
-    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css"/>
-    <!--Bootsrap 4 CDN-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=El+Messiri" rel="stylesheet">
     <!--Fontawesome CDN-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
@@ -70,19 +64,15 @@
         }
 
 
-
         .validation {
             padding: 10px;
             height: auto;
-            width: 350px;
-            background: rgba(125, 125, 125, .3);
+            width: 94%;
             margin-right: 10px;
-            color: white;
             margin-top: 10px;
             direction: rtl;
             text-align: right;
         }
-
         .card {
             height: auto;
         }
@@ -129,7 +119,7 @@
                         class="" href="/register">انشاء حساب</a></li>
             <li class=""><a
                         style="border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;border-radius:20px;color:black"
-                        class="" href="index.php">تقديم تبرع</a></li>
+                        class="" href="/donationList/create">تقديم تبرع</a></li>
         </ul>
     </div>
 </nav>
@@ -141,15 +131,12 @@
 </div>
 <!--**************************************************************الفوتر الاخير بداية *****************************************-->
 <footer>
-    <div class="copyRight" style="background:black;opacity:.8;margin-top:50px;height:40px;padding-top:20px">
+    <div class="copyRight" style="background:black;opacity:.8;margin-top:50px;height:70px;padding-top:20px">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <p style="color:white;text-align:center;">جميع الحقوق محفوظة لمركز العمل التنموي - معا © 2019 ||
-                        <a href="http://www.alhamsco.com" target="_blank" alt="الهمص للتكنولوجيا والتدريب"><img
-                                    src="/platform/images/7777.png"
-                                    style="width:30px;height:30px;margin-right:5px;margin-left:5px;margin-top:-10px;"></a>POWERED
-                        BY
+                    <p style="color:white;text-align:center;">جميع الحقوق محفوظة لمركز العمل التنموي - معا © 2019  ||
+                        <a href="http://www.alhamsco.com" target="_blank" alt="الهمص للتكنولوجيا والتدريب"><img src="/platform/images/7777.png" style="width:30px;height:30px;margin-right:5px;margin-left:5px;margin-top:-10px;"></a>POWERED BY
                     </p>
                 </div>
             </div>
@@ -157,25 +144,10 @@
     </div>
 </footer>
 <!--*********************************************** footer end ***************************************  -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script type="text/javascript">
-
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-36251023-1']);
-    _gaq.push(['_setDomainName', 'jqueryscript.net']);
-    _gaq.push(['_trackPageview']);
-
-    (function () {
-        var ga = document.createElement('script');
-        ga.type = 'text/javascript';
-        ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(ga, s);
-    })();
-
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#myModal .close").click(function(){$("#myModal").hide();});
 </script>
-
 @yield("js")
 
 </body>

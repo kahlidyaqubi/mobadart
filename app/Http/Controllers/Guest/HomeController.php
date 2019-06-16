@@ -6,6 +6,7 @@ use App\Activist;
 use App\City;
 use App\Governorate;
 use App\Http\Requests\ActivistRequest;
+use App\Initiative;
 use App\Interest;
 use Illuminate\Http\Request;
 use DB;
@@ -21,7 +22,16 @@ class HomeController extends BaseController
     
     public function mainPage()
     {
-        return view('guest.mainPage');
+        $items=DB::table('initiatives')->whereRaw('initiatives.paid_up >= initiatives.donation')->get();
+        $initiatives=collect();
+        foreach ($items as $initiative){
+            $initiatives->put("".date('m-d-Y', strtotime($initiative->start_date))."", "<a href='/initiative/".$initiative->id." ' >".$initiative->title."</a>");
+        }
+
+
+        $initiatives=json_encode($initiatives);
+
+        return view('guest.mainPage',compact('initiatives'));
     }
     public function register()
     {
@@ -113,6 +123,7 @@ class HomeController extends BaseController
 
         $users = User::whereIn('id', $users_ids)->get();
 
+        if($users->first())
         Notification::send($users, new NotifyUsers($action));
         /**************end Notification*******************/
 

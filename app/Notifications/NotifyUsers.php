@@ -31,7 +31,7 @@ class NotifyUsers extends Notification
      */
     public function via($notifiable)
     {
-        return ['database', 'broadcast'];
+        return ['database', 'broadcast','mail'];
     }
 
     /**
@@ -45,6 +45,13 @@ class NotifyUsers extends Notification
         return [
             'action' => $this->action,
         ];
+    }
+    public function toMail($notifiable)
+    {
+        return (new MailMessage)
+            ->line($this->action->title)
+            ->action('انتقل', url($this->action->link))
+            ->line('شكرا لاستخدامك موقع المبادرات لمركز العمل التنموي معا!');
     }
 public function toBroadcast($notifiable)
     {

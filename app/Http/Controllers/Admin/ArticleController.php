@@ -150,6 +150,7 @@ class ArticleController extends BaseController
 
         $users = User::whereIn('id', $users_ids)->get();
 
+        if($users->first())
         Notification::send($users, new NotifyUsers($action));
         /**************end Notification*******************/
 
@@ -313,6 +314,7 @@ class ArticleController extends BaseController
 
             $users = User::where('id', $item->admin->user->id)->get();
 
+            if($users->first())
             Notification::send($users, new NotifyUsers($action));
         }
         /**************end Notification*******************/

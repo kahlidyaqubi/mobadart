@@ -22,7 +22,13 @@
                         <input type="submit" style="width:70px;" value="بحث" class="btn btn-primary"/>
                     </div>
 
+
                 </form>
+                @if($item->end_date <= \Carbon\Carbon::now())
+                    <div class="col-sm-3 " style="margin-top: 12px">
+                        <a  href="/admin/initiative/rememberEvaluteToInitiave/{{$item->id}}" class="btn btn-danger">ارسال تذكير لغير المقيمين</a>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

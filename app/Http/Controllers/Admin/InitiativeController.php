@@ -16,6 +16,8 @@ use App\Interest;
 use Illuminate\Http\Request;
 use App\Imports\ActivistExport;
 use Maatwebsite\Excel\Facades\Excel;
+
+use Carbon\Carbon;
 use Session;
 use DB;
 use App\User;
@@ -85,7 +87,7 @@ class InitiativeController extends BaseController
         if ($in_date)
             $items = $items->whereRaw("end_date >= ? and start_date <= ?", [$in_date, $in_date]);
 
-        $items = Initiative::whereIn('id', $items->pluck('initiatives.id'))->orderBy("initiatives.id","desc")->paginate(20)
+        $items = Initiative::whereIn('id', $items->pluck('initiatives.id'))->orderBy("initiatives.id", "desc")->paginate(20)
             ->appends([
                 "q" => $q, "city_id" => $city_id, 'governorate_id' => $governorate_id
                 , "in_date" => $in_date, 'end_date' => $end_date
@@ -179,8 +181,8 @@ class InitiativeController extends BaseController
         $users_ids = array_merge($suber_admins_ids, $have_prmission);
 
         $users = User::whereIn('id', $users_ids)->get();
-
-        Notification::send($users, new NotifyUsers($action));
+        if ($users->first())
+            Notification::send($users, new NotifyUsers($action));
         /**************end Notification*******************/
         Session::flash("msg", "تمت عملية الاضافة بنجاح");
         return redirect("/admin/initiative/create");
@@ -356,18 +358,23 @@ class InitiativeController extends BaseController
         /**************start Notification*******************/
 
         if ($item->accept == 1) {
-            $action = Action::create(['title' => 'تم قبول ناشط في مبادرة', 'type' => 'من موظف', 'link' => '/admin/initiative/'.$item->initiative->id]);
+            $action = Action::create(['title' => 'تم قبول ناشط في مبادرة', 'type' => 'من موظف', 'link' => '/admin/initiative/' . $item->initiative->id]);
+            $action2 = Action::create(['title' => 'تم قبول ناشط في مبادرة', 'type' => 'من موظف', 'link' => '/initiative/' . $item->initiative->id]);
             $suber_admins_ids = User::whereIn('id', Admin::where('super_admin', 1)->pluck('user_id'))->whereNotIn('id', [auth()->user()->id])->pluck('id')->toArray();
 
             $have_prmission = User::whereIn('id', [$item->initiative->admin->user->id])->whereNotIn('id', [auth()->user()->id])->pluck('id')->toArray();
 
             $activsits_ids = User::whereIn('id', [$item->activist_id])->pluck('id')->toArray();
 
-            $users_ids = array_merge($suber_admins_ids, $have_prmission, $activsits_ids);
+            $users_ids = array_merge($suber_admins_ids, $have_prmission);
 
             $users = User::whereIn('id', $users_ids)->get();
+            $users2 = User::whereIn('id', $activsits_ids)->get();
 
-            Notification::send($users, new NotifyUsers($action));
+            if ($users->first())
+                Notification::send($users, new NotifyUsers($action));
+            if ($users2->first())
+                Notification::send($users2, new NotifyUsers($action2));
         }
         /**************end Notification*******************/
 
@@ -506,6 +513,10 @@ class InitiativeController extends BaseController
             Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
             return redirect("/admin/initiative");
         }
+        if (!($item->admin_id == auth()->user()->admin->id || auth()->user()->admin->super_admin == 1)) {
+            Session::flash("msg", "e:لا تملك صلاحية عرض تقييمات مبادرة لست منشطها");
+            return redirect("/admin/initiative");
+        }
 
         if (count($keywords) == 3) {
             $keywords[3] = "";
@@ -638,5 +649,35 @@ class InitiativeController extends BaseController
         return view("admin.initiatives.articleToInitiave", compact('items', 'the_item', 'categories', 'initiatives'));
     }
 
+    public function rememberEvaluteToInitiave($id)
+    {
+        $item = Initiative::find($id);
+        if ($item == NULL) {
+            Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
+            return redirect("/admin/initiative");
+        }
+        if (!($item->admin_id == auth()->user()->admin->id || auth()->user()->admin->super_admin == 1)) {
+            Session::flash("msg", "e:لا تملك صلاحية عرض تقييمات مبادرة لست منشطها");
+            return redirect("/admin/initiative");
+        }
+
+        DB::table('notify_initiaves')->insert([ 'initiative_id' => $item->id]);
+            $action = Action::create(['title' => "يرجى تقييم المبادرة $item->title ", 'type' => 'تذكير', 'link' => '/admin/initiative/'.$item->id]);
+            $action2 = Action::create(['title' => "يرجى تقييم المبادرة $item->title ", 'type' => 'تذكير', 'link' => '/initiative/'.$item->id]);
+            $have_prmission = User::where('id', $item->admin->user->id)->pluck('id')->toArray();
+            $activsits_ids = User::whereIn('id', $item->activists()->pluck('user_id')->toArray())->pluck('id')->toArray();
+
+            //$users_ids = array_merge($activsits_ids, $have_prmission);
+            $users = User::whereIn('id', $have_prmission)->whereNotIn('id',Admin::find(Initiative_evaluation::Where('initiative_id',$id)->pluck('admin_id')->toArray())->pluck('user_id')->toArray())->get();
+            $users2 = User::whereIn('id', $activsits_ids)->whereNotIn('id',Activist::find(Initiative_evaluation::Where('initiative_id',$id)->pluck('activist_id')->toArray())->pluck('user_id')->toArray())->get();
+            if($users->first())
+                Notification::send($users, new NotifyUsers($action));
+            if($users2->first())
+                Notification::send($users2, new NotifyUsers($action2));
+
+
+        Session::flash("msg", "تم ارسال التذكير بنجاح");
+        return redirect("/admin/initiative/evaluteToInitiave/".$id);
+    }
 
 }

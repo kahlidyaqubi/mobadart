@@ -46,7 +46,7 @@
                                 <li>
                                     <a style="color:#042e51;" href="#"> الأخبار </a>
                                 </li>
-                                @if($item->end_date <= Carbon\Carbon::now() && $item->admin_id==auth()->user()->admin->id
+								@if($item->end_date <= Carbon\Carbon::now() && $item->admin_id==auth()->user()->admin->id
                                 && \App\Initiative_evaluation::where('admin_id',auth()->user()->admin->id)->where('initiative_id',$item->id)->first()==null)
                                     <li>
                                         <a style="color:lightgoldenrodyellow;background: darkred;  !important"

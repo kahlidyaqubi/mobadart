@@ -1,12 +1,12 @@
 @if ($errors->any())
 
-    <div class="alert alert-danger alert-dismissible validation">
+    <div id="myModal"   class="alert alert-danger alert-dismissible validation">
         <ul>
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
         </ul>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <button type="button" data-target="#myModal" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -31,8 +31,8 @@
         $msgClass = "alert-danger";
     }
     ?>
-    <div class="alert {{$msgClass}} alert-dismissible validation">{{$msg}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <div id="myModal" class="{{$msgClass}} alert-dismissible validation">{{$msg}}
+        <button type="button" class="close" data-target="#myModal" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>

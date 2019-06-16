@@ -134,6 +134,10 @@ class EvalutionController extends BaseController
                 Session::flash("msg", "e:يرجى التأكد من الرابط المطلوب");
                 return redirect('admin/initiative')->withInput();
             }
+			if(Initiative_evaluation::where('initiative_id',request()['initiative_id'])->where('admin_id',auth()->user()->admin->id)->first()){
+			Session::flash("msg", "e:لقد تم تقييم المبادرة من قبل");
+                return redirect('admin/initiative')->withInput();
+			}
 
             return view('admin.initiative_evaluation.create', compact('initiative'));
 

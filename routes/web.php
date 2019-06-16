@@ -86,6 +86,7 @@ Route::namespace('Admin')
         Route::get('/initiative/activitsInInitiative/{id}', 'InitiativeController@activitsInInitiative');
         Route::get('/initiative/acceptActivit/{id}', 'InitiativeController@acceptActivit');
         Route::get('/initiative/evaluteToInitiave/{id}', 'InitiativeController@evaluteToInitiave');
+        Route::get('/initiative/rememberEvaluteToInitiave/{id}', 'InitiativeController@rememberEvaluteToInitiave');
         Route::get('/initiative/articleToInitiave/{id}', 'InitiativeController@articleToInitiave');
         /********/
         Route::resource('donationList', 'DonationListController');
