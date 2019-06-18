@@ -29,20 +29,38 @@
                             <option value="0" @if(request('donation')==='0')selected @endif>لا تحتاج تمويل</option>
                         </select>
                     </div>
-                    <div class="col-sm-1" style="padding-top: 15px">تاريخ العمل</div>
-                    <div class="col-sm-2 " style="margin-top: 12px">
-                        <input type="date" class="form-control" name="in_date" value="{{request('in_date')}}"
-                               placeholder="تاريخ العمل"/>
+                    <div class="col-sm-3 " style="margin-top: 12px">
+                        <div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd" >
+                            <input type="text" class="form-control" name="in_date" value="{{request('in_date')}}"
+                                   placeholder="تاريخ العمل">
+                            <span class="input-group-btn">
+                                                                <button class="btn default" type="button">
+                                                                    <i class="fa fa-calendar"></i>
+                                                                </button>
+                                                            </span>
+                        </div>
                     </div>
-                    <div class="col-sm-1" style="padding-top: 15px">تاريخ البدء/من</div>
-                    <div class="col-sm-2 " style="margin-top: 12px">
-                        <input type="date" class="form-control" name="start_date" value="{{request('start_date')}}"
-                               placeholder="تاريخ البدء"/>
+                    <div class="col-sm-3 " style="margin-top: 12px">
+                        <div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd" >
+                            <input type="text" class="form-control" name="start_date" value="{{request('start_date')}}"
+                                   placeholder="تاريخ البدء/من">
+                            <span class="input-group-btn">
+                                                                <button class="btn default" type="button">
+                                                                    <i class="fa fa-calendar"></i>
+                                                                </button>
+                                                            </span>
+                        </div>
                     </div>
-                    <div class="col-sm-1" style="padding-top: 15px">تاريخ الانتهاء/إلى</div>
-                    <div class="col-sm-2 " style="margin-top: 12px">
-                        <input type="date" class="form-control" name="end_date" value="{{request('end_date')}}"
-                               placeholder="تاريخ الانتهاء"/>
+                    <div class="col-sm-3 " style="margin-top: 12px;margin-bottom: 10px">
+                        <div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd" >
+                            <input type="text" class="form-control" name="end_date" value="{{request('end_date')}}"
+                                   placeholder="تاريخ الانتهاء/إلى">
+                            <span class="input-group-btn">
+                                                                <button class="btn default" type="button">
+                                                                    <i class="fa fa-calendar"></i>
+                                                                </button>
+                                                            </span>
+                        </div>
                     </div>
                     <div class="col-sm-12">
                         <label>فــــرز حســــب الاهتمـــامـــات</label>

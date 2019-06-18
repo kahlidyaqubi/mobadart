@@ -60,7 +60,7 @@
                             </label>
                             <div class="col-md-4">
                                 <input type="file" name="main_image" class="form-control" accept='image/*'
-                                >
+                                required>
                             </div>
                         </div>
                         <div class="form-group">

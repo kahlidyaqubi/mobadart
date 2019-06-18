@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Guest;
 
+use App\City;
+use App\Governorate;
+use App\Initiative;
+use App\Interest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -12,10 +16,73 @@ class InitiativeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $q = $request["q"] ?? "";
+        $city_id = $request["city_id"] ?? "";
+        $governorate_id = $request["governorate_id"] ?? "";
+        $start_date = $request["start_date"] ?? "";
+        $end_date = $request["end_date"] ?? "";
+        $in_date = $request["in_date"] ?? "";
+        $interests_ids = $request["interests_ids"] ?? "";
+
+
+        $items = Initiative::whereRaw('initiatives.paid_up >= initiatives.donation')
+            ->leftJoin('admins', 'admin_id', 'admins.id')
+            ->leftJoin('cities', 'city_id', 'cities.id')
+            ->whereRaw(true);
+
+
+        if ($q)
+            $items->whereRaw("(initiatives.title like ? or initiatives.team_name like ? or admins.name like ?)"
+                , ["%$q%", "%$q%", "%$q%"]);
+
+        if ($city_id)
+            $items->where('cities.id', '=', $city_id);
+
+        if (($governorate_id) && !($city_id)) {
+            $cities_ids = City::where('governorate_id', $governorate_id)->pluck('id')->toArray();
+            $items->whereIn('cities.id', $cities_ids);
+        }
+
+
+        if ($interests_ids) {
+            if ($interests_ids[0] != null || count($interests_ids) > 1) {
+                foreach ($interests_ids as $interest_id) {
+                    $items->whereHas('interests', function ($q) use ($interest_id) {
+                        $q->where('interests.id', $interest_id);
+                    });
+                }
+
+            }
+        }
+
+        if (($end_date) && ($start_date)) {
+            $items = $items->whereRaw("end_date <= ? and start_date >= ?", [$end_date, $start_date]);
+        } else {
+            if ($start_date)
+                $items = $items->whereRaw("start_date = ?", [$start_date]);
+
+            if ($end_date)
+                $items = $items->whereRaw("end_date = ?", [$end_date]);
+        }
+        if ($in_date)
+            $items = $items->whereRaw("end_date >= ? and start_date <= ?", [$in_date, $in_date]);
+
+        $items = Initiative::whereIn('id', $items->pluck('initiatives.id'))->orderBy("initiatives.id", "desc")->paginate(20)
+            ->appends([
+                "q" => $q, "city_id" => $city_id, 'governorate_id' => $governorate_id
+                , "in_date" => $in_date, 'end_date' => $end_date
+                , 'interests_ids' => $interests_ids,
+                'start_date' => $start_date]);
+        $cities = City::all();
+        $governorates = Governorate::all();
+        $interests = Interest::where('status', '1')->get();
+        return view('guest.initiatives.index', compact('items', 'interests', 'governorate_id', 'governorates', 'cities', 'city_id'));
+
+
     }
+
 
     /**
      * Show the form for creating a new resource.

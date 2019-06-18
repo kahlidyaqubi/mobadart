@@ -1,37 +1,9 @@
 <?php
 
+
+Route::get('/cron_all', 'Cronjobs\All@cron_all');
 /*************************************/
 // Authentication Routes...
-Route::get('login', [
-    'as' => 'login',
-    'uses' => 'Auth\LoginController@showLoginForm'
-]);
-Route::post('login', [
-    'as' => '',
-    'uses' => 'Auth\LoginController@login'
-]);
-Route::post('logout', [
-    'as' => 'logout',
-    'uses' => 'Auth\LoginController@logout'
-]);
-
-// Password Reset Routes...
-Route::post('password/email', [
-    'as' => 'password.email',
-    'uses' => 'Auth\ForgotPasswordController@sendResetLinkEmail'
-]);
-Route::get('password/reset', [
-    'as' => 'password.request',
-    'uses' => 'Auth\ForgotPasswordController@showLinkRequestForm'
-]);
-Route::post('password/reset', [
-    'as' => 'password.update',
-    'uses' => 'Auth\ResetPasswordController@reset'
-]);
-Route::get('password/reset/{token}', [
-    'as' => 'password.reset',
-    'uses' => 'Auth\ResetPasswordController@showResetForm'
-]);
 
 // Registration Routes...
 /*
@@ -43,10 +15,48 @@ Route::post('register', [
     'as' => '',
     'uses' => 'Auth\RegisterController@register'
 ]);*/
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::post('logout', [
+        'as' => 'logout',
+        'uses' => 'Auth\LoginController@logout'
+    ]);
+});
+
 Route::group(['middleware' => ['guest']], function () {
     Route::get('/register', 'Guest\HomeController@register')->name('register');
     Route::post('/register', 'Guest\HomeController@store')->name('register');
+
+
+// Password Reset Routes...
+    Route::post('password/email', [
+        'as' => 'password.email',
+        'uses' => 'Auth\ForgotPasswordController@sendResetLinkEmail'
+    ]);
+    Route::get('password/reset', [
+        'as' => 'password.request',
+        'uses' => 'Auth\ForgotPasswordController@showLinkRequestForm'
+    ]);
+    Route::post('password/reset', [
+        'as' => 'password.update',
+        'uses' => 'Auth\ResetPasswordController@reset'
+    ]);
+    Route::get('password/reset/{token}', [
+        'as' => 'password.reset',
+        'uses' => 'Auth\ResetPasswordController@showResetForm'
+    ]);
+
+    Route::get('login', [
+        'as' => 'login',
+        'uses' => 'Auth\LoginController@showLoginForm'
+    ]);
+
 });
+
+Route::post('login', [
+    'as' => '',
+    'uses' => 'Auth\LoginController@login'
+]);
 
 /****************************************/
 Route::get('home', 'HomeController@index')->name('home');
@@ -113,6 +123,7 @@ Route::namespace('Admin')
         Route::resource('article', 'ArticleController');
         Route::get('/article/delete/{id}', 'ArticleController@delete');
         Route::get('/article/accept/{id}', 'ArticleController@accept');
+        Route::get('/article/articlesComments/{id}', 'ArticleController@articlesComments');
         /********/
         Route::resource('comment', 'CommentController');
         Route::get('/comment/delete/{id}', 'CommentController@delete');//مع صلاحة الخبر
@@ -186,7 +197,7 @@ Route::namespace('Guest')
         Route::get('/', 'HomeController@mainPage');
         /********/
         Route::get('/initiative/showCalender', 'InitiativeController@showCalender');
-        Route::resource('initiative', 'InitiativeController');
+        Route::resource('/initiative', 'InitiativeController');
         Route::get('/initiative/activityInInitiave/{id}', 'InitiativeController@activityInInitiave');
         /********/
         Route::resource('activity', 'ActivityController');

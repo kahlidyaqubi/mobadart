@@ -38,6 +38,11 @@
           type="text/css" id="style_color"/>
     <link href="{{asset('metronic-rtl/assets/layouts/layout/css/custom-rtl.min.css')}}" rel="stylesheet"
           type="text/css"/>
+    <link href="{{asset('metronic-rtl/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('metronic-rtl/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('metronic-rtl/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('metronic-rtl/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('metronic-rtl/assets/global/plugins/clockface/css/clockface.css')}}" rel="stylesheet" type="text/css" />
 
     <!-- END THEME LAYOUT STYLES -->
     <link rel="shortcut icon" href="/lib/img/Group%20124.ico"/>
@@ -62,6 +67,10 @@
             /* display: none; <- Crashes Chrome on hover */
             -webkit-appearance: none;
             margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+        }
+
+        .datepicker-dropdown{
+            max-width: 15%;
         }
 
         input[type=number] {
@@ -407,8 +416,13 @@
 
 <script src="/metronic-rtl/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"
         type="text/javascript"></script>
-
-
+<script src="/metronic-rtl/assets/global/plugins/moment.min.js" type="text/javascript"></script>
+<script src="/metronic-rtl/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js" type="text/javascript"></script>
+<script src="/metronic-rtl/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+<script src="/metronic-rtl/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js" type="text/javascript"></script>
+<script src="/metronic-rtl/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+<script src="/metronic-rtl/assets/global/plugins/clockface/js/clockface.js" type="text/javascript"></script>
+<script src="/metronic-rtl/assets/pages/scripts/components-date-time-pickers.min.js" type="text/javascript"></script>
 <script>
 
 

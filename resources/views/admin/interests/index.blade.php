@@ -33,7 +33,7 @@
             </div>
         </div>
     </div>
-
+    <div class="portlet-body " id="the_error"></div>
     <div class="portlet-body">
         @if($items->count()>0)
             <div class="table-scrollable">
@@ -100,15 +100,24 @@
         $(function () {
             $(".cbActive").click(function () {
                 var id = $(this).val();
+                var mythis=this;
+                console.log(mythis);
+
                 $.ajax({
                     url: "/admin/interest/active/" + id,
                     data: {_token: '{{ csrf_token() }}'},
                     error: function (jqXHR, textStatus, errorThrown) {
-
+                        document.getElementById("the_error").innerHTML = '<div class="alert alert-danger alert-dismissible">\n' + jqXHR.responseJSON.message +
+                            '        <button type="button" class="close" data-dismiss="alert" aria-label="Close">\n' +
+                            '            <span aria-hidden="true">&times;</span>\n' +
+                            '        </button>\n' +
+                            '    </div>';
+                        mythis.checked = false;
                     },
                 });
             });
         });
     </script>
+
 @endsection
 

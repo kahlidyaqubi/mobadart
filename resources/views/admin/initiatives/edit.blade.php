@@ -47,7 +47,7 @@
                                         يوجد خطأ في المدخلات يرجى إدخال معلومات سليمة البنية
                                     </div>
                                     <div class="tab-pane active" id="tab1">
-                                        <h3 class="block">معلومات المشاركات السابقة</h3>
+                                        <h3 class="block">معلومات المبادرة</h3>
                                         <div class="form-group">
                                             <label class="control-label col-md-3">عنوان المبادرة
                                                 <span class="required"> * </span>
@@ -217,7 +217,7 @@
                                             <div class="col-md-4">
                                                 <textarea class="form-control" name="main_goale"
                                                           required>{{$item["main_goale"]}}</textarea>
-                                                <span class="help-block"> أدخل هدافاً عاماً للمبادرة </span>
+                                                <span class="help-block"> أدخل أهدافاً عاماً للمبادرة </span>
                                             </div>
                                         </div>
                                         <div class="form-group">

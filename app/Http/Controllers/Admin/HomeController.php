@@ -6,6 +6,7 @@ use App\Article;
 use App\Family_center;
 use App\Http\Requests\AdminProfileRequest;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Session;
 use App\User;
 use App\Admin;
@@ -16,7 +17,8 @@ use Illuminate\Support\Facades\Storage;
 class HomeController extends BaseController
 {
 
-    public function  changePassword(){
+    public function changePassword()
+    {
         return view("admin.home.change-password");
     }
 
@@ -39,39 +41,53 @@ class HomeController extends BaseController
         return redirect('/admin/changePassword');
     }
 
-    public function noaccess(){
+    public function noaccess()
+    {
         return view('admin.home.noaccess');
     }
 
     public function show()
     {
 
-        if(auth()->user()->admin->super_admin==1) {
+        if (auth()->user()->admin->super_admin == 1) {
             $type = 'مدير النظام';
 
-        }
-        else {
+        } else {
             $type = "المنشط";
         }
-        $item=auth()->user()->admin;
-        $articles=Article::take(5)->get();
-        return view('admin.home.profile',compact('type','item','articles'));
+        $item = auth()->user()->admin;
+        $articles = Article::take(5)->get();
+        return view('admin.home.profile', compact('type', 'item', 'articles'));
     }
 
     public function editProfile()
     {
-        $item=auth()->user()->admin;
-        $family_centers =Family_center::all();
-        return view("admin.home.edit_profile", compact("item",'family_centers'));
+        $item = auth()->user()->admin;
+        $family_centers = Family_center::all();
+        return view("admin.home.edit_profile", compact("item", 'family_centers'));
     }
 
-    public function editProfile_post(AdminProfileRequest $request){
+    public function editProfile_post(AdminProfileRequest $request)
+    {
 
         $item = auth()->user()->admin;
 
-        if(!$item->super_admin){
-            $testeroor=$this->validate($request,[
-                'family_center_id'=>'required|max:3',
+
+        $testeroor = $this->validate($request, [
+            'family_center_id' => 'required|max:3',
+            'email' => Rule::unique('users')->where(function ($query) use ($id) {
+                return $query->where('email', request()->email)->where('id', '!=', $id)
+                    ->where('the_type', 1);
+            }),
+            'user_name' => Rule::unique('users')->where(function ($query) use ($id) {
+                return $query->where('user_name', request()->user_name)->where('id', '!=', $id)
+                    ->where('the_type', 1);
+            }),
+        ]);
+
+        if (!$item->super_admin) {
+            $testeroor = $this->validate($request, [
+                'family_center_id' => 'required|max:3',
 
             ]);
         }

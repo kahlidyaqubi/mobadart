@@ -1,6 +1,6 @@
 @extends("layouts._admin_layout")
 
-@section("title", "تبرع المتبرع ".$item->financier_name . "للمبادرة".$item->initiative->title)
+@section("title", "تبرع المتبرع ".$item->financier_name . " للمبادرة ".$item->initiative->title)
 @section("content")
 
     <div class="row">

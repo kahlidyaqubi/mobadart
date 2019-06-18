@@ -12,6 +12,7 @@ use App\Initiative_evaluation;
 use App\Interest;
 use App\User;
 use App\Imports\ActivistExport;
+use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use DB;
@@ -133,6 +134,7 @@ class ActivsitController extends BaseController
                     , "gender" => $gender, 'usefull' => $usefull
                     , 'interests_ids' => $interests_ids,
                     'initiative_id' => $initiative_id]);
+
             $cities = City::all();
             $governorates = Governorate::all();
             $initiatives = Initiative::all();
@@ -152,12 +154,23 @@ class ActivsitController extends BaseController
 
     public function store(ActivistRequest $request)
     {
+
+
+
         $testeroor = $this->validate($request, [
 
             'password' => 'required|min:6|confirmed',
             'password_confirmation' => 'required|max:50',
             'shared' => 'required|max:2',
             'shared_ditalis' => 'max:1000',
+            'user_name' => Rule::unique('users')->where(function ($query)  {
+                return $query->where('user_name', request()->user_name)
+                    ->where('the_type', 2);
+            }),
+            'email' => Rule::unique('users')->where(function ($query)  {
+                return $query->where('email', request()->email)
+                    ->where('the_type', 2);
+            }),
 
         ]);
         $user_id = User::create([
@@ -250,11 +263,24 @@ class ActivsitController extends BaseController
 
     public function update(ActivistRequest $request, $id)
     {
+
         $item = Activist::find($id);
         if ($item == NULL) {
             Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
             return redirect("/admin/activsit");
         }
+        $the_id=$item->user->id;
+        $testeroor = $this->validate($request, [
+            'user_name' => Rule::unique('users')->where(function ($query) use ($the_id) {
+                return $query->where('user_name', request()->user_name)->where('id', '!=', $the_id)
+                    ->where('the_type', 2);
+            }),
+            'email' => Rule::unique('users')->where(function ($query) use ($the_id) {
+                return $query->where('email', request()->email)->where('id', '!=', $the_id)
+                    ->where('the_type', 2);
+            }),
+
+        ]);
 
         $user = User::find($item->user_id);
 

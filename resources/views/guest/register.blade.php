@@ -143,8 +143,9 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-table"></i></span>
                                 </div>
-                                <input type="date" class="form-control" name="brth_day"
+							 <input  id="datepicker" width="276"  name="brth_day"
                                        value="{{old("brth_day")}}" required placeholder="تاريخ الميلاد"/>
+							 
                             </div>
                             <!--  المحافظة-->
                             <div class="input-group form-group">

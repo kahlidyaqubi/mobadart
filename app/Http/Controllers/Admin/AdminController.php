@@ -15,6 +15,7 @@ use App\Link;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Session;
 
 class AdminController extends BaseController
@@ -22,49 +23,59 @@ class AdminController extends BaseController
     //
     public function index(Request $request)
     {
-        $q = $request["q"]??"";
+        $q = $request["q"] ?? "";
         $super_admin = $request["super_admin"] ?? "";
         $family_center_id = $request["family_center_id"] ?? "";
 
 
-        $items=Admin::leftJoin('users','user_id','users.id')->leftJoin('family_centers','family_center_id','family_centers.id')->whereRaw(true);
+        $items = Admin::leftJoin('users', 'user_id', 'users.id')->leftJoin('family_centers', 'family_center_id', 'family_centers.id')->whereRaw(true);
 
         if ($q)
             $items->whereRaw("(users.name like ? or users.email like ? or users.user_name like ? or admins.mobile like ?)"
-                , ["%$q%","%$q%","%$q%","%$q%"]);
-        if ($super_admin ||$super_admin==='0' )
-            $items->where('super_admin','=',$super_admin);
+                , ["%$q%", "%$q%", "%$q%", "%$q%"]);
+        if ($super_admin || $super_admin === '0')
+            $items->where('super_admin', '=', $super_admin);
 
         if ($family_center_id)
-            $items->where('family_centers.id','=',$family_center_id);
+            $items->where('family_centers.id', '=', $family_center_id);
 
 
-
-        $items = Admin::whereIn('id',$items->pluck('admins.id'))->orderBy("admins.id")->paginate(20)
+        $items = Admin::whereIn('id', $items->pluck('admins.id'))->orderBy("admins.id")->paginate(20)
             ->appends([
-                "q" => $q , "super_admin" => $super_admin , "family_center_id"=>$family_center_id]);
+                "q" => $q, "super_admin" => $super_admin, "family_center_id" => $family_center_id]);
 
-        $family_centers=Family_center::all();
-        return view('admin.admins.index',compact('items','family_centers','super_admin','family_center_id'));
+
+        $family_centers = Family_center::all();
+
+        return view('admin.admins.index', compact('items', 'family_centers', 'super_admin', 'family_center_id'));
     }
+
     public function create()
     {
         //
-        $family_centers=Family_center::all();
-        return view('admin.admins.create',compact('family_centers'));
+        $family_centers = Family_center::all();
+        return view('admin.admins.create', compact('family_centers'));
     }
 
     public function store(AdminRequest $request)
     {
         //
-        if(!request()->super_admin){
-            $testeroor=$this->validate($request,[
-                'family_center_id'=>'required|max:3',
+        if (!request()->super_admin) {
+            $testeroor = $this->validate($request, [
+                'family_center_id' => 'required|max:3',
 
             ]);
         }
-        $testeroor=$this->validate($request,[
+        $testeroor = $this->validate($request, [
             'password' => 'required|string|min:6',
+            'email' => Rule::unique('users')->where(function ($query)  {
+                return $query->where('email', request()->email)
+                    ->where('the_type', 1);
+            }),
+            'user_name' => Rule::unique('users')->where(function ($query)  {
+                    return $query->where('user_name', request()->user_name)
+                        ->where('the_type', 1);
+                }),
         ]);
         $user_id = User::create([
             'name' => request()->name,
@@ -73,7 +84,7 @@ class AdminController extends BaseController
             'the_type' => 1,
             'password' => bcrypt(request()->password),
         ])->id;
-        request()['user_id']=$user_id;
+        request()['user_id'] = $user_id;
         Admin::create(request()->all());
 
         Session::flash("msg", "تمت عملية الاضافة بنجاح");
@@ -88,23 +99,37 @@ class AdminController extends BaseController
     public function edit($id)
     {
         //
-        $item=Admin::find($id);
+        $item = Admin::find($id);
         if ($item == NULL) {
             Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
             return redirect("/admin/admin");
         }
-        $family_centers=Family_center::all();
-        return view('admin.admins.edit',compact('family_centers','item'));
+        $family_centers = Family_center::all();
+        return view('admin.admins.edit', compact('family_centers', 'item'));
     }
 
     public function update(AdminRequest $request, $id)
     {
         //
-        $item=Admin::find($id);
+
+
+
+        $item = Admin::find($id);
         if ($item == NULL) {
             Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
             return redirect("/admin/admin");
         }
+        $the_id=$item->user->id;
+        $testeroor = $this->validate($request, [
+            'email' => Rule::unique('users')->where(function ($query) use ($the_id) {
+                return $query->where('email', request()->email)->where('id', '!=', $the_id)
+                    ->where('the_type', 1);
+            }),
+            'user_name' => Rule::unique('users')->where(function ($query) use ($the_id) {
+                return $query->where('user_name', request()->user_name)->where('id', '!=', $the_id)
+                    ->where('the_type', 1);
+            }),
+        ]);
         $user = User::find($item->user_id);
         if ($request["password"] != "") {
             $user->password = bcrypt($request["password"]);
@@ -128,7 +153,7 @@ class AdminController extends BaseController
     public function delete($id)
     {
         //
-        $item=Admin::find($id);
+        $item = Admin::find($id);
         if ($item == NULL) {
             Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
             return redirect("/admin/admin");
@@ -149,9 +174,9 @@ class AdminController extends BaseController
 
     }
 
-    public function initiaveToAdmin($id,Request $request)
+    public function initiaveToAdmin($id, Request $request)
     {
-        $item=Admin::find($id);
+        $item = Admin::find($id);
         if ($item == NULL) {
             Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
             return redirect("/admin/admin");
@@ -183,9 +208,9 @@ class AdminController extends BaseController
 
         if ($donation || $donation === '0') {
             if ($donation == '1')
-                $items->where('initiatives.donation', '>=', 1);
+                $items->whereRaw('initiatives.paid_up < initiatives.donation');
             else {
-                $items->where('initiatives.donation', '<=', 0);
+                $items->whereRaw('initiatives.paid_up >= initiatives.donation');
             }
         }
 
@@ -221,18 +246,18 @@ class AdminController extends BaseController
         $cities = City::all();
         $governorates = Governorate::all();
         $interests = Interest::where('status', '1')->get();
-        return view('admin.admins.initiaveToAdmin', compact('item','items', 'interests', 'governorate_id', 'governorates', 'cities', 'city_id'));
+        return view('admin.admins.initiaveToAdmin', compact('item', 'items', 'interests', 'governorate_id', 'governorates', 'cities', 'city_id'));
 
 
     }
 
-    public function articleToAdmin($id,Request $request)
+    public function articleToAdmin($id, Request $request)
     {
         $q = $request["q"] ?? "";
         $category_id = $request["category_id"] ?? "";
         $initiative_id = $request["initiative_id"] ?? "";
         $status = $request["status"] ?? "";
-        $the_item=Admin::find($id);
+        $the_item = Admin::find($id);
         if ($the_item == NULL) {
             Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
             return redirect("/admin/admin");
@@ -264,7 +289,7 @@ class AdminController extends BaseController
             $categories = Category::where('type', '1')->get();
             $initiatives = Initiative::all();
         }
-        return view("admin.admins.articleToAdmin", compact('items','the_item', 'categories', 'initiatives'));
+        return view("admin.admins.articleToAdmin", compact('items', 'the_item', 'categories', 'initiatives'));
     }
 
     public function demanReplayedToAdmin($id)
@@ -280,19 +305,20 @@ class AdminController extends BaseController
     public function permission($id)
     {
         //
-        $item=Admin::find($id);
+        $item = Admin::find($id);
         if ($item == NULL) {
             Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
             return redirect("/admin/admin");
         }
 
-        $super_links=Link::where('super','=',1)->where("parent_id",0)->where("mult",0)->get();
-        $other_links=Link::where('super','!=',1)->where("parent_id",0)->where("mult",0)->get();
+        $super_links = Link::where('super', '=', 1)->where("parent_id", 0)->where("mult", 0)->get();
+        $other_links = Link::where('super', '!=', 1)->where("parent_id", 0)->where("mult", 0)->get();
 
-        return view('admin.admins.permission',compact('other_links','super_links','item'));
+        return view('admin.admins.permission', compact('other_links', 'super_links', 'item'));
 
     }
-    public function permission_post(Request $request,$id)
+
+    public function permission_post(Request $request, $id)
     {
         //
         \DB::table("admins_links")->where("admin_id", $id)->delete();
@@ -308,21 +334,23 @@ class AdminController extends BaseController
         Session::flash("msg", "i:تمت حفظ الصلاحيات بنجاح");
         return redirect("/admin/admin");
     }
+
     public function hisCategoty($id)
     {
-        $item=Admin::find($id);
-        if ($item == NULL  ||   !(auth()->user()->admin->links->contains(\App\Link::where('title','=','صلاحيات حساب')->first()->id))
+        $item = Admin::find($id);
+        if ($item == NULL || !(auth()->user()->admin->links->contains(\App\Link::where('title', '=', 'صلاحيات حساب')->first()->id))
         ) {
             Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
             return redirect("/admin/admin");
         }
 
-        $his_category=Category::where('type','=',1)->get();
+        $his_category = Category::where('type', '=', 1)->get();
 
-        return view('admin.admins.hisCategoty',compact('his_category','item'));
+        return view('admin.admins.hisCategoty', compact('his_category', 'item'));
 
     }
-    public function hisCategoty_post(Request $request,$id)
+
+    public function hisCategoty_post(Request $request, $id)
     {
         \DB::table("admins_categoris")->where("admin_id", $id)->delete();
         if ($request["categoreis"]) {
@@ -333,12 +361,13 @@ class AdminController extends BaseController
         Session::flash("msg", "i:تمت حفظ الصلاحيات بنجاح");
         return redirect("/admin/admin");
     }
-    public function evaluteToAdmin($id,Request $request)
+
+    public function evaluteToAdmin($id, Request $request)
     {
         $initiative_id = $request["initiative_id"] ?? "";
         $status = $request["status"] ?? "";
 
-        $item=Admin::find($id);
+        $item = Admin::find($id);
         if ($item == NULL) {
             Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
             return redirect("/admin/activsit");
@@ -366,7 +395,7 @@ class AdminController extends BaseController
         $items = Initiative_evaluation::whereIn('id', $items->pluck('initiative_evaluation.id'))->paginate(20)
             ->appends(['initiative_id' => $initiative_id, 'status' => $status]);
 
-        return view('admin.admins.evaluteToAdmin', compact('items','item', 'initiatives'));
+        return view('admin.admins.evaluteToAdmin', compact('items', 'item', 'initiatives'));
 
     }
 }

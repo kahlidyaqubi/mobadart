@@ -22,7 +22,7 @@ class HomeController extends BaseController
 
     public function show()
     {
-        return "activist";
+        return view("activist.home.dashboard");
     }
 
     public function noaccess()
@@ -48,12 +48,25 @@ class HomeController extends BaseController
 
     public function editProfile_post(ActivistRequest $request)
     {
+
         $item = $item = auth()->user()->activist;
         $id = auth()->user()->activist->id;
         if ($item == NULL) {
             Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
             return redirect("/activsit");
         }
+        $the_id=$item->user->id;
+        $testeroor = $this->validate($request, [
+            'user_name' => Rule::unique('users')->where(function ($query) use ($the_id) {
+                return $query->where('user_name', request()->user_name)->where('id', '!=', $the_id)
+                    ->where('the_type', 2);
+            }),
+            'email' => Rule::unique('users')->where(function ($query) use ($the_id) {
+                return $query->where('email', request()->email)->where('id', '!=', $the_id)
+                    ->where('the_type', 2);
+            }),
+
+        ]);
 
         $user = User::find($item->user_id);
 

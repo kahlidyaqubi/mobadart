@@ -38,3 +38,13 @@
     </div>
 
 @endif
+@if (session('status'))
+    <?php
+    $msg = Session::get("status");
+    ?>
+    <div id="myModal" class="alert-info alert-dismissible validation">{{$msg}}
+        <button type="button" class="close" data-target="#myModal" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif

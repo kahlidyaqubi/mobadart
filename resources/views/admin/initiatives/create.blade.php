@@ -52,7 +52,7 @@
                                         <input type="hidden" name="admin_id" value="{{$item->id}}">
                                     @endif
                                     <div class="tab-pane active" id="tab1">
-                                        <h3 class="block">معلومات المشاركات السابقة</h3>
+                                        <h3 class="block">معلومات المبادرة</h3>
                                         <div class="form-group">
                                             <label class="control-label col-md-3">عنوان المبادرة
                                                 <span class="required"> * </span>
@@ -79,7 +79,7 @@
                                             </label>
                                             <div class="col-md-4">
                                                 <input type="file" name="image" class="form-control" accept='image/*'
-                                                       required>
+                                                       >
                                                 <span class="help-block"> اختر صورة رمزية للمبادرة </span>
                                             </div>
                                         </div>
@@ -88,9 +88,15 @@
                                                 <span class="required"> * </span>
                                             </label>
                                             <div class="col-md-4">
-                                                <input type="date" class="form-control" name="start_date"
-                                                       value="{{old("start_date")}}" required/>
-                                                <span class="help-block"> أدخل تاريخ بدء المبادرة </span>
+                                                <div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd" >
+                                                    <input type="text" class="form-control" name="start_date"
+                                                           value="{{old("start_date")}}"  required>
+                                                    <span class="input-group-btn">
+                                                                <button class="btn default" type="button">
+                                                                    <i class="fa fa-calendar"></i>
+                                                                </button>
+                                                            </span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -98,9 +104,15 @@
                                                 <span class="required"> * </span>
                                             </label>
                                             <div class="col-md-4">
-                                                <input type="date" class="form-control" name="end_date"
-                                                       value="{{old("end_date")}}" required/>
-                                                <span class="help-block"> أدخل تاريخ انتهاء المبادرة </span>
+                                                <div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd" >
+                                                    <input type="text" class="form-control" name="end_date"
+                                                           value="{{old("end_date")}}" required>
+                                                    <span class="input-group-btn">
+                                                                <button class="btn default" type="button">
+                                                                    <i class="fa fa-calendar"></i>
+                                                                </button>
+                                                            </span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group" id="governorate_id">
@@ -173,7 +185,7 @@
                                             <div class="col-md-4">
                                                 <input type="number" class="form-control" value="{{old("donation")}}"
                                                        name="donation"
-                                                       maxlength="4" min="0"/>
+                                                       maxlength="16" min="0"/>
                                                 <span class="help-block"> أدخل المبلغ المحتاج تمويله بالدولار <B>&#36;</B> </span>
                                             </div>
                                         </div>
@@ -227,7 +239,7 @@
                                             <div class="col-md-4">
                                                 <textarea class="form-control" name="main_goale"
                                                           required>{{old("main_goale")}}</textarea>
-                                                <span class="help-block"> أدخل هدافاً عاماً للمبادرة </span>
+                                                <span class="help-block"> أدخل أهدافاً عاماً للمبادرة </span>
                                             </div>
                                         </div>
                                         <div class="form-group">

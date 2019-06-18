@@ -12,6 +12,8 @@
     <link rel="stylesheet" type="text/css" href="/platform/css/jquerysctipttop.css">
     <link rel="stylesheet" type="text/css" href="/platform/css/style.css">
     <link rel="stylesheet" type="text/css" href="/platform/css/bootstrap-rtl.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.13/combined/css/gijgo.min.css" rel="stylesheet"
+          type="text/css"/>
 
     <style media="screen">
         .container {
@@ -73,6 +75,12 @@
             direction: rtl;
             text-align: right;
         }
+
+        #myModal {
+            padding-right: 10px;
+            margin-bottom: 10px;
+        }
+
         .card {
             height: auto;
         }
@@ -82,7 +90,7 @@
 <body>
 <!--************************************** navbar start **************************************** -->
 <nav class="navbar navbar-expand-lg navbar-light ">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="/">
         <div class="media">
             <img alt="Maan Logo" src="/platform/images/logo.svg" style="width:200px;margin-rigth:20px;height:70px">
             <div class="media-body">
@@ -135,8 +143,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <p style="color:white;text-align:center;">جميع الحقوق محفوظة لمركز العمل التنموي - معا © 2019  ||
-                        <a href="http://www.alhamsco.com" target="_blank" alt="الهمص للتكنولوجيا والتدريب"><img src="/platform/images/7777.png" style="width:30px;height:30px;margin-right:5px;margin-left:5px;margin-top:-10px;"></a>POWERED BY
+                    <p style="color:white;text-align:center;">جميع الحقوق محفوظة لمركز العمل التنموي - معا © 2019 ||
+                        <a href="http://www.alhamsco.com" target="_blank" alt="الهمص للتكنولوجيا والتدريب"><img
+                                    src="/platform/images/7777.png"
+                                    style="width:30px;height:30px;margin-right:5px;margin-left:5px;margin-top:-10px;"></a>POWERED
+                        BY
                     </p>
                 </div>
             </div>
@@ -145,9 +156,18 @@
 </footer>
 <!--*********************************************** footer end ***************************************  -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.13/combined/js/gijgo.min.js"
+        type="text/javascript"></script>
 <script>
-    $("#myModal .close").click(function(){$("#myModal").hide();});
+    $('#datepicker').datepicker({uiLibrary: 'bootstrap4', iconsLibrary: 'materialicons', format: 'yyyy-mm-dd'});
 </script>
+<script>
+
+    $("#myModal .close").click(function () {
+        $("#myModal").hide();
+    });
+</script>
+
 @yield("js")
 
 </body>

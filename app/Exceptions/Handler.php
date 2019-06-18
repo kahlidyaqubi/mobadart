@@ -58,6 +58,10 @@ class Handler extends ExceptionHandler
         {
             return redirect('/noaccses');
         }*/
+        if($e instanceof \Illuminate\Session\TokenMismatchException)//منع ظهور ايرور للراوت غير المعرفة
+        {
+            return redirect('/');
+        }
         return parent::render($request, $e);
     }
 }

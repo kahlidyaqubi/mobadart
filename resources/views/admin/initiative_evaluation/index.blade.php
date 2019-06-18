@@ -16,7 +16,7 @@
                             <option value="">جميع المبادرات</option>
                             @foreach($initiatives as $initiative)
                                 <option value="{{$initiative->id}}"
-                                        @if($initiative->id==request('initiative')) selected @endif>{{$initiative->title}}</option>
+                                        @if($initiative->id==request('initiative_id')) selected @endif>{{$initiative->title}}</option>
                             @endforeach
                         </select>
                     </div>

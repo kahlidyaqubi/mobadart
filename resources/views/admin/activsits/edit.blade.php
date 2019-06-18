@@ -163,8 +163,14 @@
                                                 <span class="required"> * </span>
                                             </label>
                                             <div class="col-md-4">
-                                                <input type="date" class="form-control" name="brth_day" value="{{$item["brth_day"]}}" required/>
-                                                <span class="help-block"> يرجى ادخال تاريخ الميلاد </span>
+                                                <div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd" >
+                                                    <input type="text" class="form-control" name="brth_day" value="{{$item["brth_day"]}}"  required>
+                                                    <span class="input-group-btn">
+                                                                <button class="btn default" type="button">
+                                                                    <i class="fa fa-calendar"></i>
+                                                                </button>
+                                                            </span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group">

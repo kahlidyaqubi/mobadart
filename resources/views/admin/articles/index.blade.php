@@ -101,7 +101,7 @@
                                             </li>
 
                                             <li>
-                                                <a href="#">
+                                                <a href="/admin/article/articlesComments/{{$item->id}}">
                                                 <span class="text-primary"><i
                                                             class="fa fa-newspaper-o"></i>التعليقات</span></a>
                                             </li>

@@ -29,8 +29,7 @@ class ActivityRequest extends FormRequest
         $id = $this->route('activity');
         return [
             'initiative_id'=> 'required|max:3',
-            'name'=> 'required|string|max:70',
-            'name'=> Rule::unique('activities')->where(function ($query) use($id) {
+            'name'=> 'required|string|max:70|'.Rule::unique('activities')->where(function ($query) use($id) {
                 return $query->where('name', request()->name)->where('id','!=', $id)
                     ->where('initiative_id',request()->initiative_id);
             }),

@@ -58,9 +58,9 @@ class InitiativeController extends BaseController
 
         if ($donation || $donation === '0') {
             if ($donation == '1')
-                $items->where('initiatives.donation', '>=', 1);
+                $items->whereRaw('initiatives.paid_up < initiatives.donation');
             else {
-                $items->where('initiatives.donation', '<=', 0);
+                $items->whereRaw('initiatives.paid_up >= initiatives.donation');
             }
         }
 
@@ -121,22 +121,23 @@ class InitiativeController extends BaseController
     public function store(InitiativeRequest $request)
     {
 
-        $testeroor = $this->validate($request, [
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
 
         if ($request['end_date'] < $request['start_date']) {
             Session::flash("msg", "e:لا يمكن أن يكون تاريخ الانتهاء قبل تاريخ البدء");
             return redirect('admin/initiative/create')->withInput();
         }
         if ($request->hasFile('image')) {
+            dd("1");
             $myfile = $request->file('image'); // جلد الجديد من الانبوت فورم
             $filename = rand(11111, 99999) . '.' . $myfile->getClientOriginalExtension(); // جلب اسمه
             $myfile->move(public_path() . '/uploads/', $filename);//يخزن الجديد في الموقع المحدد
 
             request()['img'] = '/uploads/' . $filename;
         }
+        else{
 
+            request()['img'] ='/images/development.jpg';
+        }
 
         if (!request()['admin_id'])
             request()['admin_id'] = auth()->user()->admin->id;

@@ -29,6 +29,16 @@ class ActivistProfileRequest extends FormRequest
         });
         $id = auth()->user()->id;
         $id_activsit = auth()->user()->activsi->id;
+        /*
+         *  'user_name' => Rule::unique('users')->where(function ($query) use ($id) {
+                return $query->where('user_name', request()->user_name)->where('id', '!=', $id)
+                    ->where('the_type', 2);
+            }),
+       'email' =>  Rule::unique('users')->where(function ($query) use ($id) {
+                return $query->where('email', request()->email)->where('id', '!=', $id)
+                    ->where('the_type', 2);
+            })
+        */
         $valid = [
             'name' => 'required|max:30',
             'father_name' => 'required|max:30',
@@ -36,15 +46,7 @@ class ActivistProfileRequest extends FormRequest
             'last_name'=> 'required|max:30',
             'ido'=>'required|min:9|max:9|unique:activists,ido,' . $id_activsit . ',id',
             'user_name' => 'required|max:30|without_spaces',
-            'user_name' => Rule::unique('users')->where(function ($query) use ($id) {
-                return $query->where('user_name', request()->name)->where('id', '!=', $id)
-                    ->where('the_type', request()->type);
-            }),
             'email' => 'required|email|max:30',
-            'email' => Rule::unique('users')->where(function ($query) use ($id) {
-                return $query->where('email', request()->name)->where('id', '!=', $id)
-                    ->where('the_type', request()->type);
-            }),
             'city_id'=> 'required|max:3',
             'neighborhood'=> 'required|string|max:70',
             'brth_day'=> 'required|date',

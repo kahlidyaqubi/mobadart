@@ -46,7 +46,7 @@ class ArticleController extends BaseController
             $items->whereRaw("(initiative_id = ?)"
                 , [$initiative_id]);
 
-        $items = $items->orderBy("articles.id", 'desc')->paginate(12)->appends([
+        $items = $items->orderBy("articles.id", 'desc')->paginate(20)->appends([
             "q" => $q, "category_id" => $category_id,
             'status' => $status, 'initiative_id' => $initiative_id]);
         $admin = auth()->user()->admin;
@@ -90,11 +90,6 @@ class ArticleController extends BaseController
 
     public function store(ArticleRequest $request)
     {
-
-        $testeroor = $this->validate(request(), [
-            'main_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-
 
         $admin = auth()->user()->admin;
         request()['admin_id'] = $admin->id;
@@ -150,8 +145,8 @@ class ArticleController extends BaseController
 
         $users = User::whereIn('id', $users_ids)->get();
 
-        if($users->first())
-        Notification::send($users, new NotifyUsers($action));
+        if ($users->first())
+            Notification::send($users, new NotifyUsers($action));
         /**************end Notification*******************/
 
         if (!$admin->super_admin == 1) {
@@ -308,15 +303,35 @@ class ArticleController extends BaseController
             $item->status = 0;
         $item->save();
         /**************start Notification*******************/
-        if ($item->status==1) {
+        if ($item->status == 1) {
 
             $action = Action::create(['title' => 'تم قبول نشر خبرك الذي أضفته', 'type' => 'من موظف', 'link' => '/admin/article/']);
 
             $users = User::where('id', $item->admin->user->id)->get();
 
-            if($users->first())
-            Notification::send($users, new NotifyUsers($action));
+            if ($users->first())
+                Notification::send($users, new NotifyUsers($action));
         }
         /**************end Notification*******************/
+    }
+
+    function articlesComments($id,Request $request)
+    {
+        $item = Article::find($id);
+        if ($item == NULL) {
+            Session::flash("msg", "e:يرجى التأكد من الرابط المطلوب");
+            return redirect("/admin/article");
+        }
+        $status = $request["status"] ?? "";
+        $items = $item->comments()->whereRaw(true);
+        if ($status || $status === '0')
+            $items->whereRaw("(status = ?)"
+                , [$status]);
+
+        $items= $items->paginate(20)->appends([
+            "status" => $status]);
+
+        return view("admin.articles.articlesComments", compact('items', 'item'));
+
     }
 }

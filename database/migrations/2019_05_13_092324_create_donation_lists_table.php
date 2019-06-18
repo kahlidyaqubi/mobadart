@@ -16,7 +16,7 @@ class CreateDonationListsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('initiative_id');
-			$table->integer('bank_account');
+			$table->string('bank_account');
 			$table->string('financier_name');
 			$table->double('amount');
 			$table->string('financier_phone');

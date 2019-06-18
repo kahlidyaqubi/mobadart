@@ -24,8 +24,9 @@ class InterestController extends BaseController
         if ($item == NULL ||
             !(auth()->user()->admin->links->contains(\App\Link::where('title','=','تعديل اهتمام')->first()->id))
         ) {
-            Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
-            return redirect("/admin/interest");
+            return response()->json([
+                'message' => 'الرجاء التاكد من الرابط المطلوب'
+            ], 401);
         }
 		if($item->status==0)
 			$item->status=1;

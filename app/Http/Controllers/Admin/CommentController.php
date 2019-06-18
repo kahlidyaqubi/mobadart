@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class CommentControlle extends BaseController
+class CommentController extends BaseController
 {
     public function index()
     {
@@ -49,6 +50,18 @@ class CommentControlle extends BaseController
 
     public function accept($id)
     {
-        //
+        $item = Comment::find($id);
+        if ($item == NULL ||
+            !(auth()->user()->admin->links->contains(\App\Link::where('title','=','حذف ومنع تعليقات')->first()->id))
+        ) {
+            return response()->json([
+                'message' => 'الرجاء التاكد من الرابط المطلوب'
+            ], 401);
+        }
+        if($item->status==0)
+            $item->status=1;
+        else
+            $item->status=0;
+        $item->save();
     }
 }

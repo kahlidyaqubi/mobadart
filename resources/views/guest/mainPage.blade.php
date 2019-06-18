@@ -185,7 +185,7 @@
                                     class="" href="/register">انشاء حساب</a></li>
                         <li class=""><a
                                     style="border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;border-radius:20px;color:black"
-                                    class="" href="index.php">تقديم تبرع</a></li>
+                                    class="" href="/donationList/create">تقديم تبرع</a></li>
                     </ul>
                 </div>
             </div>
@@ -3543,15 +3543,27 @@
 
         $('#custom-next').on('click', function () {
             cal.gotoNextMonth(updateMonthYear);
+
             for (i = 0; i < document.querySelectorAll('span.fc-date').length; i++) {
                 document.querySelectorAll('span.fc-date')[i].style.top = "38%";
+
+            }
+            for (i = 0; i < document.querySelectorAll('.fc-calendar .fc-head div').length; i++) {
+                document.querySelectorAll('.fc-calendar .fc-head div')[i].style.width="14%"
+
             }
         });
         $('#custom-prev').on('click', function () {
             cal.gotoPreviousMonth(updateMonthYear);
             for (i = 0; i < document.querySelectorAll('span.fc-date').length; i++) {
                 document.querySelectorAll('span.fc-date')[i].style.top = "38%";
+
             }
+            for (i = 0; i < document.querySelectorAll('.fc-calendar .fc-head div').length; i++) {
+                document.querySelectorAll('.fc-calendar .fc-head div')[i].style.width="14%"
+
+            }
+
         });
 
         function updateMonthYear() {

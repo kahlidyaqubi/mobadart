@@ -35,19 +35,12 @@ class AdminRequest extends FormRequest
             $id='';
         else
         $id = Admin::find($id_admin)->user->id;
+
         $valid = [
             //'user_id'=> 'required|max:3',
             'name' => 'required|max:30',
             'user_name' => 'required|max:30|without_spaces',
-            'user_name' => Rule::unique('users')->where(function ($query) use ($id) {
-                return $query->where('user_name', request()->name)->where('id', '!=', $id)
-                    ->where('the_type', request()->type);
-            }),
             'email' => 'required|email|max:30',
-            'email' => Rule::unique('users')->where(function ($query) use ($id) {
-                return $query->where('email', request()->name)->where('id', '!=', $id)
-                    ->where('the_type', request()->type);
-            }),
             'family_center_id' => 'max:3',
             'is_cor' => 'max:1',
             'super_admin' => 'required|max:1',

@@ -10,6 +10,7 @@ use App\Initiative;
 use App\Interest;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Validation\Rule;
 use Session;
 use App\User;
 use App\Admin;
@@ -35,6 +36,7 @@ class HomeController extends BaseController
     }
     public function register()
     {
+
         $cities = City::all();
         $governorates = Governorate::all();
         $interests = Interest::where('status', '1')->get();
@@ -43,12 +45,23 @@ class HomeController extends BaseController
 
     public function store(ActivistRequest $request)
     {
+
+
+
         $testeroor = $this->validate($request, [
 
             'password' => 'required|min:6|confirmed',
             'password_confirmation' => 'required|max:50',
             'shared' => 'required|max:2',
             'shared_ditalis' => 'max:1000',
+            'user_name' => Rule::unique('users')->where(function ($query)  {
+                return $query->where('user_name', request()->user_name)
+                    ->where('the_type', 2);
+            }),
+            'email' => Rule::unique('users')->where(function ($query)  {
+                return $query->where('email', request()->email)
+                    ->where('the_type', 2);
+            }),
 
         ]);
         $user_id = User::create([
