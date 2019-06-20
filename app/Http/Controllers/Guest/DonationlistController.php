@@ -36,6 +36,10 @@ class DonationListController extends BaseController
     public function store(DonationListsRequest $request)
     {
         request()['status']=0;
+        if(!(in_array(request()['country'], Country::pluck('name')->toArray()))){
+            Session::flash("msg", "e:يرجى ادخال اسم دولة صحيح");
+            return redirect("/donationList/create")->withInput();
+        }
         DonationList::create(request()->all());
 
         $donation_msg=Site_sting::find(1)->donation_msg;

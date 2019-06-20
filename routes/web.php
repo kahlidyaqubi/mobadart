@@ -143,7 +143,6 @@ Route::namespace('Admin')
         Route::get('/city/delete/{id}', 'CityController@delete');
         Route::resource('city', 'CityController');
         Route::get('/governorate/familyInCity/{id}', 'CityController@familyInCity');
-
         /********/
         Route::get('/governorate/ajaxCityInGover/{id?}', 'GovernorateController@ajaxCityInGover');
         Route::resource('governorate', 'GovernorateController');
@@ -194,10 +193,12 @@ Route::namespace('Activist')
 
 Route::namespace('Guest')
     ->group(function () {
+        Route::get('/no_accsess', 'HomeController@no_accsess');
         Route::get('/', 'HomeController@mainPage');
         /********/
         Route::get('/initiative/showCalender', 'InitiativeController@showCalender');
         Route::resource('/initiative', 'InitiativeController');
+        Route::get('/initiative_don', 'InitiativeController@index_don');
         Route::get('/initiative/activityInInitiave/{id}', 'InitiativeController@activityInInitiave');
         /********/
         Route::resource('activity', 'ActivityController');

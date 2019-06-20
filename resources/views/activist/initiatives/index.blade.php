@@ -1,10 +1,10 @@
 @extends("layouts._thirst_layout")
 
-@section("title", "عرض المبادرات")
+@section("title", "عرض مبادارات الناشط ".$item->user->name." ".$item->user->last_name)
 @section("content")
     <div class="row justify-content-center" >
         <div class="col text-center" >
-            <h1 style="margin-top: 0px">عرض المبادرات </h1>
+            <h1 style="margin-top: 0px">عرض مبادرات الناشط {{$item->user->name." ".$item->user->last_name}} </h1>
         </div>
     </div>
 
@@ -101,7 +101,7 @@
 
                                 <h2><a href="single-cause.html" title="">{{$item->title}}</a></h2>
                                 <p style="min-height: 72px">
-                                    {{ mb_substr($item->details,0,300,'UTF-8')}}....
+                                    {{ substr($item->details,0,300)}}....
                                 </p>
                                 <a href="/initiative/{{$item->id}}" title="" class="donate-me" data-ripple="">تفاصيل
                                     المبادرة</a>

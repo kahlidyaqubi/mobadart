@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Comment;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Session;
+
 
 class CommentController extends BaseController
 {
@@ -45,7 +46,14 @@ class CommentController extends BaseController
 
     public function delete($id)
     {
-        //
+        $item=Comment::find($id);
+        if ($item == NULL) {
+            Session::flash("msg", "e:الرجاء التاكد من الرابط المطلوب");
+            return redirect("/admin/article");
+        }
+        $item->delete();
+        Session::flash("msg", "تم حذف اهتمام بنجاح");
+        return redirect("/admin/article/articlesComments/".$item->article->id);
     }
 
     public function accept($id)

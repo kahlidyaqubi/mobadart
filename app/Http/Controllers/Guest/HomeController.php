@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Guest;
 
 use App\Activist;
+use App\Category;
 use App\City;
 use App\Governorate;
 use App\Http\Requests\ActivistRequest;
 use App\Initiative;
 use App\Interest;
+use App\Site_sting;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Validation\Rule;
@@ -20,20 +23,29 @@ use App\Notifications\NotifyUsers;
 
 class HomeController extends BaseController
 {
-    
+
     public function mainPage()
     {
-        $items=DB::table('initiatives')->whereRaw('initiatives.paid_up >= initiatives.donation')->get();
-        $initiatives=collect();
-        foreach ($items as $initiative){
-            $initiatives->put("".date('m-d-Y', strtotime($initiative->start_date))."", "<a href='/initiative/".$initiative->id." ' >".$initiative->title."</a>");
+        $items = DB::table('initiatives')->whereRaw('initiatives.paid_up >= initiatives.donation')->get();
+        $initiatives_cal = collect();
+        foreach ($items as $initiative) {
+            $initiatives_cal->put("" . date('m-d-Y', strtotime($initiative->start_date)) . "", "<a href='/initiative/" . $initiative->id . " ' >" . $initiative->title . "</a>");
         }
+        $initiatives_cal = json_encode($initiatives_cal);
 
+        $all_initiatives=DB::table('initiatives')->whereRaw('initiatives.paid_up >= initiatives.donation')->get()->take(6);
+        $next_initiatives=DB::table('initiatives')->whereRaw('initiatives.paid_up >= initiatives.donation')->where('initiatives.start_date','=>',Carbon::now())->get()->take(6);;
+        $past_initiatives=DB::table('initiatives')->whereRaw('initiatives.paid_up >= initiatives.donation')->where('initiatives.start_date','<',Carbon::now())->get()->take(6);;
 
-        $initiatives=json_encode($initiatives);
+        $site=Site_sting::find(1);
 
-        return view('guest.mainPage',compact('initiatives'));
+        $the_section=Category::where('type',1)->where('id',"!=",1)->withcount('articles')->orderBy('articles_count', 'desc')->first();
+        $articles =$the_section->articles()->where('status',1)->orderBy('id', 'desc')->get()->take(6);
+
+        $experiences=Category::find(1)->articles()->where('status',1)->orderBy('id', 'desc')->get()->take(6);
+        return view('guest.mainPage', compact('the_section','experiences','articles','all_initiatives','past_initiatives','next_initiatives','initiatives_cal','site'));
     }
+
     public function register()
     {
 
@@ -47,18 +59,17 @@ class HomeController extends BaseController
     {
 
 
-
         $testeroor = $this->validate($request, [
 
             'password' => 'required|min:6|confirmed',
             'password_confirmation' => 'required|max:50',
             'shared' => 'required|max:2',
             'shared_ditalis' => 'max:1000',
-            'user_name' => Rule::unique('users')->where(function ($query)  {
+            'user_name' => Rule::unique('users')->where(function ($query) {
                 return $query->where('user_name', request()->user_name)
                     ->where('the_type', 2);
             }),
-            'email' => Rule::unique('users')->where(function ($query)  {
+            'email' => Rule::unique('users')->where(function ($query) {
                 return $query->where('email', request()->email)
                     ->where('the_type', 2);
             }),
@@ -136,13 +147,18 @@ class HomeController extends BaseController
 
         $users = User::whereIn('id', $users_ids)->get();
 
-        if($users->first())
-        Notification::send($users, new NotifyUsers($action));
+        if ($users->first())
+            Notification::send($users, new NotifyUsers($action));
         /**************end Notification*******************/
 
         Session::flash("msg", "تمت عملية الاضافة بنجاح");
         return redirect("/register");
     }
 
-        
+    public function no_accsess()
+    {
+
+    }
+
+
 }

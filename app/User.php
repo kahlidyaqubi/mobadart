@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -34,4 +35,9 @@ class User extends Authenticatable
     function activist(){
         return $this->belongsTo('App\Activist','id','user_id');
     }
+    function activists_initiatives()
+    {
+        return $this->hasMany('App\Activists_initiative');
+    }
+
 }

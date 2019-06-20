@@ -37,7 +37,7 @@
                 <thead>
                 <tr>
                     <th width="10%"> #</th>
-                    <th> اسم الاهتمام</th>
+                    <th> نص التعليق</th>
                     <th> الحالة</th>
                     <th width="15%" class="hidden-xs"> إجراءات</th>
                 </tr>
@@ -63,13 +63,8 @@
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="/admin/interest/{{$item->id}}/edit">
-                                            <span class="text-warning"><i class="icon-pencil"></i> تعديل </span></a>
-                                    </li>
-                                    <li>
-                                        <a href="/admin/interest/delete/{{$item->id}}" class="Confirm">
+                                        <a href="/admin/comment/delete/{{$item->id}}" class="Confirm">
                                             <span class="text-danger"><i class="icon-trash"></i> حذف</span></a>
-                                        <a href="/admin/article/articlesComments/{{$item->article->id}}" class="btn grey-salsa btn-outline">إلغاء</a>
                                     </li>
                                 </ul>
                             </div>
@@ -80,6 +75,8 @@
                 {{$items->links()}}
             </table>
         </div>
+            <a href="/admin/article" class="btn grey-salsa btn-outline">إلغاء</a>
+
         @else
             <br><br>
             <div class="alert alert-warning">نأسف لا يوجد بيانات لعرضها</div>

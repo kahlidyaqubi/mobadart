@@ -111,7 +111,7 @@
                 <ul class="nav navbar-nav pull-right">
                     <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
                         <?php
-                        $notifications = auth()->user()->unreadNotifications()->orderBy('id', 'desc')->get();
+                        $notifications = auth()->user()->unreadNotifications()->get()->sortByDesc('created_at');
                         $count = count($notifications);
                         ?>
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"

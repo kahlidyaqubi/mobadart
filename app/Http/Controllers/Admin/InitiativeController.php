@@ -40,12 +40,13 @@ class InitiativeController extends BaseController
         $interests_ids = $request["interests_ids"] ?? "";
 
         $items = Initiative::leftJoin('admins', 'admin_id', 'admins.id')
+            ->leftJoin('users', 'user_id', 'users.id')
             ->leftJoin('cities', 'city_id', 'cities.id')
             ->whereRaw(true);
 
 
         if ($q)
-            $items->whereRaw("(initiatives.title like ? or initiatives.team_name like ? or admins.name like ?)"
+            $items->whereRaw("(initiatives.title like ? or initiatives.team_name like ? or users.name like ?)"
                 , ["%$q%", "%$q%", "%$q%"]);
 
         if ($city_id)
@@ -360,7 +361,7 @@ class InitiativeController extends BaseController
 
         if ($item->accept == 1) {
             $action = Action::create(['title' => 'تم قبول ناشط في مبادرة', 'type' => 'من موظف', 'link' => '/admin/initiative/' . $item->initiative->id]);
-            $action2 = Action::create(['title' => 'تم قبول ناشط في مبادرة', 'type' => 'من موظف', 'link' => '/initiative/' . $item->initiative->id]);
+            $action2 = Action::create(['title' => ''.Site_sting::find(1)->acceptance_msg, 'type' => 'من موظف', 'link' => '/initiative/' . $item->initiative->id]);
             $suber_admins_ids = User::whereIn('id', Admin::where('super_admin', 1)->pluck('user_id'))->whereNotIn('id', [auth()->user()->id])->pluck('id')->toArray();
 
             $have_prmission = User::whereIn('id', [$item->initiative->admin->user->id])->whereNotIn('id', [auth()->user()->id])->pluck('id')->toArray();
@@ -489,7 +490,8 @@ class InitiativeController extends BaseController
             return Excel::download(new ActivistExport($items), "activist.xlsx");
         } else {
 
-            $items = Activist::whereIn('id', $items->pluck('activists.id'))->orderBy("activists.id")->paginate(20)
+            $items = Activist::whereIn('activists.id', $items->pluck('activists.id'))
+                ->paginate(20)
                 ->appends([
                     "q" => $q, "city_id" => $city_id, 'governorate_id' => $governorate_id
                     , "gender" => $gender

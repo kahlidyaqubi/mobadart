@@ -1,4 +1,4 @@
-@extends("layouts._scand_layout")
+@extends("layouts._forest_layout")
 
 @section("title", "اعادة تعيين كلمة المرور")
 @section("content")

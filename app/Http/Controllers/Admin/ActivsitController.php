@@ -128,7 +128,8 @@ class ActivsitController extends BaseController
             return Excel::download(new ActivistExport($items), "activist.xlsx");
         } else {
 
-            $items = Activist::whereIn('id', $items->pluck('activists.id'))->orderBy('activists.id', 'desc')->paginate(20)
+            $items = Activist::whereIn('activists.id', $items->pluck('activists.id'))
+                ->paginate(20)
                 ->appends([
                     "q" => $q, "city_id" => $city_id, 'governorate_id' => $governorate_id
                     , "gender" => $gender, 'usefull' => $usefull

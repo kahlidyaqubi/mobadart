@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content=""/>
+     <link rel="shortcut icon" href="/Group.ico" />
     <meta name="keywords" content=""/>
     <title>@yield('title')</title>
     <link rel="stylesheet" href="/platform/sections/css/bootstrap.min.css">
@@ -14,9 +15,6 @@
     <link rel="stylesheet" href="/platform/sections/css/style.css">
     <link href="https://fonts.googleapis.com/css?family=El+Messiri" rel="stylesheet">
     <link rel="stylesheet" href="/platform/sections/css/responsive.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.13/combined/css/gijgo.min.css" rel="stylesheet"
-          type="text/css"/>
-
     <style media="screen">
         body,
         h3,
@@ -34,7 +32,15 @@
             border-radius: 20px;
         }
 
-
+        .validation {
+            padding: 10px;
+            height: auto;
+            width: 94%;
+            margin-right: 10px;
+            margin-top: 10px;
+            direction: rtl;
+            text-align: right;
+        }
 
         .cause-meta > h2 a {
             margin-right: 30px;
@@ -116,32 +122,35 @@
 <body>
 <!--************************************** nav start************************************-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">
-        <img alt="Maan Logo" src="/platform/images/logo.svg" style="width:180px;height:60px">
+    <a class="navbar-brand" href="/">
+        <img alt="Maan Logo" src="/platform/images/logo.svg" style="width:92px;height:60px;float:right">
+
+        <p style="text-align: right;font-size: 19px;margin: 13px 104px 12px 2px;color: #FFF">{{\App\Site_sting::find(1)->title_page}}</p>
+        <!-- <p style="margin-top: -10px;font-size: 16px;text-align:right;text-shadow: 0 0 10px white, 0 0 5px white;">مركز العمل التنموي / معا</p> -->
+        </div>
     </a>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="#"> الرئيسية<span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link active" href="/"> الرئيسية<span class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" href="#">من نحن</a>
-            <a class="nav-item nav-link" href="#">المبادرات</a>
-            <a class="nav-item nav-link" href="#">آخر الأخبار</a>
-            <a class="nav-item nav-link" href="#">المبادرات</a>
+            <a class="nav-item nav-link" href="/initiative">المبادرات</a>
             <a class="nav-item nav-link" href="#">تجارب ملهمة</a>
+            <a class="nav-item nav-link" href="#">جميع الأخبار</a>
             <a class="nav-item nav-link" href="#">تواصل معنا</a>
             <a style="margin-right: 5px;border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;margin-left:5px;border-radius:20px;color:black"
-               class="" href="index.php">انشاء حساب</a>
+               class="" href="/register">انشاء حساب</a>
             <a style="border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;border-radius:20px;color:black"
-               class="" href="index.php">تقديم تبرع</a>
+               class="" href="/initiative_don">تقديم تبرع</a>
             <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true"></a>
 
         </div>
     </div>
 </nav>
 <!--******************************************* Initiatives start ***************************  -->
-<div class="site-layout">
-    <section>
-        <div class="gap">
-            <div class="container">
+<div class="site-layout" >
+    <section >
+        <div class="gap" >
+            <div class="container" >
                 @yield('content')
             </div>
         </div>
@@ -174,10 +183,11 @@
 <script src="/platform/sections/js/nprogress.js"></script>
 <script src="/platform/sections/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.13/combined/js/gijgo.min.js"
-        type="text/javascript"></script>
 <script>
-    $('#datepicker').datepicker({uiLibrary: 'bootstrap4', iconsLibrary: 'materialicons', format: 'yyyy-mm-dd'});
+
+    $("#myModal .close").click(function () {
+        $("#myModal").hide();
+    });
 </script>
 @yield("js")
 </body>

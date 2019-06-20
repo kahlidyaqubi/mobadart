@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>@yield('title')</title>
+	 <link rel="shortcut icon" href="/Group.ico" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=El+Messiri" rel="stylesheet">
@@ -94,7 +95,7 @@
         <div class="media">
             <img alt="Maan Logo" src="/platform/images/logo.svg" style="width:200px;margin-rigth:20px;height:70px">
             <div class="media-body">
-                <h5 class=" align-center" style="margin-right:-52px;margin-top:22px">مركز العمل التنموي معا</h5>
+                <h5 class=" align-center" style="margin-right:-52px;margin-top:22px">{{\App\Site_sting::find(1)->title_page}}</h5>
             </div>
         </div>
     </a>
@@ -105,19 +106,22 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
         <ul class="navbar-nav ">
             <li class="nav-item ">
-                <a class="nav-link" href="#">الرئيسية <span class="sr-only"></span></a>
+                <a class="nav-link" href="/">الرئيسية <span class="sr-only"></span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">من نحن </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">المبادرات</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">آخر الاخبار </a>
+                <a class="nav-link" href="/initiative">المبادرات</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">تجارب ملهمة</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">جميع الأخبار </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">جميع الأقسام </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">تواصل معنا</a>
@@ -127,7 +131,7 @@
                         class="" href="/register">انشاء حساب</a></li>
             <li class=""><a
                         style="border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;border-radius:20px;color:black"
-                        class="" href="/donationList/create">تقديم تبرع</a></li>
+                        class="" href="/initiative_don">تقديم تبرع</a></li>
         </ul>
     </div>
 </nav>
