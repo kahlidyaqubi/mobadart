@@ -66,7 +66,7 @@ class Family_centerController extends BaseController
 
     public function show($id)
     {
-        //
+        return redirect('/no_accsess');
     }
 
     public function edit($id)
@@ -146,6 +146,6 @@ class Family_centerController extends BaseController
 
     public function initiaveInFamily($id)
     {
-        //
+        return redirect('/no_accsess');
     }
 }

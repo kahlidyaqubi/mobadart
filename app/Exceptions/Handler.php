@@ -54,10 +54,10 @@ class Handler extends ExceptionHandler
         {
          return redirect()->back();
         }
-       /* if($e instanceof NotFoundHttpException)//منع ظهور ايرور للراوت غير المعرفة
+        if($e instanceof NotFoundHttpException)//منع ظهور ايرور للراوت غير المعرفة
         {
-            return redirect('/noaccses');
-        }*/
+            return redirect('/no_accsess');
+        }
         if($e instanceof \Illuminate\Session\TokenMismatchException)//منع ظهور ايرور للراوت غير المعرفة
         {
             return redirect('/');

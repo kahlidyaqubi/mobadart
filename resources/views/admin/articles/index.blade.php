@@ -107,7 +107,7 @@
                                             </li>
                                         @endif
                                         <li>
-                                            <a href="#">
+                                            <a href="/article/{{$item->id}}">
                                                 <span class="text-primary"><i
                                                             class="fa fa-newspaper-o"></i>عرض</span></a>
                                         </li>

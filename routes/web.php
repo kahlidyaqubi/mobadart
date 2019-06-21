@@ -48,7 +48,7 @@ Route::group(['middleware' => ['guest']], function () {
 
     Route::get('login', [
         'as' => 'login',
-        'uses' => 'Auth\LoginController@showLoginForm'
+        'uses' => 'guest\HomeController@mainPage'
     ]);
 
 });
@@ -194,14 +194,18 @@ Route::namespace('Activist')
 Route::namespace('Guest')
     ->group(function () {
         Route::get('/no_accsess', 'HomeController@no_accsess');
+        Route::get('/how_are', 'HomeController@how_are');
+        Route::get('/on_project', 'HomeController@on_project');
         Route::get('/', 'HomeController@mainPage');
         /********/
-        Route::get('/initiative/showCalender', 'InitiativeController@showCalender');
+        Route::get('/initiative/show_art/{id}', 'InitiativeController@show_art');
         Route::resource('/initiative', 'InitiativeController');
         Route::get('/initiative_don', 'InitiativeController@index_don');
         Route::get('/initiative/activityInInitiave/{id}', 'InitiativeController@activityInInitiave');
         /********/
         Route::resource('activity', 'ActivityController');
+        /********/
+        Route::resource('category', 'CategoryController');
         /********/
         Route::resource('article', 'ArticleController');
         /********/

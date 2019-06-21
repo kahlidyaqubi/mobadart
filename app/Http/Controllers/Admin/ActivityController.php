@@ -23,7 +23,7 @@ class ActivityController extends BaseController
 
     public function create()
     {
-        //
+        return redirect('/no_accsess');
     }
 
     public function store(ActivityRequest $request)
@@ -35,12 +35,12 @@ class ActivityController extends BaseController
 
     public function show($id)
     {
-        //
+        return redirect('/no_accsess');
     }
 
     public function edit($id)
     {
-        //
+        return redirect('/no_accsess');
     }
 
     public function update(ActivityRequest $request, $id)

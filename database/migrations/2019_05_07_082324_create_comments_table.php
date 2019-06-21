@@ -16,10 +16,11 @@ class CreateCommentsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('article_id');
-			$table->integer('activist_id')->nullable();
+			$table->integer('user_id')->nullable();
 			$table->string('writer')->nullable();
+            $table->string('email')->nullable();
 			$table->string('detalis');
-            $table->boolean('status');
+            $table->boolean('status')->nullable();;
 			$table->softDeletes();
 			$table->timestamps();
 		});

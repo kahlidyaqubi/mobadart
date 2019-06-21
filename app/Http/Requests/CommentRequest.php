@@ -24,13 +24,20 @@ class CommentRequest extends FormRequest
      */
     public function rules()
     {
-		return [
-            'article_id'=> 'required|max:3',
-			'activist_id'=> 'max:3',
-			'writer'=> 'string|max:50',
-			'title'=> 'required|string|max:70',
-			'detalis'=> 'required|string|max:255',
-        ];
+        if (auth()->user()) {
+            return [
+                'detalis' => 'required|string|max:255',
+                'article_id' => 'required|string|max:255',
+            ];
+        } else {
+            return [
+                'writer' => 'string|max:50',
+                'email' => 'required|string|max:70',
+                'detalis' => 'required|string|max:255',
+                'article_id' => 'required|string|max:255',
+            ];
+        }
+
     }
 }
 

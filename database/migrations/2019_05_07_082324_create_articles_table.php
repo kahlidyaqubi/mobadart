@@ -20,7 +20,7 @@ class CreateArticlesTable extends Migration {
 			$table->integer('category_id');
 			$table->string('title');
 			$table->longText('detalis');
-			$table->string('the_file');
+			$table->longText('the_file');
 			$table->string('img')->nullable();
             $table->boolean('status');
 			$table->softDeletes();

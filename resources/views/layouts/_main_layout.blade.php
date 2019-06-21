@@ -32,6 +32,11 @@
             font-family: 'El Messiri', sans-serif;
 
         }
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
 
         h3 {
             color: grey;
@@ -136,10 +141,16 @@
                         <li><a class="scroll" data-href="#news" href="#news">جميع الأخبار</a></li>
                         <li><a class="scroll" data-href="#gallery" href="#gallery">تجارب ملهمة</a></li>
                         <li><a class="scroll" data-href="#contact" href="#contact">تواصل معنا</a></li>
-                        <li><a class="scroll"  href="#">جميع الأقسام</a></li>
+                        <li><a class="scroll"  href="/category">جميع الأقسام</a></li>
+                        @if(!auth()->user())
                         <li class=""><a
                                     style="margin-right: 5px;border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;margin-left:5px;border-radius:20px;color:black"
                                     class="" href="/register">انشاء حساب</a></li>
+                        @else
+                            <li class=""><a
+                                        style="margin-right: 5px;border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;margin-left:5px;border-radius:20px;color:black"
+                                        class="" href="/home">بروفايل {{auth()->user()->name}}</a></li>
+                        @endif
                         <li class=""><a
                                     style="border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;border-radius:20px;color:black"
                                     class="" href="/initiative_don">تقديم تبرع</a></li>
@@ -201,31 +212,35 @@
                         <!--contact form  -->
                         <div class="contactForm">
                             <div id="responseMessage"></div>
-                            <form class="" method="post" id="maincontact" name="maincontact">
+                            <form class="" method="post" action="/message" id="maincontact" name="maincontact">
+                                @csrf
+                                <div class="row">
+                                @include("_first_msg")
+                                </div>
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <input id="name" name="name" type="text" class="validate">
-                                        <label for="last_name">الاسم </label>
+                                        <input id="name" name="name" type="text" value="{{old('name')}}" class="validate">
+                                        <label for="name">الاسم </label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <input id="email" name="email" type="text" class="validate">
-                                        <label for="last_name">البريد الالكتروني </label>
+                                        <input id="email" name="email" type="email" value="{{old('email')}}" class="validate">
+                                        <label for="email">البريد الالكتروني </label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <input id="phone_number" name="phone_number" maxlength="14" type="text"
-                                               class="validate numOnly">
-                                        <label for="last_name">رقم الهاتف</label>
+                                        <input id="phone_number" name="mopile"  value="{{old('mopile')}}" maxlength="14" type="number"
+                                               class="validate">
+                                        <label for="mopile">رقم الهاتف</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <input id="comment" name="comment" maxlength="500" type="text"
-                                               class="validate numOnly">
-                                        <label for="textarea1">تعليقك</label>
+                                        <input id="comment" name="content" maxlength="500" value="{{old('content')}}" type="text"
+                                               class="validate">
+                                        <label for="content">تعليقك</label>
                                     </div>
                                 </div>
                                 <div class="row">

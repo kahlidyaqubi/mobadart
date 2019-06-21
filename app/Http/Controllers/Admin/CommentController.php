@@ -11,12 +11,12 @@ class CommentController extends BaseController
 {
     public function index()
     {
-        //
+        return redirect('/no_accsess');
     }
 
     public function create()
     {
-        //
+        return redirect('/no_accsess');
     }
 
     public function store(Request $request)
@@ -26,12 +26,12 @@ class CommentController extends BaseController
 
     public function show($id)
     {
-        //
+        return redirect('/no_accsess');
     }
 
     public function edit($id)
     {
-        //
+        return redirect('/no_accsess');
     }
 
     public function update(Request $request, $id)

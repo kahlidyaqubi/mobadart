@@ -66,7 +66,7 @@ class CategoryDemandController extends BaseController
      */
     public function show($id)
     {
-
+        return redirect('/no_accsess');
     }
 
     /**
@@ -134,6 +134,6 @@ class CategoryDemandController extends BaseController
     }
     public function demandsInCate($id)
     {
-        //
+        return redirect('/no_accsess');
     }
 }

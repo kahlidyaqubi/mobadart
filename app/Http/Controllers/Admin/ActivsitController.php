@@ -351,12 +351,12 @@ class ActivsitController extends BaseController
 
     public function initiaveToActivsit($id)
     {
-        //
+        return redirect('/no_accsess');
     }
 
     public function demandToActivsit($id)
     {
-        //
+        return redirect('/no_accsess');
     }
 
     public function evaluteToActivsit($id, Request $request)

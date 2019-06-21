@@ -18,7 +18,7 @@
                                 {{ mb_substr($site->about_project,0,200,'UTF-8')}}</h6>
                             <div class="">
                                 <a style="border:1px solid #c4233d;background:#f3f3f2;padding:10px;;border-radius:20px;color:black;margin-top:20px;font-size:27px;padding-left:30px;padding-right:30px"
-                                   class="" href="index.php">المزيد</a>
+                                   class="" href="/on_project">المزيد</a>
                             </div>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
                                 {{ mb_substr($site->who_are,0,410,'UTF-8')}}....
                             <div class="">
                                 <a style="border:1px solid #c4233d;background:#f3f3f2;padding:10px;;border-radius:20px;color:black;margin-top:35px;font-size:25px;padding-left:30px;padding-right:30px"
-                                   class="" href="index.php">المزيد</a>
+                                   class="" href="/how_are">المزيد</a>
                             </div>
                         </div>
                     </div>
@@ -401,7 +401,7 @@
                                         <i style="text-align:center;font-size:30px;">التجارب الملهمة</i>
                                         <p style="color:white;">
                                             <b> {{$site->experiences}} </b>
-                                            <a href="#">
+                                            <a href="/category/1">
                                                 <button style="color:black;border-radius:20px;padding:15px;">
                                                     <b>عرض جميع التجارب الملهمة</b></button>
                                             </a>

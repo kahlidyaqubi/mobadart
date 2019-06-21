@@ -14,7 +14,7 @@ class DemandController extends Controller
      */
     public function index()
     {
-        //
+        return redirect('/no_accsess');
     }
 
     /**
@@ -24,7 +24,7 @@ class DemandController extends Controller
      */
     public function create()
     {
-        //
+        return redirect('/no_accsess');
     }
 
     /**
@@ -46,7 +46,7 @@ class DemandController extends Controller
      */
     public function show($id)
     {
-        //
+        return redirect('/no_accsess');
     }
 
     /**
@@ -57,7 +57,7 @@ class DemandController extends Controller
      */
     public function edit($id)
     {
-        //
+        return redirect('/no_accsess');
     }
 
     /**

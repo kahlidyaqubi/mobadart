@@ -385,7 +385,7 @@ class InitiativeController extends BaseController
 
     public function activityInInitiave($id)
     {
-        //
+        return redirect('/no_accsess');
     }
 
     public function activitsInInitiative($id, Request $request)

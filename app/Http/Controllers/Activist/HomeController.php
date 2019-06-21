@@ -28,7 +28,7 @@ class HomeController extends BaseController
 
     public function noaccess()
     {
-        return "no access";
+        return redirect('/no_accsess');
     }
 
     public function editProfile()
@@ -132,7 +132,7 @@ class HomeController extends BaseController
 
     public function hisDemand()
     {
-
+        return redirect('/no_accsess');
     }
 
     public function hisInitiave(Request $request)

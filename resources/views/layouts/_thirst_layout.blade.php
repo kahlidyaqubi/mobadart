@@ -132,13 +132,18 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
             <a class="nav-item nav-link active" href="/"> الرئيسية<span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="#">من نحن</a>
+            <a class="nav-item nav-link" href="/how_are">من نحن</a>
             <a class="nav-item nav-link" href="/initiative">المبادرات</a>
-            <a class="nav-item nav-link" href="#">تجارب ملهمة</a>
-            <a class="nav-item nav-link" href="#">جميع الأخبار</a>
-            <a class="nav-item nav-link" href="#">تواصل معنا</a>
+            <a class="nav-item nav-link" href="/category/1">تجارب ملهمة</a>
+            <a class="nav-item nav-link" href="/article">جميع الأخبار</a>
+            <a class="nav-item nav-link" href="/#contact">تواصل معنا</a>
+            @if(!auth()->user())
             <a style="margin-right: 5px;border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;margin-left:5px;border-radius:20px;color:black"
                class="" href="/register">انشاء حساب</a>
+            @else
+            <a style="margin-right: 5px;border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;margin-left:5px;border-radius:20px;color:black"
+               class="" href="/home">بروفايل {{auth()->user()->name}}</a>
+            @endif
             <a style="border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;border-radius:20px;color:black"
                class="" href="/initiative_don">تقديم تبرع</a>
             <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true"></a>

@@ -93,7 +93,7 @@ class AdminController extends BaseController
 
     public function show($id)
     {
-        //
+        return redirect('/no_accsess');
     }
 
     public function edit($id)
@@ -294,12 +294,12 @@ class AdminController extends BaseController
 
     public function demanReplayedToAdmin($id)
     {
-        //
+        return redirect('/no_accsess');
     }
 
     public function demandToAdmin($id)
     {
-        //
+        return redirect('/no_accsess');
     }
 
     public function permission($id)

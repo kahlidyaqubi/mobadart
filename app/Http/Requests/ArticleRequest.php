@@ -29,7 +29,7 @@ class ArticleRequest extends FormRequest
             'category_id' => 'required|max:3',
             'title' => 'required|string|max:70|unique:articles,title,' . $id . ',id',
             'detalis' => 'required|string|max:400',
-            'the_file' => 'required|string|max:255',
+            'the_file' => 'required|string|max:10000',
 
         ];
 

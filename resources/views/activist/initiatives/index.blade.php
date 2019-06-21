@@ -92,14 +92,14 @@
                     <div class="col-sm-4">
                         <div class="caro-unit fadein">
                             <div class="cause-avatar">
-                                <a href="single-cause.html" title=""><img src="{{$item->img}}" alt=""></a>
+                                <a href="/initiative/{{$item->id}}" title=""><img src="{{$item->img}}" alt=""></a>
                                 <div class="required-amount">
                                     <span>{{$item->id}}</span>
                                 </div>
                             </div>
                             <div class="cause-meta">
 
-                                <h2><a href="single-cause.html" title="">{{$item->title}}</a></h2>
+                                <h2><a href="/initiative/{{$item->id}}" title="">{{$item->title}}</a></h2>
                                 <p style="min-height: 72px">
                                     {{ substr($item->details,0,300)}}....
                                 </p>

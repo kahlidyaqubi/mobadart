@@ -9,7 +9,7 @@ class Activists_initiative extends Model
     //
     protected $table='activists_initiatives';
 
-    protected $fillable=['initiative_id','activist_id'
+    protected $fillable=['initiative_id','activist_id','accept'
     ];
 
     public function activist()

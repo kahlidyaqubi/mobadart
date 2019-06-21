@@ -157,6 +157,25 @@ class HomeController extends BaseController
 
     public function no_accsess()
     {
+        $site=Site_sting::find(1);
+        return view('guest.no_accsess', compact('site'));
+
+    }
+
+    public function how_are()
+    {
+
+        $site=Site_sting::find(1);
+        return view('guest.how_are', compact('site'));
+
+
+    }
+
+    public function on_project()
+    {
+        $site=Site_sting::find(1);
+        return view('guest.on_project', compact('site'));
+
 
     }
 

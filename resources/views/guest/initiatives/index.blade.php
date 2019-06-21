@@ -86,20 +86,20 @@
         </div>
     </form>
     <div class="container">
-        <div class="row ">
+        <div class="row " style="min-height: 190px">
             <div class="our-cause remove-ext-50 loader-data" id="itemContainer">
                 @foreach($items as $item)
                     <div class="col-sm-4">
                         <div class="caro-unit fadein">
                             <div class="cause-avatar">
-                                <a href="single-cause.html" title=""><img src="{{$item->img}}" alt=""></a>
+                                <a href="/initiative/{{$item->id}}" title=""><img src="{{$item->img}}" alt=""></a>
                                 <div class="required-amount">
                                     <span>{{$item->id}}</span>
                                 </div>
                             </div>
                             <div class="cause-meta">
 
-                                <h2><a href="single-cause.html" title="">{{$item->title}}</a></h2>
+                                <h2><a href="/initiative/{{$item->id}}" title="">{{$item->title}}</a></h2>
                                 <p style="min-height: 72px">
                                     {{ mb_substr($item->details,0,300,'UTF-8')}}....
                                 </p>

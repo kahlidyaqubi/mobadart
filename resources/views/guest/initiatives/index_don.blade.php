@@ -86,13 +86,13 @@
         </div>
     </form>
     <div class="container">
-        <div class="row ">
+        <div class="row " style="min-height: 190px">
             <div class="our-cause remove-ext-50 loader-data" id="itemContainer">
                 @foreach($items as $item)
                     <div class="col-sm-4">
                         <div class="caro-unit fadein">
                             <div class="cause-avatar">
-                                <a href="single-cause.html" title=""><img src="{{$item->img}}" alt=""></a>
+                                <a href="/initiative/{{$item->id}}" title=""><img src="{{$item->img}}" alt=""></a>
                                 <div class="required-amount">
                                     <span>{{$item->id}}</span>
                                 </div>
@@ -103,7 +103,7 @@
                                     </div>
                                 </div>
                                 <span>{{($item->paid_up)/($item->donation)*100}} % ({{($item->paid_up)}}$ /{{($item->donation)}}$)</span>
-                                <h2><a href="single-cause.html" title="" style="margin-right:20px;">{{$item->title}}</a></h2>
+                                <h2><a href="/initiative/{{$item->id}}" title="" style="margin-right:20px;">{{$item->title}}</a></h2>
                                 <p> {{ mb_substr($item->details,0,300,'UTF-8')}}....
                                 </p>
                                 <a href="/donationList/create?initiative_id={{$item->id}}" title="" class="donate-me" data-ripple="">تبرع</a>

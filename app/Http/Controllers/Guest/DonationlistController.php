@@ -21,7 +21,7 @@ class DonationListController extends BaseController
 {
     public function index()
     {
-        //
+        return redirect('/no_accsess');
     }
 
     public function create()
@@ -71,16 +71,16 @@ class DonationListController extends BaseController
 
     public function show($id)
     {
-        //
+        return redirect('/no_accsess');
     }
     public function show_accept($id)
     {
-        //
+        return redirect('/no_accsess');
     }
 
     public function edit($id)
     {
-        //
+        return redirect('/no_accsess');
     }
 
     public function update(Request $request, $id)
@@ -95,7 +95,7 @@ class DonationListController extends BaseController
 
     public function delete($id)
     {
-        //
+        return redirect('/no_accsess');
     }
 
 

@@ -75,12 +75,12 @@
                                 </div>
                             </div>
                             <div class="input-group form-group mt-5">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">الاهتمامات</span>
-                                    </div>
-                                    <textarea readonly name="name" rows="2"
-                                              cols="90">@foreach($hisinterests as $interests ){{$interests->name}}،@endforeach</textarea>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">الاهتمامات</span>
                                 </div>
+                                <textarea readonly name="name" rows="2"
+                                          cols="90">@foreach($hisinterests as $interests ){{$interests->name}}،@endforeach</textarea>
+                            </div>
                             <!-- نبذة -->
                             <div class="input-group form-group mt-5">
                                 <div class="input-group-prepend">
@@ -152,14 +152,14 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                @foreach($hisactivities as $item)
+                                                @foreach($hisactivities as $item_act)
                                                     <tr>
                                                         <th scope="row">1</th>
-                                                        <td>{{$item->name}}</td>
-                                                        <td>{{$item->target_group}}</td>
-                                                        <td>{{$item->ativiests_count}}</td>
-                                                        <td>{{$item->count}}</td>
-                                                        <td>{{date('d-m-Y', strtotime($item->start_date))}}</td>
+                                                        <td>{{$item_act->name}}</td>
+                                                        <td>{{$item_act->target_group}}</td>
+                                                        <td>{{$item_act->ativiests_count}}</td>
+                                                        <td>{{$item_act->count}}</td>
+                                                        <td>{{date('d-m-Y', strtotime($item_act->start_date))}}</td>
                                                     </tr>
                                                 @endforeach
                                                 </tbody>
@@ -177,19 +177,23 @@
                             <div class="input-group form-group">
                                 @if(auth()->user() && auth()->user()->activist)
                                     @if(
-                                    !($item->activists_initiatives->where('activist_id',auth()->user()->activist->id)->first()))
-                                        <a class="but " href="/activist/initiative/application/{{$item->id}}">طلب انضمام</a>
+                                    !($item->activists_initiatives && $item->activists_initiatives->where('activist_id',auth()->user()->activist->id)->first()))
+                                        <a class="but " href="/activist/initiative/application/{{$item->id}}">طلب
+                                            انضمام</a>
                                     @else
                                         <a class="but " href="/activist/initiative/goOut/{{$item->id}}">انسحاب</a>
                                     @endif
-                                    @if(!($item->initiative_evaluations->where('activist_id',auth()->user()->activist->id)->first()) &&
-                                    $item->end_date <= Carbon\Carbon::now()
-                                    && ($item->activists_initiatives->where('accept',1)->where('activist_id',auth()->user()->activist->id)->first())
+                                    @if( (!($item->initiative_evaluations != null)||
+                                            ($item->initiative_evaluations &&
+                                    !($item->initiative_evaluations->where('activist_id',auth()->user()->activist->id)->first())))
+&& $item->end_date <= Carbon\Carbon::now()
+                                    && $item->activists_initiatives && ($item->activists_initiatives->where('accept',1)->where('activist_id',auth()->user()->activist->id)->first())
+
                                     )
-                                        <a class="but" href="#">تقييم المبادرة</a>
+                                        <a class="but" href="/activist/evalution/create?initiative_id={{$item->id}}">تقييم المبادرة</a>
                                     @endif
                                 @endif
-                                <a class="but " href="#">الأخبار </a>
+                                <a class="but " href="/initiative/show_art/{{$item->id}}">الأخبار </a>
                             </div>
                         </div>
                     </div>

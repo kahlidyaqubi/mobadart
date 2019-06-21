@@ -64,7 +64,7 @@ class GovernorateController extends BaseController
      */
     public function show($id)
     {
-        //
+        return redirect('/no_accsess');
     }
 
     /**

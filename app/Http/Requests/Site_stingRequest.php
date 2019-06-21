@@ -27,10 +27,10 @@ class Site_stingRequest extends FormRequest
         $valid = [
             'title_page'=> 'required|string|max:50',
 			'project_title'=> 'required|string|max:70',
-			'about_project'=> 'required|string|max:500',
-			'who_are'=> 'required|string|max:500',
+			'about_project'=> 'required|string|max:800',
+			'who_are'=> 'required|string|max:800',
 			'motivational_words'=> 'required|string|max:100',
-			'experiences'=> 'required|string|max:500',
+			'experiences'=> 'required|string|max:400',
 			'address'=> 'required|string|max:255',
             'email'=>'required|email|max:255',
 			'mobile1'=> 'required|numeric|digits_between:6,10',

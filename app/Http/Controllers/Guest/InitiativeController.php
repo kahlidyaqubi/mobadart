@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Guest;
 
+use App\Category;
 use App\City;
 use App\Governorate;
 use App\Initiative;
@@ -170,7 +171,7 @@ class InitiativeController extends Controller
      */
     public function create()
     {
-        //
+        return redirect('/no_accsess');
     }
 
     /**
@@ -212,7 +213,7 @@ class InitiativeController extends Controller
      */
     public function edit($id)
     {
-        //
+        return redirect('/no_accsess');
     }
 
     /**
@@ -240,11 +241,40 @@ class InitiativeController extends Controller
 
     public function showCalender($id)
     {
-        //showCalender
+        return redirect('/no_accsess');
     }
 
     public function activityInInitiave($id)
     {
-        //showCalender
+        return redirect('/no_accsess');
     }
+
+    public function show_art($id,Request $request)
+    {
+
+        $q = $request["q"] ?? "";
+        $category_id = $request["category_id"] ?? "";
+        $the_item = Initiative::find($id);
+        if ($the_item == NULL) {
+            return redirect("/no_accsess");
+        }
+        $items = $the_item->articles()->join('categories', 'categories.id', '=', 'articles.category_id')->select('articles.*')->whereRaw("true");
+        if ($q)
+            $items->whereRaw("(title like ?)"
+                , ["%$q%"]);
+        if ($category_id)
+            $items->whereRaw("(category_id = ?)"
+                , [$category_id]);
+
+
+
+        $items = $items->orderBy("articles.id", 'desc')->paginate(6)->appends([
+            "q" => $q, "category_id" => $category_id, ]);
+
+        $categories = Category::where('type', '1')->get();
+        $initiatives = Initiative::all();
+        return view("guest.initiatives.show_art", compact('items', 'the_item','categories', 'initiatives'));
+
+    }
+
 }

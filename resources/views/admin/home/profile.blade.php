@@ -97,7 +97,7 @@
                                                             <td class="hidden-xs">{{date('d-m-Y', strtotime($article->created_at))}}</td>
                                                             <td>
                                                                 <a class="btn btn-sm grey-salsa btn-outline"
-                                                                   href="#"> مشاهدة</a>
+                                                                   href="/article/{{$article->id}}"> مشاهدة</a>
                                                             </td>
                                                         </tr>
                                                     @endforeach
