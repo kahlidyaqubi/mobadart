@@ -215,7 +215,8 @@
 
         img {
             width: 737px;
-            height: 300px
+            height: 300px;
+			margin-top: 0 !important;
         }
 
         body {

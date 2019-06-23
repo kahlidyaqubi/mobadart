@@ -13,6 +13,7 @@ use App\Initiative;
 use App\Initiative_evaluation;
 use App\Initiatives_goal;
 use App\Interest;
+use App\Site_sting;
 use Illuminate\Http\Request;
 use App\Imports\ActivistExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -366,12 +367,13 @@ class InitiativeController extends BaseController
 
             $have_prmission = User::whereIn('id', [$item->initiative->admin->user->id])->whereNotIn('id', [auth()->user()->id])->pluck('id')->toArray();
 
-            $activsits_ids = User::whereIn('id', [$item->activist_id])->pluck('id')->toArray();
+            $activsits_ids = User::whereIn('id', [$item->activist->user->id])->pluck('id')->toArray();
 
             $users_ids = array_merge($suber_admins_ids, $have_prmission);
 
             $users = User::whereIn('id', $users_ids)->get();
             $users2 = User::whereIn('id', $activsits_ids)->get();
+
 
             if ($users->first())
                 Notification::send($users, new NotifyUsers($action));

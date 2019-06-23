@@ -107,8 +107,8 @@
         <div class="bgLight">
             <div class="container">
                 <div class="visionSection">
-                    <div class="visionImgWrap" style="background-image:url({{$site->img3}})"></div>
-                    <div class="vissionText">
+                    <img src="{{$site->img3}}" width="50%">
+					<div class="vissionText">
                         <div class="quoteObjHold">
                             <div class="quoteBlock">
                             </div>
@@ -163,9 +163,9 @@
                                                                     </div>
                                                                     <div class="cause-meta">
 
-                                                                        <h3><a href="/initiative/{{$item->id}}" title=""
-                                                                               class="title">{{$item->title}}</a></h3>
-                                                                        <p>{{ mb_substr($item->details,0,200,'UTF-8')}}
+                                                                        <h3 style="min-height: 240px;"><a href="/initiative/{{$item->id}}" title=""
+                                                                               class="title">{{ mb_substr($item->title,0,60,'UTF-8')}}</a></h3>
+                                                                        <p style="min-height:85px;max-height:85px;height:85px">{{ mb_substr($item->details,0,100,'UTF-8')}}
                                                                             ....</p>
                                                                         <a href="/initiative/{{$item->id}}" title=""
                                                                            class="donate-me" data-ripple=""
@@ -206,9 +206,9 @@
                                                                     </div>
                                                                     <div class="cause-meta">
 
-                                                                        <h3><a href="/initiative/{{$item->id}}" title=""
-                                                                               class="title">{{$item->title}}</a></h3>
-                                                                        <p>{{ mb_substr($item->details,0,200,'UTF-8')}}
+                                                                        <h3 style="min-height: 240px;"><a href="/initiative/{{$item->id}}" title=""
+                                                                               class="title">{{ mb_substr($item->title,0,60,'UTF-8')}}</a></h3>
+                                                                        <p style="min-height:85px;max-height:85px;height:85px">{{ mb_substr($item->details,0,100,'UTF-8')}}
                                                                             ....</p>
                                                                         <a href="/initiative/{{$item->id}}" title=""
                                                                            class="donate-me" data-ripple=""
@@ -243,9 +243,9 @@
                                                                     </div>
                                                                     <div class="cause-meta">
 
-                                                                        <h3><a href="/initiative/{{$item->id}}" title=""
-                                                                               class="title">{{$item->title}}</a></h3>
-                                                                        <p>{{ mb_substr($item->details,0,200,'UTF-8')}}
+                                                                        <h3 style="min-height: 240px;"><a href="/initiative/{{$item->id}}" title=""
+                                                                               class="title">{{ mb_substr($item->title,0,60,'UTF-8')}}</a></h3>
+                                                                        <p style="min-height:85px;max-height:85px;height:85px">{{ mb_substr($item->details,0,100,'UTF-8')}}
                                                                             ....</p>
                                                                         <a href="/initiative/{{$item->id}}" title=""
                                                                            class="donate-me" data-ripple=""
@@ -351,8 +351,10 @@
                                     </div>
                                     <div class="contentHold">
                                         <h4>
-                                            {{$item->title}}
+                                           {{ mb_substr($item->title,0,60,'UTF-8')}}
                                         </h4>
+                                        <p style="min-height: 54px;max-height: 54px;height: 54px">    {{ mb_substr($item->detalis,0,100,'UTF-8')}}....
+                                        </p>
                                     </div>
                                     <a href="/article/{{$item->id}}" class="moreNewsBtn fancybox">
                                         <i class="fas fa-arrow-left"></i> </a>
@@ -361,10 +363,10 @@
                                             <div class="popupHeader">
                                                 <div class="popupTitleDetails fullWidth">
                                                     <h3>
-                                                        {{$item->title}}
+                                                        {{ mb_substr($item->title,0,60,'UTF-8')}}
                                                     </h3>
                                                     <p>
-                                                        {{ mb_substr($item->detalis,0,200,'UTF-8')}}....
+                                                        {{ mb_substr($item->detalis,0,100,'UTF-8')}}....
                                                     </p>
                                                 </div>
                                             </div>
@@ -415,14 +417,12 @@
                                     <div class="container" style="width:800px;">
                                         <div class="row pb-5">
                                             @foreach($experiences as $item)
-                                                <div style="margin-bottom: 10px" class="col-md-4">
+                                                <div style="margin-bottom: 10px;margin-top: 7px" class="col-md-4">
                                                     <img src="{{$item->img}}" data-to="{{$item->img}}"
                                                          class="modallery"
                                                          style="width:200px;height:200px;margin-bottom:20px;cursor:pointer;">
-                                                    <p style="font-size:15px;cursor:pointer;margin-bottom:-18px">{{$item->title}}</p>
-                                                    <br><a href="article/{{$item->id}}"
-                                                           style="padding:10px;cursor:pointer">انتقل</a>
-
+                                                    <a href="article/{{$item->id}}" style="display:block;font-size:15px;cursor:pointer;margin-bottom:-18px;min-height: 60px;max-height: 60px;height: 60px;">{{ mb_substr($item->title,0,60,'UTF-8')}}</a>
+                                                    <br>
                                                 </div>
                                             @endforeach
                                         </div>

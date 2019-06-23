@@ -100,8 +100,8 @@
                             <div class="cause-meta">
 
                                 <h2><a href="/initiative/{{$item->id}}" title="">{{$item->title}}</a></h2>
-                                <p style="min-height: 72px">
-                                    {{ mb_substr($item->details,0,300,'UTF-8')}}....
+                                <p style="min-height: 82px">
+                                    {{ mb_substr($item->details,0,100,'UTF-8')}}....
                                 </p>
                                 <a href="/initiative/{{$item->id}}" title="" class="donate-me" data-ripple="">تفاصيل
                                     المبادرة</a>

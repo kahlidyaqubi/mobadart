@@ -17,9 +17,22 @@ class EvalutionController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return redirect('/no_accsess');
+        $initiative_id = $request["initiative_id"] ?? "";
+
+        $items=auth()->user()->activist->initiative_evaluations()->whereRaw(true);
+
+        if ($initiative_id) {
+            $items->whereRaw("(initiative_id = ?)"
+                , [$initiative_id]);
+        }
+
+        $items = Initiative_evaluation::whereIn('id', $items->pluck('initiative_evaluation.id'))->paginate(20)
+            ->appends([ 'initiative_id' => $initiative_id]);
+
+        $initiatives = auth()->user()->activist->initiatives->all();
+        return view('activist.initiative_evaluation.index',compact('items','initiatives'));
     }
 
     public function create(Request $request)

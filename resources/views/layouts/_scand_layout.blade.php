@@ -322,10 +322,29 @@
             </li>
             @if(!auth()->user())
             <li class=""><a style="margin-right: 5px;border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;margin-left:5px;border-radius:20px;color:black" class="" href="/register">انشاء حساب</a></li>
+                <li class=""><a style="border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;border-radius:20px;color:black" class="" href="/donationList">تقديم تبرع</a></li>
             @else
-                <li class=""><a style="margin-right: 5px;border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;margin-left:5px;border-radius:20px;color:black" class="" href="/home">بروفايل {{auth()->user()->name}}</a></li>
+                <li class="nav-item dropdown col-md-2">
+                    <a style="width:90%;background:#c4233d;color:white;margin-right:40px;border-radius:20px;"
+                       class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{auth()->user()->name}}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="/activist">البروفايل</a>
+                        
+                        <a class="dropdown-item" href="/activist/changePassword">تعديل كلمة المرور</a>
+                        <a class="dropdown-item" href="/activist/editProfile">تعديل حساب</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">تسجيل خروج </a>
+                    </div>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                          style="display: none;">
+                        @csrf
+                    </form>
+                </li>
             @endif
-            <li class=""><a style="border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;border-radius:20px;color:black" class="" href="/donationList">تقديم تبرع</a></li>
         </ul>
     </div>
 </nav>

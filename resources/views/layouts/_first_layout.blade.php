@@ -3,6 +3,7 @@
 <head>
     <title>@yield('title')</title>
 	 <link rel="shortcut icon" href="/Group.ico" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=El+Messiri" rel="stylesheet">
@@ -17,6 +18,9 @@
           type="text/css"/>
 
     <style media="screen">
+        body{
+            max-width: 100%;
+        }
         .container {
             max-width: 100%;
             overflow-x: hidden;
@@ -104,7 +108,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-        <ul class="navbar-nav ">
+        <ul class="navbar-nav col-md-11">
             <li class="nav-item ">
                 <a class="nav-link" href="/">الرئيسية <span class="sr-only"></span></a>
             </li>
@@ -130,14 +134,31 @@
             <li class=""><a
                         style="margin-right: 5px;border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;margin-left:5px;border-radius:20px;color:black"
                         class="" href="/register">انشاء حساب</a></li>
-            @else
                 <li class=""><a
                             style="border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;border-radius:20px;color:black"
-                            class="" href="/home">بروفايل {{auth()->user()->name}}</a></li>
+                            class="" href="/initiative_don">تقديم تبرع</a></li>
+            @else
+                <li class="nav-item dropdown col-md-3">
+                    <a style="width:90%;background:#c4233d;color:white;margin-right:40px;border-radius:20px;"
+                       class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{auth()->user()->name}}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="/activist">البروفايل</a>
+                        
+                        <a class="dropdown-item" href="/activist/changePassword">تعديل كلمة المرور</a>
+                        <a class="dropdown-item" href="/activist/editProfile">تعديل حساب</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">تسجيل خروج </a>
+                    </div>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                          style="display: none;">
+                        @csrf
+                    </form>
+                </li>
             @endif
-            <li class=""><a
-                        style="border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;border-radius:20px;color:black"
-                        class="" href="/initiative_don">تقديم تبرع</a></li>
 
         </ul>
     </div>
@@ -178,7 +199,60 @@
         $("#myModal").hide();
     });
 </script>
+@if(auth()->user())
 
+
+    <meta name="userId" content="{{ Auth::check() ? Auth::user()->id : '' }}">
+    <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
+    <script>
+        function formatDate(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+
+            return [year, month, day].join('-');
+        }
+
+        var userId = $('meta[name="userId"]').attr('content');
+        Echo.private('App.User.' + userId).notification((notification) => {
+            // this.notifications.push(notification);
+
+            var action = notification.data.action;
+            var the_id = notification.id;
+
+            var li = document.createElement("li");
+            var dateobj = formatDate(new Date(action.created_at));
+            li.innerHTML = "<a class='notfiylink' onclick='pop(this)' the_id='" + the_id + "' href='" + action.link + "'>"+
+                "<div class='notification-info'> <div class='notification-list-user-block'><span class='notification-list-user-name' style='color:#288CF0;'>"+ action.type + "<br></span> " +
+                + action.title + "<div class='notification-date' style='font-size:15px;color:red'>" + dateobj.toString() + "</span>  ";
+
+            document.getElementById("notif").appendChild(li);
+            var num_notif = document.getElementById("num_notif");
+            var num_notif_count = 1 + parseInt(document.getElementById("num_notif").innerText);
+            num_notif.innerHTML = "<span>" + num_notif_count + "</div> </div> </div> </a> </li>";
+
+            var audio = new Audio('audio/unsure.mp3');
+            audio.play();
+        });
+
+    </script>
+    <script>
+
+        function pop(e) {
+            event.preventDefault();
+            var the_id = e.getAttribute('the_id');
+            var the_href = e.href;
+            $.get('/getnotfiy/' + the_id, function (data, status) {
+            });
+            location.href = the_href;
+        };
+
+    </script>
+@endif
 @yield("js")
 
 </body>

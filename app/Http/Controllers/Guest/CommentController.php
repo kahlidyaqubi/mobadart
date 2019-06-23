@@ -43,6 +43,8 @@ class CommentController extends Controller
         if ($item == NULL) {
             return redirect("/no_accsess");
         }
+		
+		request()['status']=1;
         if(auth()->user())
             request()['user_id']=auth()->user()->id;
 

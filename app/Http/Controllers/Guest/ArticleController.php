@@ -34,7 +34,7 @@ class ArticleController extends Controller
             $items->whereRaw("(initiative_id = ?)"
                 , [$initiative_id]);
 
-        $items = $items->orderBy("articles.id", 'desc')->paginate(6)->appends([
+        $items = $items->orderBy("articles.id", 'desc')->paginate(20)->appends([
             "q" => $q, "category_id" => $category_id, 'initiative_id' => $initiative_id]);
 
             $categories = Category::where('type', '1')->get();

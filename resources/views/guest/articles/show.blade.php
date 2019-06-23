@@ -59,10 +59,10 @@
                         </div>
                     </div>
                     <!--second  -->
-                    <div class="card-body">
+                    <div class="card-body" >
                         <!-- 1 -->
-                        <div class="div-1" style="min-width: 100%;padding: 10px">
-                            <div style="width:740px;">
+                        <div class="row" style="text-align:center;padding: 13px;"">
+                            <div class="div-1"  style="min-width: 100%;padding: 10px;">
                                 <!--title  -->
                                 <h5>التعليقات</h5>
                                 <hr style="border: 5px"/>
@@ -96,14 +96,15 @@
                                 </div>
                                 <div class="input-group form-group" style="margin-top: 10px">
                                     <div class="row">
-                                        <div class="col-md-12 "><h3>أضف تعليقاً</h3></div>
+                                        <div class="col-md-12 col-sm-6"><h3>أضف تعليقاً</h3></div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12 ">@include("_first_msg")</div>
                                     </div>
-                                    <form class="" action="/comment" method="post">
+                                    <form class="" action="/comment" method="post" class="input-group form-group mt-5">
                                         <input hidden name="article_id" value="{{$item->id}}"/>
                                         @csrf
+										 <div class="input-group form-group mt-5">
                                         <div class="row">
                                             @if(auth()->user())
                                                 <div class="form-group">
@@ -113,7 +114,7 @@
                                                     </div>
                                                 </div>
                                             @else
-                                                <div class="form-group">
+                                                <div class="input-group form-group">
                                                     <div class="col-md-12 ">
                                                         <input type="text" placeholder="ادخل اسمك" name="writer"
                                                                value="{{old('writer')}}"
@@ -123,7 +124,7 @@
                                                 <div class="row">
                                                     <div class="col-md-12 "></div>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="input-group form-group">
                                                     <div class="col-md-12 ">
                                                         <input type="text" placeholder="الإيميل" name="email"
                                                                value="{{old('email')}}"
@@ -131,21 +132,25 @@
                                                     </div>
                                                 </div>
                                             @endif
-                                        </div>
-                                        <div class="row">
-
-                                            <div class="col-md-12 ">
-                                                <textarea name="detalis" placeholder="اكتب تعليقك"
+											
+											<div class="row">
+                                                    <div class="col-md-12 "></div>
+                                                </div>
+                                                <div class="input-group form-group">
+                                                    <div class="col-md-12 ">
+                                                       <textarea name="detalis" placeholder="اكتب تعليقك"
                                                           style="padding: 7px;float: right"
                                                           rows="4" cols="80" required>{{old('detalis')}}</textarea>
-                                                <button type="submit" href="#"
+                                                    </div>
+                                                </div>
+												<button type="submit" href="#"
                                                         style="background:#c4233d;border-radius: 20px;color: white;padding:14px;text-align:center;margin-top:36px; margin-right:10px ">
                                                     أضف
                                                     تعليقك
                                                 </button>
-                                            </div>
-
+												
                                         </div>
+</div>
 
                                     </form>
                                 </div>
@@ -163,7 +168,148 @@
 @endsection
 @section('css')
     <style>
+        .card {
+            width: 798px;
+            background: #f3f3f2 !important;
+            border: 1px solid gray;
+            height: auto !important;
+            box-shadow: 5px 10px #888888;
+        }
 
+        img {
+            width: 737px;
+            height: 300px;
+			margin-top: -27px !important;
+        }
+
+        body {
+            background: #f3f3f2;
+        }
+
+        .input-group-prepend span {
+            width: 175px;
+        }
+
+        label {
+            color: black;
+        }
+
+        .input-group-text {
+            color: white !important;
+            font-size: 15px;
+        }
+
+        .input-group-prepend span {
+            width: 288px;
+
+        }
+
+        input.form-control {
+            width: auto;
+        }
+
+        h3 {
+            float: right;
+        }
+
+        .but {
+            border: 1px solid gray;
+            background: #c4233d;
+            padding: 15px;
+            padding-left: 35px;
+            text-decoration: none;
+            padding-right: 35px;
+            margin-top: 12px;
+            border-radius: 20px;
+            color: white;
+            width: 170px;
+            margin: 5px;
+            margin-bottom: 10px;
+            border: 2px solid #c4233d;
+
+        }
+
+        .but:hover {
+            color: #c4233d;
+            background: white;
+            text-decoration: none;
+            border: 2px solid #c4233d;
+        }
+
+        .table {
+            border: 1px solid gray;
+            box-shadow: 5px 10px #888888;
+            max-width: 86%;
+        }
+
+        a {
+            text-align: center;
+        }
+
+        @media (max-width: 670px) {
+            .card {
+                width: 272px;
+            }
+
+            img {
+                width: 200px;
+                height: 200px;
+            }
+
+            .input-group-prepend span {
+                width: 140px;
+            }
+
+            .input-group-text {
+                font-size: 8px;
+            }
+
+            .validation {
+                width: 200px;
+            }
+
+            .textA {
+                width: 200px;
+                height: 120px;
+            }
+
+            .table {
+                width: 100%;
+            }
+
+            .but {
+
+                padding: 14px;
+            }
+
+            .butto {
+                margin-left: 105px;
+                margin-bottom: -200px;
+            }
+
+            .bo {
+                margin-bottom: 50px;
+            }
+
+            ::-webkit-input-placeholder {
+                font-size: 7px;
+            }
+        }
+
+        textarea {
+            resize: none;
+            border: 0px;
+            outline: none;
+			width : 100%;
+        }
+
+        label {
+            float: right;
+        }
+
+        .validation {
+            float: right;
+        }
     </style>
 @endsection
 @section('js')

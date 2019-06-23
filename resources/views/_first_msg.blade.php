@@ -31,7 +31,7 @@
         $msgClass = "alert-danger";
     }
     ?>
-    <div id="myModal" class="{{$msgClass}} alert-dismissible validation">{{$msg}}
+    <div id="myModal" class="alert {{$msgClass}} alert-dismissible validation">{{$msg}}
         <button type="button" class="close" data-target="#myModal" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -42,7 +42,7 @@
     <?php
     $msg = Session::get("status");
     ?>
-    <div id="myModal" class="alert-info alert-dismissible validation">{{$msg}}
+    <div id="myModal" class="alert alert-info alert-dismissible validation">{{$msg}}
         <button type="button" class="close" data-target="#myModal" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>

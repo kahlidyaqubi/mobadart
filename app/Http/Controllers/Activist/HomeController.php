@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Activist;
 use App\City;
 use App\Governorate;
 use App\Http\Requests\ActivistRequest;
+use App\Http\Requests\ChangePasswordRequest;
 use App\Initiative;
 use App\Interest;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Session;
 use App\Activist;
 use DB;
@@ -18,7 +21,25 @@ class HomeController extends BaseController
 
     public function changePassword()
     {
+        return view("activist.home.changePassword");
+    }
+    public function changePassword_post(ChangePasswordRequest $request)
+    {
+        $credentials = [
+            'email' => Auth::user()->email,
+            'password' => $request->old_password
+        ];
 
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            $user->password = bcrypt($request["password"]);
+            $user->save();
+
+            Session::flash("msg", "s:تم تغيير كلمة المرور بنجاح");
+        } else {
+            Session::flash("msg", "e: كلمة المرور الحالية غير صحيحة");
+        }
+        return redirect('/activist/changePassword');
     }
 
     public function show()
@@ -192,7 +213,7 @@ class HomeController extends BaseController
         if ($in_date)
             $items = $items->whereRaw("end_date >= ? and start_date <= ?", [$in_date, $in_date]);
 
-        $items = Initiative::whereIn('initiatives.id', $items->pluck('initiatives.id'))->orderBy("initiatives.id", "desc")->paginate(6)
+        $items = Initiative::whereIn('initiatives.id', $items->pluck('initiatives.id'))->orderBy("initiatives.id", "desc")->paginate(20)
             ->appends([
                 "q" => $q, "city_id" => $city_id, 'governorate_id' => $governorate_id
                 , "in_date" => $in_date, 'end_date' => $end_date

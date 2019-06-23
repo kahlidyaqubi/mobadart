@@ -80,7 +80,7 @@ class InitiativeController extends Controller
         if ($in_date)
             $items = $items->whereRaw("end_date >= ? and start_date <= ?", [$in_date, $in_date]);
 
-        $items = Initiative::whereIn('id', $items->pluck('initiatives.id'))->orderBy("initiatives.id", "desc")->paginate(6)
+        $items = Initiative::whereIn('id', $items->pluck('initiatives.id'))->orderBy("initiatives.id", "desc")->paginate(20)
             ->appends([
                 "q" => $q, "city_id" => $city_id, 'governorate_id' => $governorate_id
                 , "in_date" => $in_date, 'end_date' => $end_date
@@ -150,7 +150,7 @@ class InitiativeController extends Controller
         if ($in_date)
             $items = $items->whereRaw("end_date >= ? and start_date <= ?", [$in_date, $in_date]);
 
-        $items = Initiative::whereIn('id', $items->pluck('initiatives.id'))->orderBy("initiatives.id", "desc")->paginate(6)
+        $items = Initiative::whereIn('id', $items->pluck('initiatives.id'))->orderBy("initiatives.id", "desc")->paginate(20)
             ->appends([
                 "q" => $q, "city_id" => $city_id, 'governorate_id' => $governorate_id
                 , "in_date" => $in_date, 'end_date' => $end_date
@@ -268,7 +268,7 @@ class InitiativeController extends Controller
 
 
 
-        $items = $items->orderBy("articles.id", 'desc')->paginate(6)->appends([
+        $items = $items->orderBy("articles.id", 'desc')->paginate(20)->appends([
             "q" => $q, "category_id" => $category_id, ]);
 
         $categories = Category::where('type', '1')->get();

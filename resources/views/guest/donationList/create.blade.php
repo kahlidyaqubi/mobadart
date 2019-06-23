@@ -141,6 +141,10 @@
             margin-right: -35px;
             height: 25px;
         }
+		img {
+            margin-top : 0 !important;
+
+        }
 
         .card {
             background: white !important;

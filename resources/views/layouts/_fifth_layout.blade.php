@@ -3,6 +3,7 @@
 
 <head>
     <title>@yield('title')</title>
+	 <link rel="shortcut icon" href="/Group.ico" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=El+Messiri" rel="stylesheet">
@@ -209,7 +210,7 @@
         <img alt="Maan Logo" src="/platform/dist/images/logo.svg" style="width:90px;height:70px;margin-top:-26px;">
         </div>
     </a>
-    <p style="color:#fff;font-size:20px">مركز العمل التنموي معاً</p>
+    <a href="/"><p style="color:#fff;font-size:20px">مركز العمل التنموي معاً</p></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>

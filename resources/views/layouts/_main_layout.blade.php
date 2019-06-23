@@ -146,15 +146,15 @@
                         <li class=""><a
                                     style="margin-right: 5px;border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;margin-left:5px;border-radius:20px;color:black"
                                     class="" href="/register">انشاء حساب</a></li>
+                            <li class=""><a
+                                        style="border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;border-radius:20px;color:black"
+                                        class="" href="/initiative_don">تقديم تبرع</a></li>
                         @else
                             <li class=""><a
                                         style="margin-right: 5px;border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;margin-left:5px;border-radius:20px;color:black"
                                         class="" href="/home">بروفايل {{auth()->user()->name}}</a></li>
                         @endif
-                        <li class=""><a
-                                    style="border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;border-radius:20px;color:black"
-                                    class="" href="/initiative_don">تقديم تبرع</a></li>
-                    </ul>
+                     </ul>
                 </div>
             </div>
         </div>
@@ -220,13 +220,13 @@
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <input id="name" name="name" type="text" value="{{old('name')}}" class="validate">
-                                        <label for="name">الاسم </label>
+                                        <label for="name">الاسم <font style="color:red;font-size:20px">*</font></label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <input id="email" name="email" type="email" value="{{old('email')}}" class="validate">
-                                        <label for="email">البريد الالكتروني </label>
+                                        <label for="email">البريد الالكتروني <font style="color:red;font-size:20px">*</font></label>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -240,7 +240,7 @@
                                     <div class="input-field col s12">
                                         <input id="comment" name="content" maxlength="500" value="{{old('content')}}" type="text"
                                                class="validate">
-                                        <label for="content">تعليقك</label>
+                                        <label for="content">تعليقك <font style="color:red;font-size:20px">*</font></label>
                                     </div>
                                 </div>
                                 <div class="row">

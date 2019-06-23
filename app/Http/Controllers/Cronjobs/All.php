@@ -12,9 +12,19 @@ use DB;
 use App\Action;
 use Notification;
 use App\Notifications\NotifyUsers;
+use Artisan;
 
 class All extends Controller
 {
+
+
+    public function storge_link()
+    {
+		
+		Artisan::call('storage:link');
+		return 'succses';
+		
+	}
 
     public function cron_all()
     {

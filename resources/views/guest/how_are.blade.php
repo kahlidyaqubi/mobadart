@@ -2,7 +2,7 @@
 
 @section("title", "من نحن")
 @section("content")
-    <div class="d-flex justify-content-center h-100" style="min-height: 450px">
+    <div class="d-flex justify-content-center h-100" style="min-height: 460px">
         <div class="row" >
             <div class="col">
                 <div class="card">

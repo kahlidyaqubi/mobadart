@@ -2,6 +2,7 @@
 
 
 Route::get('/cron_all', 'Cronjobs\All@cron_all');
+Route::get('/storge_link', 'Cronjobs\All@storge_link');
 /*************************************/
 // Authentication Routes...
 
@@ -178,6 +179,7 @@ Route::namespace('Activist')
         /********/
         Route::get('/', 'HomeController@show');
         Route::get('/changePassword', 'HomeController@changePassword');
+        Route::post('/changePassword', 'HomeController@changePassword_post');
         Route::get('/editProfile', 'HomeController@editProfile');
         Route::post('/editProfile', 'HomeController@editProfile_post');
         Route::get('/hisDemand', 'HomeController@hisDemand');

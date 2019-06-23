@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-	 <link rel="shortcut icon" href="/Group.ico" />
+    <link rel="shortcut icon" href="/Group.ico"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@yield('title')</title>
     <link href="https://fonts.googleapis.com/css?family=El+Messiri" rel="stylesheet">
@@ -327,23 +327,41 @@
                 <a class="nav-link" href="/#contact">تواصل معنا</a>
             </li>
             @if(!auth()->user())
-            <li class=""><a
-                        style="margin-right: 5px;border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;margin-left:5px;border-radius:20px;color:black"
-                        class="" href="/register">انشاء حساب</a></li>
-            @else
                 <li class=""><a
                             style="margin-right: 5px;border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;margin-left:5px;border-radius:20px;color:black"
-                            class="" href="/home">بروفايل {{auth()->user()->name}}</a></li>
+                            class="" href="/register">انشاء حساب</a></li>
+                <li class=""><a
+                            style="border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;border-radius:20px;color:black"
+                            class="" href="/initiative_don">تقديم تبرع</a></li>
+
+            @else
+                <li class="nav-item dropdown col-md-2">
+                    <a style="width:90%;background:#c4233d;color:white;margin-right:40px;border-radius:20px;"
+                       class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{auth()->user()->name}}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="/activist">البروفايل</a>
+                        
+                        <a class="dropdown-item" href="/activist/changePassword">تعديل كلمة المرور</a>
+                        <a class="dropdown-item" href="/activist/editProfile">تعديل حساب</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">تسجيل خروج </a>
+                    </div>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                          style="display: none;">
+                        @csrf
+                    </form>
+                </li>
             @endif
-            <li class=""><a
-                        style="border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;border-radius:20px;color:black"
-                        class="" href="/initiative_don">تقديم تبرع</a></li>
         </ul>
     </div>
 </nav>
 <section class="home mt-5 mb-5 " id="">
     <div class="container">
-    @yield('content')
+        @yield('content')
     </div>
 </section>
 <footer>

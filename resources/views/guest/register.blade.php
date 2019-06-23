@@ -27,8 +27,9 @@
                                 <div class="col">
                                     <div class="input-group form-group">
                                         <div class="input-group-prepend"		>
-                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                        </div>
+                                            <span class="input-group-text"><i class="fas fa-user"></i>
+												<font style="color:#f4fc02;font-size:20px">*</font></span>
+										</div>
                                         <input type="text" class="form-control" placeholder="الاسم الأول" name="name"
                                                value="{{old("name")}}">
                                     </div>
@@ -36,7 +37,8 @@
                                 <div class="col">
                                     <div class="input-group form-group">
                                         <div class="input-group-prepend"		>
-                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                            <span class="input-group-text"><i class="fas fa-user"></i>
+												<font style="color:#f4fc02;font-size:20px">*</font></span>
                                         </div>
                                         <input type="text" class="form-control" placeholder="اسم الأب "
                                                value="{{old("father_name")}}"
@@ -48,7 +50,8 @@
                                 <div class="col">
                                     <div class="input-group form-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                            <span class="input-group-text"><i class="fas fa-user"></i>
+												<font style="color:#f4fc02;font-size:20px">*</font></span>
                                         </div>
                                         <input type="text" class="form-control" placeholder="اسم الجد"
                                                value="{{old("grand_father_name")}}" name="grand_father_name">
@@ -57,7 +60,8 @@
                                 <div class="col">
                                     <div class="input-group form-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                            <span class="input-group-text"><i class="fas fa-user"></i>
+												<font style="color:#f4fc02;font-size:20px">*</font></span>
                                         </div>
                                         <input type="text" class="form-control" placeholder="العائلة"
                                                value="{{old("last_name")}}"
@@ -68,7 +72,8 @@
                             <!-- الايميل -->
                             <div class="input-group form-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    <span class="input-group-text"><i class="fas fa-envelope"></i>
+												<font style="color:#f4fc02;font-size:20px">*</font></span>
                                 </div>
                                 <input type="email" class="form-control" value="{{old("email")}}"
                                        name="email" required placeholder="الايميل">
@@ -76,7 +81,8 @@
                             <!-- اسم المستخدم -->
                             <div class="input-group form-group">
                                 <div class="input-group-prepend"		>
-                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    <span class="input-group-text"><i class="fas fa-user"></i>
+												<font style="color:#f4fc02;font-size:20px">*</font></span>
                                 </div>
                                 <input type="text" class="form-control" value="{{old("user_name")}}"
                                        name="user_name"
@@ -85,7 +91,8 @@
                             <!--  كلمة المرور-->
                             <div class="input-group form-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                    <span class="input-group-text"><i class="fas fa-key"></i>
+												<font style="color:#f4fc02;font-size:20px">*</font></span>
                                 </div>
                                 <input type="password" class="form-control" value="{{old("password")}}"
                                        name="password" required
@@ -94,11 +101,22 @@
                             <!-- تأكيد كلمة المرور -->
                             <div class="input-group form-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                    <span class="input-group-text"><i class="fas fa-key"></i>
+												<font style="color:#f4fc02;font-size:20px">*</font></span>
                                 </div>
                                 <input type="password" class="form-control" value="{{old("password_confirmation")}}"
                                        name="password_confirmation" required
                                        minlength="7" placeholder="تأكيد كلمة المرور">
+                            </div>
+                            <!--  -رقم الهوية -->
+                            <div class="input-group form-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-sort-numeric-up"></i>
+												<font style="color:#f4fc02;font-size:20px">*</font></span>
+                                </div>
+                                <input type="number" value="{{old("ido")}}"
+                                       name="ido" required
+                                       minlength="9" maxlength="9" class="form-control" placeholder="رقم الهوية ">
                             </div>
                             <!--  رقم التواصل-->
                             <div class="input-group form-group">
@@ -109,16 +127,7 @@
                                        name="mobile" minlength="6"
                                        maxlength="10" placeholder="رقم التواصل">
                             </div>
-                            <!--  -رقم الهوية -->
-                            <div class="input-group form-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-sort-numeric-up"></i></span>
-                                </div>
-                                <input type="number" value="{{old("ido")}}"
-                                       name="ido" required
-                                       minlength="9" maxlength="9" class="form-control" placeholder="رقم الهوية ">
-                            </div>
-                            <!-- رابط حساب الفيس بوك -->
+							<!-- رابط حساب الفيس بوك -->
                             <div class="input-group form-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fab fa-facebook-f"></i></span>
@@ -126,10 +135,12 @@
                                 <input type="url" class="form-control" value="{{old("face_url")}}"
                                        name="face_url" minlength="6" placeholder="رابط حساب الفيس بوك">
                             </div>
+                            
                             <!-- الجنس -->
                             <div class="input-group form-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">الجنس</span>
+                                    <span class="input-group-text"><span style="font-size:14px">الجنس</span>
+												<font style="color:#f4fc02;font-size:20px">*</font></span>
                                 </div>
                                 <input  type="radio" name="gender" value="M" required
                                         data-title="Male" @if(old('gender')) checked @endif class="form-control">
@@ -141,7 +152,8 @@
                             <!--  تاريخ المييلاد-->
                             <div class="input-group form-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-table"></i></span>
+                                    <span class="input-group-text"><i class="fas fa-table"></i>
+												<font style="color:#f4fc02;font-size:20px">*</font></span>
                                 </div>
 							 <input  id="datepicker" width="276"  name="brth_day"
                                        value="{{old("brth_day")}}" required placeholder="تاريخ الميلاد"/>
@@ -150,7 +162,8 @@
                             <!--  المحافظة-->
                             <div class="input-group form-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-city"></i></span>
+                                    <span class="input-group-text"><i class="fas fa-city"></i>
+												<font style="color:#f4fc02;font-size:20px">*</font></span>
                                 </div>
                                 <select name="governorate_id" id="governorate_id" class="form-control"
                                         placeholder="المحافظة">
@@ -165,7 +178,8 @@
                             <!-- المدينة -->
                             <div class="input-group form-group" id="city_id">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-city"></i></span>
+                                    <span class="input-group-text"><i class="fas fa-city"></i>
+												<font style="color:#f4fc02;font-size:20px">*</font></span>
                                 </div>
                                 <select id="city_list" name="city_id"
                                         class="form-control" required>
@@ -175,7 +189,8 @@
                             <!-- العنوان -->
                             <div class="input-group form-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                    <span class="input-group-text"><i class="fas fa-map-marker-alt"></i>
+												<font style="color:#f4fc02;font-size:20px">*</font></span>
                                 </div>
                                 <input type="text" class="form-control" name="neighborhood"
                                        value="{{old("neighborhood")}}" required placeholder="العنوان">
@@ -266,6 +281,11 @@
 
         tags .input {
             color: white
+
+        }
+
+img {
+            margin-top : 0 !important;
 
         }
 
