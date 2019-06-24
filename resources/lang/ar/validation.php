@@ -271,7 +271,9 @@ return [
         'financier_phone'=> 'رقم التواصل',//
         'country'=> "الدولة",
         'financier_address'=> 'عنوان التفصيلي',//
-        'article_id'=>'الخبر'
+        'article_id'=>'الخبر',
+        'face_url'=>'حساب الفيسبوك'
+
 
 
     ],
