@@ -398,6 +398,7 @@
 @endif
 
 <script src="/metronic-rtl/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js"></script>
 <script src="/metronic-rtl/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="/metronic-rtl/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
 <script src="/metronic-rtl/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js"
@@ -436,8 +437,6 @@
         });
     });
 </script>
-<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js"></script>
 <script>$(".responsiveChosen").chosen({width: "50%"});</script>
 
 

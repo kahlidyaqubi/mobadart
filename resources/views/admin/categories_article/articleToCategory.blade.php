@@ -36,7 +36,7 @@
                 <table class="table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer">
                     <thead>
                     <tr>
-                        <th>عنوان الخبر</th>
+                        <th width="22%">عنوان الخبر</th>
                         <th> الناشر</th>
                         <th> القسم</th>
                         <th> المبادرة</th>
