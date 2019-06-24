@@ -30,9 +30,14 @@ class ArticleController extends Controller
                 , [$category_id]);
 
 
-        if ($initiative_id)
+        if ($initiative_id){
+            if($initiative_id=='no')
+                $items->whereNull("initiative_id");
+            else
             $items->whereRaw("(initiative_id = ?)"
                 , [$initiative_id]);
+        }
+
 
         $items = $items->orderBy("articles.id", 'desc')->paginate(20)->appends([
             "q" => $q, "category_id" => $category_id, 'initiative_id' => $initiative_id]);

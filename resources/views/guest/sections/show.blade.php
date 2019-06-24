@@ -24,6 +24,7 @@
                             <option value="{{$initiative->id}}"
                                     @if($initiative->id==request('initiative')) selected @endif>{{$initiative->title}}</option>
                         @endforeach
+                        <option value="no">لا تنتمي لمبادرة</option>
                     </select>
                 </div>
                 <div class="cl-md-3" style="margin-bottom:10px">
@@ -41,7 +42,7 @@
                             <div class="cause-avatar">
                                 <a href="/article/{{$item->id}}" title=""><img src="{{$item->img}}" alt=""></a>
                                 <div class="required-amount">
-                                    <span>{{$item->id}}</span>
+                                    <span>{{date('d-m-Y', strtotime($item->created_at))}}</span>
                                 </div>
                             </div>
                             <div class="cause-meta">

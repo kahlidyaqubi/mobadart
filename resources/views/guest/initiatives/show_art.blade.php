@@ -41,7 +41,7 @@
                             <div class="cause-avatar">
                                 <a href="/article/{{$item->id}}" title=""><img src="{{$item->img}}" alt=""></a>
                                 <div class="required-amount">
-                                    <span>{{$item->id}}</span>
+                                    <span>{{date('d-m-Y', strtotime($item->created_at))}}</span>
                                 </div>
                             </div>
                             <div class="cause-meta">

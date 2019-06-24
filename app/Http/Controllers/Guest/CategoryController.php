@@ -72,9 +72,13 @@ class CategoryController extends Controller
                 , ["%$q%"]);
 
 
-        if ($initiative_id)
-            $items->whereRaw("(initiative_id = ?)"
-                , [$initiative_id]);
+        if ($initiative_id){
+            if($initiative_id=='no')
+                $items->whereNull("initiative_id");
+            else
+                $items->whereRaw("(initiative_id = ?)"
+                    , [$initiative_id]);
+        }
 
         $items = $items->orderBy("articles.id", 'desc')->paginate(6)->appends([
             "q" => $q, 'initiative_id' => $initiative_id]);
