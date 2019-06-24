@@ -10,5 +10,5 @@ class Action extends Model
 	/**test**/
     protected $table = 'actions';
 
-    protected $fillable = ['title', 'type' ,'link'];
+    protected $fillable = ['title', 'type' ,'zink'];
 }
