@@ -57,7 +57,7 @@
                             </div>
                             <div class="cause-meta">
 
-                                <h2><a href="/article/{{$item->id}}" title="">{{$item->title}}</a></h2>
+                                <h2 style="height:72px;min-height:72px;max-height: 72px;"><a href="/article/{{$item->id}}" title="">{{ mb_substr($item->title,0,60,'UTF-8')}}</a></h2>
                                 <p style="min-height: 72px">
                                     {{ mb_substr($item->detalis,0,100,'UTF-8')}}....
                                 </p>

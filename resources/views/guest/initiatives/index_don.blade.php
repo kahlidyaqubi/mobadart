@@ -103,7 +103,7 @@
                                     </div>
                                 </div>
                                 <span>{{($item->paid_up)/($item->donation)*100}} % ({{($item->paid_up)}}$ /{{($item->donation)}}$)</span>
-                                <h2><a href="/initiative/{{$item->id}}" title="" style="margin-right:20px;">{{$item->title}}</a></h2>
+                                <h2 style="height:72px;min-height:72px;max-height: 72px;"><a href="/initiative/{{$item->id}}" title="" style="margin-right:20px;">{{ mb_substr($item->title,0,60,'UTF-8')}}</a></h2>
                                 <p style="min-height: 72px"> {{ mb_substr($item->details,0,70,'UTF-8')}}....
                                 </p>
                                 <a href="/donationList/create?initiative_id={{$item->id}}" title="" class="donate-me" data-ripple="">تبرع</a>

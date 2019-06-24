@@ -68,7 +68,7 @@
                                             <span class="input-group-text">العنوان</span>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 text-center">
+                                    <div class="col-md-4 text-center">
                                         <label for="">{{$item->city->governorate->name}} / {{$item->city->name}}
                                             / {{$item->neighborhood}}</label>
                                     </div>
@@ -77,7 +77,7 @@
                                             <span class="input-group-text">الفترة</span>
                                         </div>
                                     </div>
-                                    <div class="col-md-5 text-center">
+                                    <div class="col-md-4 text-center">
                                         <label for="">{{date('d-m-Y', strtotime($item->start_date))}} إلى {{date('d-m-Y', strtotime($item->end_date))}}</label>
                                     </div>
                                 </div>

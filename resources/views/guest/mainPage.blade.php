@@ -345,7 +345,7 @@
                                     </div></a>
 									<a href="/article/{{$item->id}}">
                                     <div class="contentHold">
-                                        <h4>
+                                        <h4 style="height:72px;min-height:72px;max-height: 72px;">
                                            {{ mb_substr($item->title,0,60,'UTF-8')}}
                                         </h4>
                                         <p style="min-height: 54px;max-height: 54px;height: 54px">    {{ mb_substr($item->detalis,0,100,'UTF-8')}}....
