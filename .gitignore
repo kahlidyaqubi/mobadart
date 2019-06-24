@@ -13,3 +13,5 @@ yarn-error.log
 .env
 .phpunit.result.cache
 my_cpanel_new/
+public/platform/sections/
+public/private_account/
