@@ -30,6 +30,7 @@
                                 <option value="{{$initiative->id}}"
                                         @if($initiative->id==request('initiative')) selected @endif>{{$initiative->title}}</option>
                             @endforeach
+							<option value="no">لا ينتمي لمبادرة</option>
                         </select>
                     </div>
                     <div class="col-sm-1 " style="margin-top: 12px">

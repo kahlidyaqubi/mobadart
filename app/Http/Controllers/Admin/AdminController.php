@@ -274,9 +274,13 @@ class AdminController extends BaseController
             $items->whereRaw("(status = ?)"
                 , [$status]);
 
-        if ($initiative_id)
+        if ($initiative_id){
+            if($initiative_id=='no')
+                $items->whereNull("initiative_id");
+            else
             $items->whereRaw("(initiative_id = ?)"
                 , [$initiative_id]);
+        }
 
         $items = $items->orderBy("articles.id", 'desc')->paginate(12)->appends([
             "q" => $q, "category_id" => $category_id,

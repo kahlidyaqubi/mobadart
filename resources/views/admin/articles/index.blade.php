@@ -30,6 +30,7 @@
                                 <option value="{{$initiative->id}}"
                                         @if($initiative->id==request('initiative')) selected @endif>{{$initiative->title}}</option>
                             @endforeach
+							<option value="no">لا ينتمي لمبادرة</option>
                         </select>
                     </div>
                     @if(auth()->user()->admin->super_admin == 1)
