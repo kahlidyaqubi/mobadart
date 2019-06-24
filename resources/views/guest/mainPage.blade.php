@@ -1,9 +1,9 @@
-@extends("layouts._main_layout")
+﻿@extends("layouts._main_layout")
 
 @section("title", "$site->title_page")
 @section("content")
     <!---------------->
-    <section class="homeBanner" id="main">
+    <section class="homeBanner" id="zmainz">
         <div class="bannerParallaxWrapper wrapper">
 
             <div class="container">
