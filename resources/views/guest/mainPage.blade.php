@@ -15,7 +15,7 @@
                       <strong style="line-height: 38px;">{{$site->project_title}}</strong></span>
                             </h3>
                             <h6 style="line-height: 28px;font-size:16px;text-shadow: 0 0 0px white, 0 0 0px white;text-align:justify;;">
-                                {{ mb_substr($site->about_project,0,200,'UTF-8')}}</h6>
+                                {{ mb_substr($site->about_project,0,200,'UTF-8')}}...</h6>
                             <div class="">
                                 <a style="border:1px solid #c4233d;background:#f3f3f2;padding:10px;;border-radius:20px;color:black;margin-top:20px;font-size:27px;padding-left:30px;padding-right:30px"
                                    class="" href="/on_project">المزيد</a>
@@ -329,7 +329,7 @@
                         @foreach($articles as $item)
                             <div class="slide">
                                 <div class="totalItem">
-                                    <div class="picHold" style="background-image:url({{$item->img}})">
+                                    <a href="/article/{{$item->id}}"><div class="picHold" style="background-image:url({{$item->img}})">
                                         <div class="dateHold">
                                             <div class="dateBlock">
                                                 <div class="total" data-year="{{$item->created_at->year}}">
@@ -342,7 +342,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div></a>
+									<a href="/article/{{$item->id}}">
                                     <div class="contentHold">
                                         <h4>
                                            {{ mb_substr($item->title,0,60,'UTF-8')}}
@@ -350,19 +351,12 @@
                                         <p style="min-height: 54px;max-height: 54px;height: 54px">    {{ mb_substr($item->detalis,0,100,'UTF-8')}}....
                                         </p>
                                     </div>
+									</a>
                                     <a href="/article/{{$item->id}}" class="moreNewsBtn fancybox">
                                         <i class="fas fa-arrow-left"></i> </a>
                                     <div id="arab_youth_attracts_2018" class="persenDetailPopUp newspopup">
                                         <div class="popupInner">
                                             <div class="popupHeader">
-                                                <div class="popupTitleDetails fullWidth">
-                                                    <h3>
-                                                        {{ mb_substr($item->title,0,60,'UTF-8')}}
-                                                    </h3>
-                                                    <p>
-                                                        {{ mb_substr($item->detalis,0,100,'UTF-8')}}....
-                                                    </p>
-                                                </div>
                                             </div>
                                             <div class="popUpDescription">
 
@@ -372,6 +366,7 @@
                                 </div>
                             </div>
                         @endforeach
+
                     </div>
                 </div>
             </div>
