@@ -137,6 +137,9 @@ Route::namespace('Admin')
         Route::get('/demand/delete/{id}', 'DemandController@delete');
         Route::get('/demand/accept/{id}', 'DemandController@accept');
         /********/
+        Route::resource('notification', 'NotificationController');
+        Route::get('/notification/delete/{id}', 'NotificationController@delete');
+        /********/
         Route::resource('interest', 'InterestController');
         Route::get('/interest/delete/{id}', 'InterestController@delete');
         Route::get('/interest/active/{id}', 'InterestController@active');
@@ -184,6 +187,9 @@ Route::namespace('Activist')
         Route::post('/editProfile', 'HomeController@editProfile_post');
         Route::get('/hisDemand', 'HomeController@hisDemand');
         Route::get('/hisInitiave', 'HomeController@hisInitiave');
+        /********/
+        Route::resource('notification', 'NotificationController');
+        Route::get('/notification/delete/{id}', 'NotificationController@delete');
         /********/
         Route::get('/initiative/application/{id}', 'InitiativeController@application');
         Route::get('/initiative/goOut/{id}', 'InitiativeController@goOut');

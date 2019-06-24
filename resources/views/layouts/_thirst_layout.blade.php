@@ -182,6 +182,28 @@
         </div>
     </div>
 </footer>
+<div class="modal fade" id="Confirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">تأكيد</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                هل أنت متأكد من الاستمرار في العملية
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal">إلغاء
+                </button>
+                <a href="#" class="btn btn-danger">نعم، متأكد</a>
+            </div>
+        </div>
+    </div>
+</div>
 <!--******************************* footer end ***************************************  -->
 <!--******************************* scripts start ************************************  -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -194,6 +216,7 @@
         $("#myModal").hide();
     });
 </script>
+
 @yield("js")
 </body>
 

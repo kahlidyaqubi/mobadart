@@ -1114,5 +1114,21 @@ class CreateAdminLinks extends Seeder
             'name' => 'تجارب ملهمة',
             'type' => 1,
         ]);
+        /*************************/
+        DB::table('governorates')->insertGetId([
+            'name' => 'رفح',
+        ]);
+        DB::table('governorates')->insertGetId([
+            'name' => 'خانيونس',
+        ]);
+        DB::table('governorates')->insertGetId([
+            'name' => 'الوسطى',
+        ]);
+        DB::table('governorates')->insertGetId([
+            'name' => 'غزة',
+        ]);
+        DB::table('governorates')->insertGetId([
+            'name' => 'الشمال',
+        ]);
     }
 }

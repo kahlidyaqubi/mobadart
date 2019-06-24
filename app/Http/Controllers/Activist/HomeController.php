@@ -44,7 +44,11 @@ class HomeController extends BaseController
 
     public function show()
     {
-        return view("activist.home.dashboard");
+        $item = auth()->user()->activist;
+
+        $hisinterests = $item->interests->all();
+        $hisinitiative = $item->initiatives()->where('accept', 1)->paginate(20);
+        return view("activist.home.dashboard",compact('hisinterests', 'hisinitiative', 'item'));
     }
 
     public function noaccess()

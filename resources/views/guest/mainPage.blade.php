@@ -121,14 +121,8 @@
         </div>
     </section>
     <!---------------->
-    <section style="background:#f3f3f2;" class="homeSection sectionVision" id="specialization">
-        <div class="container">
-            <div class="sectionTitleWrap text-center">
-                <div class="row">
-                </div>
-            </div>
-        </div>
-        <div class="gap" style="margin-bottom:-100px">
+    <section style="background:#f3f3f2;padding-top: 0;padding-bottom: 0" class="homeSection sectionVision" id="specialization">
+             <div class="gap" style="margin-bottom:-100px">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12 col-md-9">
@@ -275,7 +269,7 @@
                                 </div>
                                 <!-- tags widget -->
                                 <div class="widget fadein">
-                                    <div class="search " style="width: 88%">
+                                    <div class="search " style="width: 100%">
                                         <form style="text-align:center" action="\initiative">
                                             <input type="text" name="q" placeholder="بحث عن المبادرات"
                                                    style="margin-top:80px;margin-right:20px">

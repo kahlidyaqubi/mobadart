@@ -26,6 +26,7 @@
             </tr>
             @endforeach
             </tbody>
+            {{$items->links()}}
         </table>
 
 

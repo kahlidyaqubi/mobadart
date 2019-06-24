@@ -9,6 +9,7 @@
     <meta content="" name="description"/>
     <meta content="" name="author"/>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css">
     <link href="https://fonts.googleapis.com/css?family=El+Messiri" rel="stylesheet">
     <link href="{{asset('metronic-rtl/assets/global/plugins/font-awesome/css/font-awesome.min.css')}}"
           rel="stylesheet"
@@ -127,7 +128,7 @@
                             <li class="external">
                                 <h3>
                                     <span class="bold">الإشعارات</span> الغير مقروءة</h3>
-                                <a href="#"></a>
+                                <a href="/admin/notification">عرض جميع الاشعارت</a>
                             </li>
                             <li>
                                 <ul class="dropdown-menu-list scroller" id="notif" style="height: 250px;"
@@ -435,6 +436,9 @@
         });
     });
 </script>
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js"></script>
+<script>$(".responsiveChosen").chosen({width: "50%"});</script>
 
 
 @yield("js")

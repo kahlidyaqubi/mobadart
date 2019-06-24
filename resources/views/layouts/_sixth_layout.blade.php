@@ -218,7 +218,7 @@
                     <ul class="dropdown-menu dropdown-menu-right notification-dropdown"
                         style=" overflow: scroll;width:350px;height:350px;">
                         <li>
-                            <div class="notification-title mr-2"> الاشعارات</div>
+                            <div class="notification-title mr-2"><a href="/activist/notification"> عرض جميع الاشعارات</a></div>
                             <div class="notification-list">
                                 <ul class="list-group" id="notif">
                                     @foreach($notifications as $notification)
