@@ -49,7 +49,7 @@ Route::group(['middleware' => ['guest']], function () {
 
     Route::get('login', [
         'as' => 'login',
-        'uses' => 'guest\HomeController@mainPage'
+        'uses' => 'Guest\HomeController@mainPage'
     ]);
 
 });
