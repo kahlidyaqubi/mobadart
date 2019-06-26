@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Initiative;
+use App\Admin;
+use App\Activist;
 use App\User;
+use App\Initiative_evaluation;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Validator;
@@ -79,8 +82,9 @@ class LoginController extends Controller
                 $activsits_ids = User::whereIn('id', $initiative->activists()->pluck('user_id')->toArray())->pluck('id')->toArray();
 
                 //$users_ids = array_merge($activsits_ids, $have_prmission);
-                $users = User::whereIn('id', $have_prmission)->get();
-                $users2 = User::whereIn('id', $activsits_ids)->get();
+                $users = User::whereIn('id', $have_prmission)->whereNotIn('id',Admin::find(Initiative_evaluation::Where('initiative_id',$initiative->id)->pluck('admin_id')->toArray())->pluck('user_id')->toArray())->get();
+                $users2 = User::whereIn('id', $activsits_ids)->whereNotIn('id',Activist::find(Initiative_evaluation::Where('initiative_id',$initiative->id)->pluck('activist_id')->toArray())->pluck('user_id')->toArray())->get();
+           
                 if ($users->first())
                     Notification::send($users, new NotifyUsers($action));
                 if ($users2->first())

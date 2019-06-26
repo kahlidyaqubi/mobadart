@@ -129,9 +129,25 @@ class ChartController extends BaseController
 
             $items->where('activists_initiatives.accept', '=', '1');
 
-            $items->leftJoin('activists', 'activists_initiatives.activist_id', 'activists.id');
+           /* $items->leftJoin('activists', 'activists_initiatives.activist_id', 'activists.id');
+*/
+           $items->with(['activists' => function ($activists) use ($interests_ids){
+		   
+		   
+		   $activists->leftJoin('cities', 'city_id', 'cities.id')->whereRaw(true);
+		   
+		   if ($interests_ids) {
+                if ($interests_ids[0] != null || count($interests_ids) > 1) {
+                    foreach ($interests_ids as $interest_id) {
+                        $activists->whereHas('interests', function ($q) use ($interest_id) {
+                            $q->where('interests.id', $interest_id);
+                        });
+                    }
 
-            if ($city_id)
+                }
+            }
+			
+			if ($city_id)
                 $items->where('city_id', '=', $city_id);
 
             if (($governorate_id) && !($city_id)) {
@@ -141,21 +157,8 @@ class ChartController extends BaseController
 
             if ($gender)
                 $items->where('activists.gender', '=', $gender);
-
-
-            if ($interests_ids) {
-                if ($interests_ids[0] != null || count($interests_ids) > 1) {
-                    foreach ($interests_ids as $interest_id) {
-                        $items->whereHas('interests', function ($q) use ($interest_id) {
-                            $q->where('interests.id', $interest_id);
-                        });
-                    }
-
-                }
-            }
-
-
-            if ($usefull) {
+			
+			 if ($usefull) {
                 if ($usefull == 1) {
                     $activistsids = Activists_initiative::where('accept', 1)->pluck('activist_id');
                     $items->whereIn("activists.id"
@@ -166,6 +169,28 @@ class ChartController extends BaseController
                         , $activistsids);
                 }
             }
+		   
+		   }]);
+		   
+		   
+            
+
+
+
+
+           /* if ($interests_ids) {
+                if ($interests_ids[0] != null || count($interests_ids) > 1) {
+                    foreach ($interests_ids as $interest_id) {
+                        $items->whereHas('interests', function ($q) use ($interest_id) {
+                            $q->where('interests.id', $interest_id);
+                        });
+                    }
+
+                }
+            }*/
+
+
+           
 
 
         }])->get();
@@ -251,8 +276,8 @@ class ChartController extends BaseController
         $initiative_id = $request["initiative_id"] ?? "";
         $interests_ids = $request["interests_ids"] ?? "";
 
-        $items = DB::table('activists')
-            ->select('gender', DB::raw('count(*) as total'))
+        $items = Activist::
+            select('gender', DB::raw('count(*) as total'))
             ->groupBy('gender')
             ->whereRaw(true);
 
@@ -266,6 +291,7 @@ class ChartController extends BaseController
 
             if ($gender)
                 $items->where('activists.gender', '=', $gender);
+
 
 
             if ($interests_ids) {
@@ -321,11 +347,11 @@ class ChartController extends BaseController
         $minAge = 18;
         $maxDate = \Carbon\Carbon::today()->subYears($minAge)->endOfDay();
 
-        $items_young_count = DB::table('activists')
+        $items_young_count = Activist::leftJoin('cities', 'city_id', 'cities.id')
             ->where('brth_day' ,'<' ,$maxDate)
             ->whereRaw(true);
 
-        $items_old_count= DB::table('activists')
+        $items_old_count= Activist::leftJoin('cities', 'city_id', 'cities.id')
             ->where('brth_day' ,'>' ,$maxDate)
             ->whereRaw(true);
 
@@ -341,7 +367,7 @@ class ChartController extends BaseController
 
         if ($gender) {
             $items_young_count->where('activists.gender', '=', $gender);
-            $items_old_count->whereIn('cities.id', $cities_ids);
+            $items_old_count->where('activists.gender', '=', $gender);
         }
 
         if ($interests_ids) {

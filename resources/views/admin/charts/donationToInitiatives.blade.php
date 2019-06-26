@@ -64,7 +64,7 @@
                     </div>
                     <div class="col-sm-12">
                         <label>فــــرز حســــب الاهتمـــامـــات</label>
-                        <select id="second" data-placeholder="اختر المهارات" class="responsiveChosen" multiple style="width:350px;" tabindex="4" name="interests_ids[]" >
+                        <select id="second" data-placeholder="اختر المهارات"  class="responsiveChosen" multiple style="width:350px;" tabindex="4" name="interests_ids[]" >
                             @foreach($interests as $interest)
                                 <option value="{{$interest->id}}"
                                         @if(collect(request('interests_ids'))->contains($interest->id))selected @endif>{{$interest->name}}</option>

@@ -85,11 +85,11 @@ class HomeController extends BaseController
         $testeroor = $this->validate($request, [
             'user_name' => Rule::unique('users')->where(function ($query) use ($the_id) {
                 return $query->where('user_name', request()->user_name)->where('id', '!=', $the_id)
-                    ->where('the_type', 2);
+                    ;
             }),
             'email' => Rule::unique('users')->where(function ($query) use ($the_id) {
                 return $query->where('email', request()->email)->where('id', '!=', $the_id)
-                    ->where('the_type', 2);
+                    ;
             }),
 
         ]);

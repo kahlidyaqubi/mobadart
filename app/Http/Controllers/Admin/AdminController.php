@@ -70,11 +70,11 @@ class AdminController extends BaseController
             'password' => 'required|string|min:6',
             'email' => Rule::unique('users')->where(function ($query)  {
                 return $query->where('email', request()->email)
-                    ->where('the_type', 1);
+                    ;
             }),
             'user_name' => Rule::unique('users')->where(function ($query)  {
                     return $query->where('user_name', request()->user_name)
-                        ->where('the_type', 1);
+                        ;
                 }),
         ]);
         $user_id = User::create([
@@ -123,11 +123,11 @@ class AdminController extends BaseController
         $testeroor = $this->validate($request, [
             'email' => Rule::unique('users')->where(function ($query) use ($the_id) {
                 return $query->where('email', request()->email)->where('id', '!=', $the_id)
-                    ->where('the_type', 1);
+                    ;
             }),
             'user_name' => Rule::unique('users')->where(function ($query) use ($the_id) {
                 return $query->where('user_name', request()->user_name)->where('id', '!=', $the_id)
-                    ->where('the_type', 1);
+                    ;
             }),
         ]);
         $user = User::find($item->user_id);
@@ -191,11 +191,13 @@ class AdminController extends BaseController
         $donation = $request["donation"] ?? "";
         $interests_ids = $request["interests_ids"] ?? "";
 
-        $items = $item->initiatives()->leftJoin('admins', 'admin_id', 'admins.id')->leftJoin('cities', 'city_id', 'cities.id')->whereRaw(true);
+        $items = $item->initiatives()->leftJoin('admins', 'admin_id', 'admins.id')
+		->leftJoin('users', 'admins.user_id', 'users.id')
+		->leftJoin('cities', 'city_id', 'cities.id')->whereRaw(true);
 
 
         if ($q)
-            $items->whereRaw("(initiatives.title like ? or initiatives.team_name like ? or admins.name like ?)"
+            $items->whereRaw("(initiatives.title like ? or initiatives.team_name like ? or users.name like ?)"
                 , ["%$q%", "%$q%", "%$q%"]);
 
         if ($city_id)

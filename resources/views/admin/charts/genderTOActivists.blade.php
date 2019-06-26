@@ -22,13 +22,6 @@
                         </select>
                     </div>
                     <div class="col-sm-4" style="margin-top: 12px">
-                        <select class="form-control" name="gender">
-                            <option value="">الذكور والإناث</option>
-                            <option value="M" @if(request('gender')=='M')selected @endif>الذكور</option>
-                            <option value="F" @if(request('gender')=='F')selected @endif>الإناث</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-4" style="margin-top: 12px">
                         <select class="form-control" name="usefull">
                             <option value="">المشاركين وغير المشاركين</option>
                             <option {{request('usefull')=="1"?"selected":""}} value="1">مشاركين</option>
@@ -48,7 +41,7 @@
                     </div>
                     <div class="col-sm-12" style="margin-top: 12px">
                         <label>فــــرز حســــب الاهتمـــامـــات</label>
-                        <select id="multi-select-demo" name="interests_ids[]" multiple="multiple">
+                        <select id="second" data-placeholder="اختر المهارات"  class="responsiveChosen" multiple style="width:350px;" tabindex="4" name="interests_ids[]" >
                             @foreach($interests as $interest)
                                 <option value="{{$interest->id}}"
                                         @if(collect(request('interests_ids'))->contains($interest->id))selected @endif>{{$interest->name}}</option>

@@ -34,10 +34,10 @@ class HomeController extends BaseController
         $initiatives_cal = json_encode($initiatives_cal);
 
         $all_initiatives=DB::table('initiatives')->whereRaw('initiatives.paid_up >= initiatives.donation')->get()->take(6);
-        $next_initiatives=DB::table('initiatives')->whereRaw('initiatives.paid_up >= initiatives.donation')->where('initiatives.start_date','=>',Carbon::now())->get()->take(6);;
-        $past_initiatives=DB::table('initiatives')->whereRaw('initiatives.paid_up >= initiatives.donation')->where('initiatives.start_date','<',Carbon::now())->get()->take(6);;
+        $next_initiatives=DB::table('initiatives')->whereRaw('initiatives.paid_up >= initiatives.donation')->where('initiatives.start_date','>=',Carbon::now())->get()->take(6);;
+        $past_initiatives=DB::table('initiatives')->whereRaw('initiatives.paid_up >= initiatives.donation')->where('initiatives.end_date','<',Carbon::now())->get()->take(6);;
 
-        $site=Site_sting::find(1);
+ $site=Site_sting::find(1);
 
         $the_section=Category::where('type',1)->where('id',"!=",1)->withcount('articles')->orderBy('articles_count', 'desc')->first();
         $articles =$the_section->articles()->where('status',1)->orderBy('id', 'desc')->get()->take(6);
@@ -67,11 +67,11 @@ class HomeController extends BaseController
             'shared_ditalis' => 'max:1000',
             'user_name' => Rule::unique('users')->where(function ($query) {
                 return $query->where('user_name', request()->user_name)
-                    ->where('the_type', 2);
+                    ;
             }),
             'email' => Rule::unique('users')->where(function ($query) {
                 return $query->where('email', request()->email)
-                    ->where('the_type', 2);
+                   ;
             }),
 
         ]);
@@ -151,7 +151,7 @@ class HomeController extends BaseController
             Notification::send($users, new NotifyUsers($action));
         /**************end Notification*******************/
 
-        Session::flash("msg", "تمت عملية الاضافة بنجاح");
+        Session::flash("msg", " تم انشاء حساب بنجاح بامكانك تسجيل دخول الآن");
         return redirect("/register");
     }
 

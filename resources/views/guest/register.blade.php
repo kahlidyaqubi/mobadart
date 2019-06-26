@@ -250,10 +250,18 @@
                             <!--  اجابة السؤال في حال نعم-->
                             <div class="input-group form-group disp" id="shared_ditalis" style="display: none">
                                 <div class="input-group-prepend"		>
-                                    <span class="input-group-text"></span>
+                                    <span class="input-group-text"><i class="fas fa-city"></i></span>
                                 </div>
-                                <textarea required style="padding:5px" name="shared_ditalis" rows="6" cols="40"
-                                          placeholder="اذا كانت اجابتك نعم , ماهي الزوايا التي استفدت منها؟">{{old("shared_ditalis")}}</textarea>
+                                                                      <select name="shared_ditalis"
+                                                        class="form-control" required>
+                                                    <option value="">الزاوية التي استدفت منها</option>
+													 <option @if(old("shared_ditalis")=='زاوية المهارات الحياتية')selected @endif>زاوية المهارات الحياتية</option>
+													 <option @if(old("shared_ditalis")=='زواية التثقيف الصحي')selected @endif>زواية التثقيف الصحي</option>
+													 <option @if(old("shared_ditalis")=='زاوية الرياضة')selected @endif>زاوية الرياضة</option>
+													 <option @if(old("shared_ditalis")=='زاوية التدريب المهني')selected @endif>زاوية التدريب المهني</option>
+													 <option @if(old("shared_ditalis")=='زاوية الدعم النفسي والاجتماعي')selected @endif>زاوية الدعم النفسي والاجتماعي</option>
+													 <option @if(old("shared_ditalis")=='زاويا التعلم النشط')selected @endif>زاويا التعلم النشط</option>
+</select></select>
                             </div>
                             <!--  زر انشاء حشاب-->
                             <div class="form-group" style="text-align:center">

@@ -140,7 +140,7 @@
                                     <div class="tab__content-1 tab__content--active">
                                         <div class="gap">
                                             <div class="container">
-                                                <div class="row">
+                                                <div class="row" style="margin-left: 50px;">
                                                     <div class="our-cause remove-ext-50 loader-data" id="itemContainer">
                                                         <!--1  -->
                                                         @foreach($all_initiatives as $item)

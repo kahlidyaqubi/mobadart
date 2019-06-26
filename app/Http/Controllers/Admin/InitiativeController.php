@@ -129,7 +129,6 @@ class InitiativeController extends BaseController
             return redirect('admin/initiative/create')->withInput();
         }
         if ($request->hasFile('image')) {
-            dd("1");
             $myfile = $request->file('image'); // جلد الجديد من الانبوت فورم
             $filename = rand(11111, 99999) . '.' . $myfile->getClientOriginalExtension(); // جلب اسمه
             $myfile->move(public_path() . '/uploads/', $filename);//يخزن الجديد في الموقع المحدد

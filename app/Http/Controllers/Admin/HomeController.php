@@ -77,11 +77,11 @@ class HomeController extends BaseController
             'family_center_id' => 'required|max:3',
             'email' => Rule::unique('users')->where(function ($query) use ($id) {
                 return $query->where('email', request()->email)->where('id', '!=', $id)
-                    ->where('the_type', 1);
+                    ;
             }),
             'user_name' => Rule::unique('users')->where(function ($query) use ($id) {
                 return $query->where('user_name', request()->user_name)->where('id', '!=', $id)
-                    ->where('the_type', 1);
+                    ;
             }),
         ]);
 

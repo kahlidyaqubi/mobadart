@@ -82,6 +82,21 @@
                                     </div>
                                 </div>
                             </div>
+							 @if(auth()->user() && auth()->user()->activist)
+							<div class="input-group form-group mt-5">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+									@if(($item->activists_initiatives && $item->activists_initiatives->where('accept','=',1)->where('activist_id',auth()->user()->activist->id)->first()) )
+									انت مشترك في المبادرة
+								@elseif(($item->activists_initiatives && $item->activists_initiatives->where('activist_id',auth()->user()->activist->id)->first()))
+								طلبك للانضمام في الانتظار
+								@else
+									غير مشترك في المبادرة
+								@endif
+								</span>
+                                </div>
+                            </div>
+							@endif
                             <div class="input-group form-group mt-5">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">الاهتمامات</span>

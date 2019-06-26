@@ -59,13 +59,20 @@
                                             </div>
                                         </div>
                                         <div class="form-group" id="shared_ditalis" style="display: none">
-                                            <label class="control-label col-md-3">اكتب تفاصيل المشاركة
+                                            <label class="control-label col-md-3">ما هي الزاويا التي استفدت منها
                                                 <span class="required"> * </span>
                                             </label>
                                             <div class="col-md-4">
-                                                <textarea class="form-control" name="shared_ditalis"
-                                                          required>{{old("shared_ditalis")}}</textarea>
-                                                <span class="help-block"> تحدث عن تفاصبل المشاركة </span>
+                                                <select name="shared_ditalis"
+                                                        class="form-control" required>
+                                                    <option value="">اختر زاوية</option>
+													 <option @if(old("shared_ditalis")=='زاوية المهارات الحياتية')selected @endif>زاوية المهارات الحياتية</option>
+													 <option @if(old("shared_ditalis")=='زواية التثقيف الصحي')selected @endif>زواية التثقيف الصحي</option>
+													 <option @if(old("shared_ditalis")=='زاوية الرياضة')selected @endif>زاوية الرياضة</option>
+													 <option @if(old("shared_ditalis")=='زاوية التدريب المهني')selected @endif>زاوية التدريب المهني</option>
+													 <option @if(old("shared_ditalis")=='زاوية الدعم النفسي والاجتماعي')selected @endif>زاوية الدعم النفسي والاجتماعي</option>
+													 <option @if(old("shared_ditalis")=='زاويا التعلم النشط')selected @endif>زاويا التعلم النشط</option>
+</select></select>
                                             </div>
                                         </div>
 

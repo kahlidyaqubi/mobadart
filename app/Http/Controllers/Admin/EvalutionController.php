@@ -151,6 +151,19 @@ class EvalutionController extends BaseController
 
     public function store(Initiative_evaluation_towRequest $request)
     {
+		
+		$admin = auth()->user()->admin;
+		 $initiative = $admin->initiatives->find(request()['initiative_id']);
+		if ($initiative == null) {
+                Session::flash("msg", "e:يرجى التأكد من الرابط المطلوب");
+                return redirect('admin/initiative')->withInput();
+            }
+			if(Initiative_evaluation::where('initiative_id',request()['initiative_id'])->where('admin_id',auth()->user()->admin->id)->first()){
+			Session::flash("msg", "e:لقد تم تقييم المبادرة من قبل");
+                return redirect('admin/initiative')->withInput();
+			}
+			
+		
         if (array_keys(request()['values']) != array_keys(request()['attributes']) || request()['values'] == [] || request()['values'] == []) {
             Session::flash("msg", "e:يجب إدخال إجابة لكل سؤال");
             return redirect('admin/evalution/create?initiative_id=' . request()['initiative_id'] . '')->withInput();

@@ -7,6 +7,14 @@ use App\Initiative;
 use App\Site_sting;
 use Session;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use DB;
+use Illuminate\Validation\Rule;
+use App\User;
+use App\Admin;
+use App\Action;
+use Notification;
+use App\Notifications\NotifyUsers;
 
 class InitiativeController extends BaseController
 {
@@ -31,7 +39,26 @@ class InitiativeController extends BaseController
             return redirect("/initiative/".$item->id);
         }
         Activists_initiative::create(['initiative_id' => $id, 'activist_id' => auth()->user()->activist->id]);
+/**************start Notification*******************/
+        /*use App\User;
+        use App\Admin;
+        use App\Action;
+        use DB;
+        use Notification;
+        use App\Notifications\NotifyUsers;*/
 
+        $action = Action::create(['title' => ' طلب انضمام جديد لمبادرة'.$item->title, 'type' => 'من ناشط', 'link' => "/admin/initiative/activitsInInitiative/$id?accept=0"]);
+        $suber_admins_ids = User::whereIn('id', Admin::where('super_admin', 1)->pluck('user_id'))->pluck('id')->toArray();
+
+        $have_prmission = User::where('id', Admin::where('id', $item->admin_id)->pluck('user_id'))->pluck('id')->toArray();
+
+        $users_ids = array_merge($suber_admins_ids, $have_prmission);
+
+        $users = User::whereIn('id', $users_ids)->get();
+
+        if ($users->first())
+            Notification::send($users, new NotifyUsers($action));
+        /**************end Notification*******************/
 
         Session::flash("msg", "".Site_sting::find(1)->accession_msg);
         return redirect("/initiative/".$item->id);

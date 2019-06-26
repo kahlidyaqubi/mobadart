@@ -112,8 +112,8 @@ class ActivsitController extends BaseController
         }
         if ($initiative_id) {
             $activistsids = Initiative::find($initiative_id)->activists_initiatives->pluck('initiative_id');
-            $items->whereIn("id"
-                , $activistsids);
+            $items->whereIn("activists.id"
+                , $activistsids);//
         }
 
 
