@@ -75,12 +75,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-md-3">أرفق صورة
-                                                <span class="required"> * </span>
                                             </label>
                                             <div class="col-md-4">
                                                 <input type="file" name="image" class="form-control" accept='image/*'
-                                                       >
-                                                <span class="help-block"> اختر صورة رمزية للمبادرة </span>
+                                                >
+                                                <span class="help-block"> حقل اختياري </span>
                                             </div>
                                         </div>
                                         <div class="form-group">

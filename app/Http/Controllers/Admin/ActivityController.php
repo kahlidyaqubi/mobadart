@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Activity;
 use App\Http\Requests\ActivityRequest;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ActivityController extends BaseController
 {
@@ -29,6 +30,14 @@ class ActivityController extends BaseController
     public function store(ActivityRequest $request)
     {
 
+        $testeroor = $this->validate($request, [
+
+            'name' =>Rule::unique('activities')->where(function ($query){
+                return $query->where('name', request()->name)
+                    ->where('initiative_id',request()->initiative_id);})
+        ]);
+
+
         Activity::create($request->all());
         return response()->json(["msg"=>'تم إنشاء نشاط بنجاح']);
     }
@@ -45,7 +54,12 @@ class ActivityController extends BaseController
 
     public function update(ActivityRequest $request, $id)
     {
+        $testeroor = $this->validate($request, [
+        'name'=>Rule::unique('activities')->where(function ($query) use($id) {
+            return $query->where('name', request()->name)->where('id','!=', $id)
+                ->where('initiative_id',request()->initiative_id);})
 
+        ]);
         $activity = Activity::find($id);
         if(!$activity){
             return response()->json(["status"=>0, "msg"=>'رقم النشاط غير صحيح']);

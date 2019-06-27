@@ -46,7 +46,7 @@
                                 <li>
                                     <a style="color:#042e51;" href="/initiative/show_art/{{$item->id}}"> الأخبار </a>
                                 </li>
-								@if($item->end_date <= Carbon\Carbon::now() && $item->admin_id==auth()->user()->admin->id
+                                @if($item->end_date <= Carbon\Carbon::now() && $item->admin_id==auth()->user()->admin->id
                                 && \App\Initiative_evaluation::where('admin_id',auth()->user()->admin->id)->where('initiative_id',$item->id)->first()==null)
                                     <li>
                                         <a style="color:lightgoldenrodyellow;background: darkred;  !important"
@@ -215,10 +215,14 @@
                                                                     v-on:keyup.escape='setEditIndex(-1)' type="text"
                                                                     v-model="item.count"
                                                                     class="form-control"/></td>
-                                                        <td v-show='index==inlineEditIndex'><input
-                                                                    v-on:keyup.enter='updateActivityInline(index)'
-                                                                    v-on:keyup.escape='setEditIndex(-1)' type="date"
-                                                                    v-model="item.start_date" class="form-control"/>
+                                                        <td v-show='index==inlineEditIndex'>
+                                                            <date-picker placeholder="تاريخ النشاط"
+                                                                         v-on:keyup.enter='updateActivityInline(index)'
+                                                                         v-on:keyup.escape='setEditIndex(-1)'
+                                                                         type="text"
+                                                                         v-model="item.start_date" class="form-control"
+                                                                         :config="{format: 'YYYY-MM-DD'}"></date-picker>
+
                                                         </td>
                                                         <td v-show='index!=inlineEditIndex'><a
                                                                     @click.prevent="showEditActivity(item.id,index)"
@@ -361,12 +365,10 @@
                                                                        class="col-sm-3 col-form-label">تاريخ
                                                                     النشاط </label>
                                                                 <div class="col-sm-9">
-                                                                    <input v-model="activity.start_date"
-                                                                           type="date" required min="1"
-                                                                           class="form-control"
-                                                                           name="start_date"
-                                                                           id="start_date"
-                                                                           placeholder="تاريخ النشاط">
+                                                                    <date-picker placeholder="تاريخ النشاط"
+                                                                                 name="start_date"
+                                                                                 v-model="activity.start_date"
+                                                                                 :config="{format: 'YYYY-MM-DD'}"></date-picker>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
@@ -423,9 +425,19 @@
           integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 @endsection
 @section('js')
+    <!-- Date-picker itself -->
+    <script src="https://cdn.jsdelivr.net/npm/pc-bootstrap4-datetimepicker@4.17/build/js/bootstrap-datetimepicker.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/pc-bootstrap4-datetimepicker@4.17/build/css/bootstrap-datetimepicker.min.css"
+          rel="stylesheet">
+
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue-bootstrap-datetimepicker@5"></script>
+
     <script>
+        Vue.component('date-picker', VueBootstrapDatetimePicker);
         var app = new Vue({
             el: "#app",
             data: {
@@ -607,6 +619,10 @@
                 },
             }
         });
+    </script>
+    <script>
+        // Initialize as global component
+        Vue.component('date-picker', VueBootstrapDatetimePicker);
     </script>
 @endsection
 
