@@ -27,6 +27,6 @@ class CreateNotifyInitiativesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notify_initiatives');
+        Schema::dropIfExists('notify_initiaves');
     }
 }

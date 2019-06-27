@@ -1115,8 +1115,8 @@ class CreateAdminLinks extends Seeder
             'type' => 1,
         ]);
         /**********************/
-        DB::table('قطاع التعليم')->insertGetId([
-            'name' => 'تجارب ملهمة',
+        DB::table('interests')->insertGetId([
+            'name' => 'قطاع التعليم',
             'status' => 1,
         ]);
         DB::table('interests')->insertGetId([
@@ -1145,7 +1145,7 @@ class CreateAdminLinks extends Seeder
         ]);
         DB::table('cities')->insertGetId([
             'name' => 'رفح',
-            'governorate_id	'=>$gover_id,
+            'governorate_id'=>$gover_id,
         ]);
 
         $gover_id=DB::table('governorates')->insertGetId([
@@ -1153,40 +1153,40 @@ class CreateAdminLinks extends Seeder
         ]);
         DB::table('cities')->insertGetId([
             'name' => 'بني سهيلا',
-            'governorate_id	'=>$gover_id,
+            'governorate_id'=>$gover_id,
         ]);
         DB::table('cities')->insertGetId([
             'name' => 'خانيونس',
-            'governorate_id	'=>$gover_id,
+            'governorate_id'=>$gover_id,
         ]);
         $gover_id=DB::table('governorates')->insertGetId([
             'name' => 'الوسطى',
         ]);
         DB::table('cities')->insertGetId([
             'name' => 'دير البلح',
-            'governorate_id	'=>$gover_id,
+            'governorate_id'=>$gover_id,
         ]);
         $gover_id=DB::table('governorates')->insertGetId([
             'name' => 'غزة',
         ]);
         DB::table('cities')->insertGetId([
             'name' => 'غزة',
-            'governorate_id	'=>$gover_id,
+            'governorate_id'=>$gover_id,
         ]);
         $gover_id= DB::table('governorates')->insertGetId([
             'name' => 'الشمال',
         ]);
         DB::table('cities')->insertGetId([
             'name' => 'جباليا',
-            'governorate_id	'=>$gover_id,
+            'governorate_id'=>$gover_id,
         ]);
         DB::table('cities')->insertGetId([
             'name' => 'بيت حانون',
-            'governorate_id	'=>$gover_id,
+            'governorate_id'=>$gover_id,
         ]);
         DB::table('cities')->insertGetId([
             'name' => 'بيت لاهيا',
-            'governorate_id	'=>$gover_id,
+            'governorate_id'=>$gover_id,
         ]);
     }
 }
