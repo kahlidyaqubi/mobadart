@@ -146,6 +146,10 @@ class CityController extends BaseController
             Session::flash("msg", "e:لا يمكن حذف مدينة بها مراكز عائلة");
             return redirect("/admin/city");
         }
+		if ($item->activists->all()) {
+            Session::flash("msg", "e:لا يمكن حذف مدينة بها ناشطين");
+            return redirect("/admin/city");
+        }
         $item->delete();
         Session::flash("msg", "تم حذف محافظة بنجاح");
         return redirect("/admin/city");
