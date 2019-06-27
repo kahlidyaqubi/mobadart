@@ -2,8 +2,8 @@
 
 @section("title", "عرض مبادارات الناشط ".$item->user->name." ".$item->user->last_name)
 @section("content")
-    <div class="row justify-content-center" >
-        <div class="col text-center" >
+    <div class="row justify-content-center">
+        <div class="col text-center">
             <h1 style="margin-top: 0px">عرض مبادرات الناشط {{$item->user->name." ".$item->user->last_name}} </h1>
         </div>
     </div>
@@ -87,30 +87,37 @@
     </form>
     <div class="container">
         <div class="row ">
-            <div class="our-cause remove-ext-50 loader-data" id="itemContainer">
-                @foreach($items as $item)
-                    <div class="col-sm-4">
-                        <div class="caro-unit fadein">
-                            <div class="cause-avatar">
-                                <a href="/initiative/{{$item->id}}" title=""><img src="{{$item->img}}" alt=""></a>
-                                <div class="required-amount">
-                                    <span>{{$item->id}}</span>
+            @if($items->count()>0)
+
+                <div class="our-cause remove-ext-50 loader-data" id="itemContainer">
+                    @foreach($items as $item)
+                        <div class="col-sm-4">
+                            <div class="caro-unit fadein">
+                                <div class="cause-avatar">
+                                    <a href="/initiative/{{$item->id}}" title=""><img src="{{$item->img}}" alt=""></a>
+                                    <div class="required-amount">
+                                        <span>{{$item->id}}</span>
+                                    </div>
+                                </div>
+                                <div class="cause-meta">
+
+                                    <h2 style="height:72px;min-height:72px;max-height: 72px;"><a
+                                                href="/initiative/{{$item->id}}"
+                                                title="">{{ mb_substr($item->title,0,60,'UTF-8')}}</a></h2>
+                                    <p style="min-height: 72px">
+                                        {{ mb_substr($item->detalis,0,100,'UTF-8')}}....
+                                    </p>
+                                    <a href="/initiative/{{$item->id}}" title="" class="donate-me" data-ripple="">تفاصيل
+                                        المبادرة</a>
                                 </div>
                             </div>
-                            <div class="cause-meta">
-
-                                <h2 style="height:72px;min-height:72px;max-height: 72px;"><a href="/initiative/{{$item->id}}" title="">{{ mb_substr($item->title,0,60,'UTF-8')}}</a></h2>
-                                <p style="min-height: 72px">
-                                    {{ mb_substr($item->detalis,0,100,'UTF-8')}}....
-                                </p>
-                                <a href="/initiative/{{$item->id}}" title="" class="donate-me" data-ripple="">تفاصيل
-                                    المبادرة</a>
-                            </div>
                         </div>
-                    </div>
-                @endforeach
-            </div>
-
+                    @endforeach
+                </div>
+            @else
+                <br><br>
+                <div class="alert alert-warning">نأسف لا يوجد بيانات لعرضها</div>
+            @endif
         </div>
         <!-- pagination div -->
         <div class="row  " style="margin-top:50px;">

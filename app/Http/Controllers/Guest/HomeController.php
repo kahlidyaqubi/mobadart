@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Guest;
 
 use App\Activist;
+use App\Article;
 use App\Category;
 use App\City;
 use App\Governorate;
@@ -33,17 +34,22 @@ class HomeController extends BaseController
         }
         $initiatives_cal = json_encode($initiatives_cal);
 
-        $all_initiatives=DB::table('initiatives')->whereRaw('initiatives.paid_up >= initiatives.donation')->get()->take(6);
-        $next_initiatives=DB::table('initiatives')->whereRaw('initiatives.paid_up >= initiatives.donation')->where('initiatives.start_date','>=',Carbon::now())->get()->take(6);;
-        $past_initiatives=DB::table('initiatives')->whereRaw('initiatives.paid_up >= initiatives.donation')->where('initiatives.end_date','<',Carbon::now())->get()->take(6);;
+        $all_initiatives = DB::table('initiatives')->whereRaw('initiatives.paid_up >= initiatives.donation')->get()->take(6);
+        $next_initiatives = DB::table('initiatives')->whereRaw('initiatives.paid_up >= initiatives.donation')->where('initiatives.start_date', '>=', Carbon::now())->get()->take(6);;
+        $past_initiatives = DB::table('initiatives')->whereRaw('initiatives.paid_up >= initiatives.donation')->where('initiatives.end_date', '<', Carbon::now())->get()->take(6);;
 
- $site=Site_sting::find(1);
+        $site = Site_sting::find(1);
 
-        $the_section=Category::where('type',1)->where('id',"!=",1)->withcount('articles')->orderBy('articles_count', 'desc')->first();
-        $articles =$the_section->articles()->where('status',1)->orderBy('id', 'desc')->get()->take(6);
+        $the_section = Category::where('type', 1)->where('id', "!=", 1)->withcount('articles')->orderBy('articles_count', 'desc')->first();
+        if ($the_section)
+            $articles = $the_section->articles()->where('status', 1)->orderBy('id', 'desc')->get()->take(6);
+        else {
+            $the_section = Category::where('type', 1)->first();
+            $articles = Article::where('status', 1)->orderBy('id', 'desc')->get()->take(6);
 
-        $experiences=Category::find(1)->articles()->where('status',1)->orderBy('id', 'desc')->get()->take(6);
-        return view('guest.mainPage', compact('the_section','experiences','articles','all_initiatives','past_initiatives','next_initiatives','initiatives_cal','site'));
+        }
+        $experiences = Category::find(1)->articles()->where('status', 1)->orderBy('id', 'desc')->get()->take(6);
+        return view('guest.mainPage', compact('the_section', 'experiences', 'articles', 'all_initiatives', 'past_initiatives', 'next_initiatives', 'initiatives_cal', 'site'));
     }
 
     public function register()
@@ -66,12 +72,10 @@ class HomeController extends BaseController
             'shared' => 'required|max:2',
             'shared_ditalis' => 'max:1000',
             'user_name' => Rule::unique('users')->where(function ($query) {
-                return $query->where('user_name', request()->user_name)
-                    ;
+                return $query->where('user_name', request()->user_name);
             }),
             'email' => Rule::unique('users')->where(function ($query) {
-                return $query->where('email', request()->email)
-                   ;
+                return $query->where('email', request()->email);
             }),
 
         ]);
@@ -157,7 +161,7 @@ class HomeController extends BaseController
 
     public function no_accsess()
     {
-        $site=Site_sting::find(1);
+        $site = Site_sting::find(1);
         return view('guest.no_accsess', compact('site'));
 
     }
@@ -165,7 +169,7 @@ class HomeController extends BaseController
     public function how_are()
     {
 
-        $site=Site_sting::find(1);
+        $site = Site_sting::find(1);
         return view('guest.how_are', compact('site'));
 
 
@@ -173,7 +177,7 @@ class HomeController extends BaseController
 
     public function on_project()
     {
-        $site=Site_sting::find(1);
+        $site = Site_sting::find(1);
         return view('guest.on_project', compact('site'));
 
 

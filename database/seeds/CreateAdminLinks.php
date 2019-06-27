@@ -1174,7 +1174,7 @@ class CreateAdminLinks extends Seeder
             'governorate_id'=>$gover_id,
         ]);
         $gover_id= DB::table('governorates')->insertGetId([
-            'name' => 'الشمال',
+            'name' => 'شمال غزة',
         ]);
         DB::table('cities')->insertGetId([
             'name' => 'جباليا',

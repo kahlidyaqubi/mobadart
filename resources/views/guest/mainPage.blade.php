@@ -69,7 +69,7 @@
             </ul>
         </div>
         <div class="banerWrapXS"></div>
-        <div class="videoWrap hidden-xs" style="background-image:url('/platform/dist/images/pr-video6.jpg')">
+        <div class="videoWrap hidden-xs" style="background-image:url({{$site->img1}})">
             <div id="container">
 
             </div>

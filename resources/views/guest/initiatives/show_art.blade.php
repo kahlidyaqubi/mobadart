@@ -34,6 +34,8 @@
     </form>
     <div class="container">
         <div class="row ">
+            @if($items->count()>0)
+
             <div class="our-cause remove-ext-50 loader-data" id="itemContainer">
                 @foreach($items as $item)
                     <div class="col-sm-4">
@@ -56,7 +58,10 @@
                     </div>
                 @endforeach
             </div>
-
+            @else
+                <br><br>
+                <div class="alert alert-warning">نأسف لا يوجد بيانات لعرضها</div>
+            @endif
         </div>
         <!-- pagination div -->
         <div class="row  " style="margin-top:50px;">

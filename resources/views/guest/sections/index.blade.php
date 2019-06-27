@@ -9,6 +9,7 @@
         </div>
     </div>
     <div class="row" style="min-height: 190px">
+        @if($items->count()>0)
         <table class="table table-striped ">
             <thead>
             <tr>
@@ -29,7 +30,10 @@
             {{$items->links()}}
         </table>
 
-
+        @else
+            <br><br>
+            <div class="alert alert-warning">نأسف لا يوجد بيانات لعرضها</div>
+        @endif
 
     </div>
 
