@@ -106,7 +106,7 @@
 
                         @if($item->shared)
                             <div class="form-group row ">
-                                <label for="inputPassword" class="col-sm-4 col-form-label">تفاصيل المشاركات السابقة</label>
+                                <label for="inputPassword" class="col-sm-4 col-form-label">الزوايا السابقة التي استفاد منها في مراكز العائلة</label>
                                 <div class="col">
                                     {{$item->shared_ditalis}}
                                 </div>
