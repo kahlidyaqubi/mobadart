@@ -50,7 +50,7 @@
                 </div>
 
 
-                <div class="col-md-3" style="margin-bottom:0px">
+                <div class="col-md-2" style="margin-bottom:0px">
                     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
                     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css"/>
                     <input id="datepickerrr" name="in_date" value="{{request('in_date')}}" placeholder="تاريخ العمل">
@@ -60,7 +60,7 @@
                         });
                     </script>
                 </div>
-                <div class="col-md-3" style="margin-bottom:0px">
+                <div class="col-md-2" style="margin-bottom:0px">
                     <input id="datepickerr" name="start_date" value="{{request('start_date')}}"
                            placeholder="تاريخ البدء/ من">
                     <script>
@@ -205,7 +205,7 @@
 
         .btn {
             height: 52px;
-            margin-right: 217px;
+            margin-right: 69%;
             margin-top: -72px;
             position: absolute;
             z-index: 2000;

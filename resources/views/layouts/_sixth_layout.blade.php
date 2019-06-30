@@ -2,7 +2,8 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" href="/Group.ico"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -183,10 +184,11 @@
                             class="" href="/initiative_don">تقديم تبرع</a></li>
             @else
                 <li class="nav-item dropdown col-md-2">
-                    <a style="width:90%;background:#c4233d;color:white;margin-right:40px;border-radius:20px;"
+                    <a style="max-width: 75px;max-height: 75px;overflow: hidden;width:90%;background:#c4233d;color:white;margin-right:40px;border-radius:20px;"
                        class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{auth()->user()->name}}
+                       
+						 {{ mb_substr(auth()->user()->name,0,9,'UTF-8')}}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item" href="/activist">البروفايل</a>

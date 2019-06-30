@@ -161,7 +161,7 @@
                             <img alt="" class="img-circle"
                                  src="https://pngimage.net/wp-content/uploads/2018/05/admin-avatar-png.png"/>
                             <span class="username username-hide-on-mobile">
-                           {{ Auth::user()->name }} </span>
+                            {{ mb_substr(auth()->user()->name,0,9,'UTF-8')}} </span>
                             <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">

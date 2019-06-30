@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content=""/>
@@ -142,7 +144,7 @@
                class="" href="/register">انشاء حساب</a>
             @else
             <a style="margin-right: 5px;border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;margin-left:5px;border-radius:20px;color:black"
-               class="" href="/home">بروفايل {{auth()->user()->name}}</a>
+               class="" href="/home">بروفايل  {{ mb_substr(auth()->user()->name,0,9,'UTF-8')}}</a>
             @endif
             <a style="border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;border-radius:20px;color:black"
                class="" href="/initiative_don">تقديم تبرع</a>

@@ -54,7 +54,7 @@ class ActivistProfileRequest extends FormRequest
             'governorate_id'=> 'required|max:3',
         ];
         if (request()->mobile)
-            $valid['mobile'] = 'numeric|digits_between:6,10';
+            $valid['mobile'] = 'numeric|digits_between:6,12';
         if (request()->face_url)
             $valid['face_url'] = 'regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/';
         return $valid;

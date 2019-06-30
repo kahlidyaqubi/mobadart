@@ -46,7 +46,7 @@ class AdminRequest extends FormRequest
             'super_admin' => 'required|max:1',
         ];
         if (request()->mobile)
-            $valid['mobile'] = 'numeric|digits_between:6,10';
+            $valid['mobile'] = 'numeric|digits_between:6,12';
          return $valid;
     }
 }

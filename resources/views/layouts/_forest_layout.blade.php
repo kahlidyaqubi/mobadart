@@ -1,28 +1,23 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="/Group.ico"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@yield('title')</title>
-	 <link rel="shortcut icon" href="/Group.ico" />
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=El+Messiri" rel="stylesheet">
     <!--Fontawesome CDN-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
           integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <!--Custom styles-->
-    <link rel="stylesheet" type="text/css" href="/platform/css/jquerysctipttop.css">
     <link rel="stylesheet" type="text/css" href="/platform/css/style.css">
     <link rel="stylesheet" type="text/css" href="/platform/css/bootstrap-rtl.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.13/combined/css/gijgo.min.css" rel="stylesheet"
-          type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="/platform/css/style.css">
 
     <style media="screen">
-        body{
-            max-width: 100%;
-        }
         .container {
             max-width: 100%;
             overflow-x: hidden;
@@ -63,7 +58,8 @@
             color: #c4233d;
         }
 
-        .navbar-light .navbar-nav .active > .nav-link, h5 {
+        .navbar-light .navbar-nav .active > .nav-link,
+        h5 {
             color: white;
 
         }
@@ -72,6 +68,183 @@
             margin-top: 65px;
         }
 
+        tags tag.tagify--noAnim {
+            display: none;
+        }
+
+        tags .input {
+            color: white
+        }
+
+        tags .input {
+            color: white
+        }
+
+        input[type="radio"] {
+            margin-right: -35px;
+            height: 25px;
+        }
+
+        body {
+            background-image: url('/platform/images/account.jpg');
+
+        }
+
+        ::-webkit-input-placeholder {
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 80%;
+        }
+
+        .loader-tem {
+            width: 250px;
+            height: 200px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            margin: auto;
+        }
+
+        .loader-tem img {
+            width: 100%;
+        }
+
+        .loader-tem svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .pageLoaded .loader {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        body.bodyLoaded .loader-wrapper {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        body,
+        h3,
+        h2 {
+            font-family: 'El Messiri', sans-serif;
+        }
+
+        h3 {
+            color: grey;
+        }
+
+        p,
+        span,
+        strong,
+        h5 {
+            text-align: center;
+        }
+
+        body {
+            background-image: url('/platform/dist/images/pr-video6.jpg');
+            background-size: cover;
+        }
+
+        body,
+        h3,
+        h2 {
+            font-family: 'El Messiri', sans-serif;
+
+        }
+
+        h3 {
+            color: grey;
+        }
+
+        .row .col {
+            float: center;
+        }
+
+        .container {
+            width: 600px;
+        }
+
+        p {
+            direction: rtl;
+        }
+
+        .panel {
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1), 0 0 6px 1px grey;
+            border-radius: 30px;
+            height: auto;
+            background: white;
+            padding: 33px;
+            width: 504px;
+            margin-bottom: 50px;
+        }
+
+        #navbar-primary .navbar-nav {
+            width: 100%;
+            text-align: center;
+
+        > li {
+            display: inline-block;
+            float: none;
+
+        > a {
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+
+        }
+        }
+
+        .nav a {
+            padding-top: 100px;
+            color: red;
+        }
+
+        .modal-backdrop {
+            opacity: .5;
+        }
+
+        .modal .modal-footer {
+            text-align: center;
+        }
+
+        .button {
+            background: #c4233d;
+        }
+
+        .button:hover {
+            background: grey;
+        }
+
+        .modal-body {
+            text-align: center;
+        }
+
+        .image {
+            width: 80px;
+        }
+
+        .form-gap {
+            padding-top: 70px;
+        }
+
+        .btn-block:hover {
+            background: white;
+            color: black;
+        }
+
+        .navbar-light .navbar-nav .active > .nav-link,
+        h5 {
+            color: white !important;
+        }
+
+        h2 {
+            margin-top: -20px;
+        }
 
         .validation {
             padding: 10px;
@@ -83,34 +256,57 @@
             text-align: right;
         }
 
-        #myModal {
-            padding-right: 10px;
-            margin-bottom: 10px;
+        @media (max-width: 670px) {
+            .panel {
+                width: 272px;
+            }
+
+            .validation {
+                width: 200px;
+            }
+
+
+            ::-webkit-input-placeholder {
+                font-size: 7px;
+            }
         }
 
-        .card {
-            height: auto;
+        h3 {
+
+            color: #c4233d;
+            margin-top: 150px;
+            font-weight: bold;
+            text-shadow: 0 0 10px white, 0 0 10px white;
+        }
+
+        h5 {
+            color: white;
+            font-size: 10px;
+        }
+
+        .navbar-light .navbar-nav .nav-link {
+            color: white !important;
         }
     </style>
     @yield('css')
 </head>
+
 <body>
 <!--************************************** navbar start **************************************** -->
 <nav class="navbar navbar-expand-lg navbar-light ">
     <a class="navbar-brand" href="/">
         <div class="media">
-            <img alt="Maan Logo" src="/platform/images/logo.svg" style="width:200px;height:70px;margin-top:-26px;">
+            <img alt="Maan Logo" src="/platform/images/logo.svg" style="width:200px;height:70px">
             <div class="media-body">
-                <h5 class=" align-center" style="margin-right:-52px;margin-top:22px">{{\App\Site_sting::find(1)->title_page}}</h5>
+                <h5 style="margin-right:-40px;margin-top:22px">{{\App\Site_sting::find(1)->title_page}}</h5>
             </div>
         </div>
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-    </button>
+    </button> -->
     <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-        <ul class="navbar-nav col-md-11">
+        <ul class="navbar-nav ">
             <li class="nav-item ">
                 <a class="nav-link" href="/">الرئيسية <span class="sr-only"></span></a>
             </li>
@@ -133,18 +329,19 @@
                 <a class="nav-link" href="/#contact">تواصل معنا</a>
             </li>
             @if(!auth()->user())
-            <li class=""><a
-                        style="margin-right: 5px;border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;margin-left:5px;border-radius:20px;color:black"
-                        class="" href="/register">انشاء حساب</a></li>
+                <li class=""><a
+                            style="margin-right: 5px;border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;margin-left:5px;border-radius:20px;color:black"
+                            class="" href="/register">انشاء حساب</a></li>
                 <li class=""><a
                             style="border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;border-radius:20px;color:black"
                             class="" href="/initiative_don">تقديم تبرع</a></li>
+
             @else
-                <li class="nav-item dropdown col-md-3">
+                <li class="nav-item dropdown col-md-2">
                     <a style="width:90%;background:#c4233d;color:white;margin-right:40px;border-radius:20px;"
                        class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                         {{ mb_substr(auth()->user()->name,0,9,'UTF-8')}}
+                        {{auth()->user()->name}}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item" href="/activist">البروفايل</a>
@@ -161,17 +358,14 @@
                     </form>
                 </li>
             @endif
-
         </ul>
     </div>
 </nav>
-<!--************************************** navbar end ****************************************-->
-<div class="container">
-
-    @yield('content')
-
-</div>
-<!--**************************************************************الفوتر الاخير بداية *****************************************-->
+<section class="home mt-5 mb-5 " id="">
+    <div class="container">
+        @yield('content')
+    </div>
+</section>
 <footer>
     <div class="copyRight" style="background:black;opacity:.8;margin-top:50px;height:70px;padding-top:20px">
         <div class="container">
@@ -190,72 +384,16 @@
 </footer>
 <!--*********************************************** footer end ***************************************  -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.13/combined/js/gijgo.min.js"
-        type="text/javascript"></script>
-<script>
-    $('#datepicker').datepicker({uiLibrary: 'bootstrap4', iconsLibrary: 'materialicons', format: 'yyyy-mm-dd'});
-</script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="/platform/js/jQuery.tagify.js"></script>
 <script>
 
     $("#myModal .close").click(function () {
         $("#myModal").hide();
     });
 </script>
-@if(auth()->user())
-
-
-    <meta name="userId" content="{{ Auth::check() ? Auth::user()->id : '' }}">
-    <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
-    <script>
-        function formatDate(date) {
-            var d = new Date(date),
-                month = '' + (d.getMonth() + 1),
-                day = '' + d.getDate(),
-                year = d.getFullYear();
-
-            if (month.length < 2) month = '0' + month;
-            if (day.length < 2) day = '0' + day;
-
-            return [year, month, day].join('-');
-        }
-
-        var userId = $('meta[name="userId"]').attr('content');
-        Echo.private('App.User.' + userId).notification((notification) => {
-            // this.notifications.push(notification);
-
-            var action = notification.data.action;
-            var the_id = notification.id;
-
-            var li = document.createElement("li");
-            var dateobj = formatDate(new Date(action.created_at));
-            li.innerHTML = "<a class='notfiylink' onclick='pop(this)' the_id='" + the_id + "' href='" + action.link + "'>"+
-                "<div class='notification-info'> <div class='notification-list-user-block'><span class='notification-list-user-name' style='color:#288CF0;'>"+ action.type + "<br></span> " +
-                + action.title + "<div class='notification-date' style='font-size:15px;color:red'>" + dateobj.toString() + "</span>  ";
-
-            document.getElementById("notif").appendChild(li);
-            var num_notif = document.getElementById("num_notif");
-            var num_notif_count = 1 + parseInt(document.getElementById("num_notif").innerText);
-            num_notif.innerHTML = "<span>" + num_notif_count + "</div> </div> </div> </a> </li>";
-
-            var audio = new Audio('audio/unsure.mp3');
-            audio.play();
-        });
-
-    </script>
-    <script>
-
-        function pop(e) {
-            event.preventDefault();
-            var the_id = e.getAttribute('the_id');
-            var the_href = e.href;
-            $.get('/getnotfiy/' + the_id, function (data, status) {
-            });
-            location.href = the_href;
-        };
-
-    </script>
-@endif
-@yield("js")
-
+@yield('js')
 </body>
+
 </html>

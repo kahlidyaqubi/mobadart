@@ -152,7 +152,7 @@
                         @else
                             <li class=""><a
                                         style="margin-right: 5px;border:1px solid #c4233d;background:#f3f3f2;padding:15px;margin-top:12px;margin-left:5px;border-radius:20px;color:black"
-                                        class="" href="/home">بروفايل {{auth()->user()->name}}</a></li>
+                                        class="" href="/home">بروفايل  {{ mb_substr(auth()->user()->name,0,9,'UTF-8')}}</a></li>
                         @endif
                      </ul>
                 </div>
