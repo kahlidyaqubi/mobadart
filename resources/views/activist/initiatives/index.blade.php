@@ -96,7 +96,7 @@
                                 <div class="cause-avatar">
                                     <a href="/initiative/{{$item->id}}" title=""><img src="{{$item->img}}" alt=""></a>
                                     <div class="required-amount">
-                                        <span>{{$item->id}}</span>
+                                        <span>{{date('d-m-Y', strtotime($item->start_date))}}</span>
                                     </div>
                                 </div>
                                 <div class="cause-meta">
