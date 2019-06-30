@@ -150,7 +150,7 @@
         <div class="media">
             <img alt="Maan Logo" src="/platform/dist/images/logo.svg" style="width:200px;height:70px">
             <div class="media-body">
-                <h5 class=" align-center" style="margin-right:-52px;margin-top:22px">مركز العمل التنموي معا</h5>
+                <h5 class=" align-center" style="margin-right:-52px;margin-top:22px">{{\App\Site_sting::find(1)->title_page}}</h5>
             </div>
         </div>
     </a>

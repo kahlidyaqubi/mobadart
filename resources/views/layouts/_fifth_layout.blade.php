@@ -210,7 +210,7 @@
         <img alt="Maan Logo" src="/platform/dist/images/logo.svg" style="width:90px;height:70px;margin-top:-26px;">
         </div>
     </a>
-    <a href="/"><p style="color:#fff;font-size:20px">مركز العمل التنموي معاً</p></a>
+    <a href="/"><p style="color:#fff;font-size:20px">{{\App\Site_sting::find(1)->title_page}}</p></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
